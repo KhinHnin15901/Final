@@ -1,125 +1,140 @@
-<header class="bg-gradient-to-r from-green-100 to-blue-500 text-white shadow-md sticky top-0 z-50"
-    x-data="{ mobileOpen: false }">
+<header class="bg-white text-[#000120] font-[Arial,sans-serif] shadow-md shadow-[#027c7d] sticky top-0 z-50" x-data="{ mobileOpen: false }">
+    {{-- #d6dd42 yellow --}}
+    {{-- #027c7d green --}}
+    {{-- #000120 black --}}
+    @php
+        $currentSection = request('section') ?? 'home';
+        $journalSections = ['journal', 'conference'];
+    @endphp
+
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- Top Bar -->
         <div class="flex justify-between items-center py-4">
             <!-- Logo -->
-            <a href="/" class="flex items-center gap-2 hover:opacity-90 transition">
-                <img src="{{ asset('assets/img/logo/logo.jpg') }}" alt="Logo" class="h-12 w-full">
-
-
-            </a>
+            <div class="absolute top-0 left-6 p-2 m-2 rounded-md bg-white shadow-[#d6dd42] shadow-sm">
+                <a href="/" class="flex items-center gap-2 hover:opacity-90 transition">
+                    <img src="{{ asset('assets/img/logo/logo.jpg') }}" alt="Logo" class="w-16 h-auto object-contain">
+                </a>
+            </div>
 
             <!-- Desktop Navigation -->
-            <nav class="hidden md:flex space-x-6 text-sm font-semibold">
+            <nav class="hidden md:flex items-center space-x-6 text-sm font-semibold select-none">
+
                 <a href="{{ route('guest.home', ['section' => 'home']) }}"
-                    class="text-black hover:text-green-200 transition"
-                    style="text-shadow: 2px 2px 4px rgba(222, 222, 222, 0.936);">Home</a>
+                    class="relative transition cursor-pointer
+                    {{ $currentSection === 'home' ? 'text-[#027c7d] font-bold' : 'hover:text-[#027c7d] hover:underline' }}">
+                    Home
+                </a>
 
                 <a href="{{ route('guest.home', ['section' => 'events']) }}"
-                    class="text-black hover:text-green-200 transition"
-                    style="text-shadow: 2px 2px 4px rgba(222, 222, 222, 0.936);">Events</a>
-                <div class="relative group inline-block">
-                    <button class="text-black hover:text-green-200 transition">
-                        Journals&Conferences ▼
+                    class="relative transition cursor-pointer
+                    {{ $currentSection === 'events' ? 'text-[#027c7d] font-bold' : 'hover:text-[#027c7d] hover:underline' }}">
+                    Events
+                </a>
+
+                <div class="relative group inline-block cursor-pointer">
+                    <button
+                        class="flex items-center gap-1 transition
+                        {{ in_array($currentSection, $journalSections) ? 'text-[#027c7d] font-bold' : 'hover:text-[#027c7d] hover:underline' }}">
+                        Journals & Conferences
+                        <svg class="w-3 h-3 stroke-current" fill="none" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M6 9l6 6 6-6" />
+                        </svg>
                     </button>
-
                     <div
-                        class="absolute hidden group-hover:block ... bg-white shadow-md rounded mt-1 z-50 text-sm min-w-[150px]">
-
+                        class="absolute left-0 hidden group-hover:block bg-white text-[#000120] rounded-md shadow-lg min-w-[160px] z-20">
                         <a href="{{ route('guest.home', ['section' => 'journal']) }}"
-                            class="block px-4 py-2 hover:bg-green-100 text-gray-800">Journal</a>
+                            class="block px-4 py-3 transition
+                            {{ $currentSection === 'journal' ? 'bg-[#027c7d] text-white' : 'hover:bg-[#027c7d] hover:text-white' }}">
+                            Journal
+                        </a>
                         <a href="{{ route('guest.home', ['section' => 'conference']) }}"
-                            class="block px-4 py-2 hover:bg-green-100 text-gray-800">Conference</a>
+                            class="block px-4 py-3 transition
+                            {{ $currentSection === 'conference' ? 'bg-[#027c7d] text-white' : 'hover:bg-[#027c7d] hover:text-white' }}">
+                            Conference
+                        </a>
                     </div>
                 </div>
-                @if (Auth::check() && Auth::user()->roles->contains('name', 'reviewer'))
-                    <div class="relative group inline-block">
-                        <button class="text-black hover:text-green-200 transition "
-                            style="text-shadow: 2px 2px 4px rgba(222, 222, 222, 0.936);">
-                            Review ▼
-                        </button>
 
-                        <!-- Dropdown -->
+                @if (Auth::check() && Auth::user()->roles->contains('name', 'reviewer'))
+                    <div class="relative group inline-block cursor-pointer">
+                        <button
+                            class="flex items-center gap-1 transition
+                            {{ in_array($currentSection, ['journals', 'conferences']) ? 'text-[#027c7d] font-bold' : 'hover:text-[#027c7d] hover:underline' }}">
+                            Review
+                            <svg class="w-3 h-3 stroke-current" fill="none" stroke-width="2" viewBox="0 0 24 24">
+                                <path d="M6 9l6 6 6-6" />
+                            </svg>
+                        </button>
                         <div
-                            class="absolute hidden group-hover:block ... bg-white shadow-md rounded mt-1 z-50 text-sm min-w-[150px]">
+                            class="absolute left-0 mt-1 hidden group-hover:block bg-white text-[#000120] rounded-md shadow-lg min-w-[160px] z-20">
                             <a href="{{ route('guest.home', ['section' => 'journals']) }}"
-                                class="block px-4 py-2 hover:bg-green-100 text-gray-800">Journal</a>
+                                class="block px-4 py-3 transition
+                                {{ $currentSection === 'journals' ? 'bg-[#027c7d] text-white' : 'hover:bg-[#027c7d] hover:text-white' }}">
+                                Journal
+                            </a>
                             <a href="{{ route('guest.home', ['section' => 'conferences']) }}"
-                                class="block px-4 py-2 hover:bg-green-100 text-gray-800">Conference</a>
+                                class="block px-4 py-3 transition
+                                {{ $currentSection === 'conferences' ? 'bg-[#027c7d] text-white' : 'hover:bg-[#027c7d] hover:text-white' }}">
+                                Conference
+                            </a>
                         </div>
                     </div>
                 @endif
+
                 <a href="{{ route('guest.home', ['section' => 'about']) }}"
-                    class="text-black hover:text-green-200 transition"
-                    style="text-shadow: 2px 2px 4px rgba(222, 222, 222, 0.936);">About</a>
+                    class="relative transition cursor-pointer
+                    {{ $currentSection === 'about' ? 'text-[#027c7d] font-bold' : 'hover:text-[#027c7d] hover:underline' }}">
+                    About
+                </a>
+
                 <a href="{{ route('guest.home', ['section' => 'contact']) }}"
-                    class="text-black hover:text-green-200 transition"
-                    style="text-shadow: 2px 2px 4px rgba(222, 222, 222, 0.936);">Contact</a>
-
-
+                    class="relative transition cursor-pointer
+                    {{ $currentSection === 'contact' ? 'text-[#027c7d] font-bold' : 'hover:text-[#027c7d] hover:underline' }}">
+                    Contact
+                </a>
 
                 @auth
-                    @php
-                        $unreadCount = auth()->user()->unreadNotifications->count();
-                    @endphp
-
+                    @php $unreadCount = auth()->user()->unreadNotifications->count(); @endphp
                     @if (Auth::user()->roles->contains('name', 'author'))
                         <a href="{{ route('guest.home', ['section' => 'notification']) }}"
-                            class="text-black hover:text-green-200 transition "
-                            style="text-shadow: 2px 2px 4px rgba(222, 222, 222, 0.936);">
+                            class="relative px-3 py-2 transition cursor-pointer
+                            {{ $currentSection === 'notification' ? 'text-[#027c7d] font-bold' : 'hover:text-[#027c7d] hover:underline' }}">
                             Notifications
-
                             @if ($unreadCount > 0)
                                 <span
-                                    class="absolute -top-2 -right-3 bg-green-300 text-green-900 text-xs font-semibold rounded-full w-5 h-5 flex items-center justify-center">
+                                    class="absolute -top-2 -right-3 bg-[#d6dd42] text-[#000120] text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
                                     {{ $unreadCount }}
                                 </span>
                             @endif
                         </a>
                     @endif
-
-
-
                 @endauth
-
-
             </nav>
 
             <!-- Auth Buttons / Profile -->
             <div class="flex items-center gap-3">
                 @auth
                     <div class="relative" x-data="{ open: false }">
-                        <button @click="open = !open" class="flex items-center gap-2 focus:outline-none">
+                        <button @click="open = !open" class="flex items-center gap-2">
                             <img src="{{ Auth::user()->profile_photo_url ?? asset('assets/img/profile.jpg') }}"
-                                class="w-9 h-9 rounded-full border border-green-300 shadow object-cover" alt="Avatar">
-                            <div class="text-sm sm:text-base font-medium">
-                                <span class="block">{{ Auth::user()->name }}</span> {{-- User name --}}
-
-                                @php
-                                    $user = Auth::user();
-                                    $firstRole = $user->roles->first();
-                                @endphp
-
-                                <span class="block text-yellow-500 text-sm">
-                                    {{ $firstRole ? ucfirst($firstRole->name) : 'No Role' }}
-                                </span> {{-- Role below --}}
+                                class="w-9 h-9 rounded-full border-2 border-[#d6dd42] object-cover" alt="Avatar">
+                            <div class="text-left text-sm">
+                                <span class="block font-bold">{{ Auth::user()->name }}</span>
+                                <span class="block text-[#d6dd42] text-xs">
+                                    {{ optional(Auth::user()->roles->first())->name ?? 'No Role' }}
+                                </span>
                             </div>
-
-                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2"
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
                                 viewBox="0 0 24 24">
                                 <path d="M19 9l-7 7-7-7" />
                             </svg>
                         </button>
-
-                        <!-- Dropdown -->
                         <div x-show="open" @click.away="open = false"
-                            class="absolute right-0 mt-2 w-48 bg-green-500 text-white rounded-md shadow-md py-2 z-50"
-                            x-transition>
-                            <a href="#" class="block px-4 py-2 hover:bg-green-600">View Profile</a>
+                            class="absolute right-0 mt-2 w-48 bg-white text-[#000120] rounded-md shadow-lg py-2" x-transition>
+                            <a href="#" class="block px-4 py-2 hover:bg-[#d6dd42] hover:text-[#000120]">View Profile</a>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
-                                <button class="w-full text-left px-4 py-2 hover:bg-green-600">Logout</button>
+                                <button class="w-full text-left px-4 py-2 hover:bg-[#d6dd42] hover:text-[#000120]">Logout</button>
                             </form>
                         </div>
                     </div>
@@ -127,21 +142,23 @@
 
                 @guest
                     <a href="{{ route('guest.home', ['section' => 'register']) }}"
-                        class="bg-green-400 hover:bg-green-500 text-green-900 px-4 py-1.5 rounded-md text-sm font-medium transition">
+                        class="text-[#027c7d] font-semibold text-sm hover:bg-[#027c7d] rounded-md hover:text-[#d6dd42] transition px-3 py-2">
                         Register
                     </a>
+                    <span class="text-gray-400 select-none">|</span>
                     <a href="{{ route('guest.home', ['section' => 'login']) }}"
-                        class="bg-blue-300 hover:bg-blue-400 text-blue-900 px-4 py-1.5 rounded-md text-sm font-medium transition">
+                        class="text-[#027c7d] font-semibold text-sm hover:bg-[#027c7d] rounded-md hover:text-[#d6dd42] transition px-3 py-2">
                         Login
                     </a>
                 @endguest
 
-                <!-- Mobile Toggle -->
-                <button @click="mobileOpen = !mobileOpen"
-                    class="md:hidden text-white hover:text-green-200 focus:outline-none">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path x-show="!mobileOpen" d="M4 6h16M4 12h16M4 18h16" />
-                        <path x-show="mobileOpen" d="M6 18L18 6M6 6l12 12" />
+                <!-- Mobile Menu Toggle -->
+                <button @click="mobileOpen = !mobileOpen" class="md:hidden hover:text-[#027c7d]">
+                    <svg x-show="!mobileOpen" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                    <svg x-show="mobileOpen" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
             </div>
@@ -149,24 +166,84 @@
     </div>
 
     <!-- Mobile Menu -->
-    <div class="md:hidden" x-show="mobileOpen" x-transition>
-        <div
-            class="bg-gradient-to-r from-green-400 to-blue-600 border-t border-green-300 px-4 py-4 space-y-3 text-sm font-medium text-white">
-            <a href="{{ route('guest.home', ['section' => 'events']) }}" class="block hover:text-green-200">Events</a>
-            <a href="{{ route('guest.home', ['section' => 'about']) }}" class="block hover:text-green-200">About</a>
+    <div class="md:hidden bg-white text-[#000120]" x-show="mobileOpen" x-transition>
+        <div class="px-4 py-4 space-y-3 text-sm font-semibold">
+
+            <a href="{{ route('guest.home', ['section' => 'home']) }}"
+                class="block px-4 py-3 rounded transition cursor-pointer
+                {{ $currentSection === 'home' ? 'bg-[#027c7d] text-white' : 'hover:bg-[#027c7d] hover:text-white' }}">
+                Home
+            </a>
+
+            <a href="{{ route('guest.home', ['section' => 'events']) }}"
+                class="block px-4 py-3 rounded transition cursor-pointer
+                {{ $currentSection === 'events' ? 'bg-[#027c7d] text-white' : 'hover:bg-[#027c7d] hover:text-white' }}">
+                Events
+            </a>
+
+            <a href="{{ route('guest.home', ['section' => 'journal']) }}"
+                class="block px-4 py-3 rounded transition cursor-pointer
+                {{ $currentSection === 'journal' ? 'bg-[#027c7d] text-white' : 'hover:bg-[#027c7d] hover:text-white' }}">
+                Journal
+            </a>
+
+            <a href="{{ route('guest.home', ['section' => 'conference']) }}"
+                class="block px-4 py-3 rounded transition cursor-pointer
+                {{ $currentSection === 'conference' ? 'bg-[#027c7d] text-white' : 'hover:bg-[#027c7d] hover:text-white' }}">
+                Conference
+            </a>
+
+            @if (Auth::check() && Auth::user()->roles->contains('name', 'reviewer'))
+                <a href="{{ route('guest.home', ['section' => 'journals']) }}"
+                    class="block px-4 py-3 rounded transition cursor-pointer
+                    {{ $currentSection === 'journals' ? 'bg-[#027c7d] text-white' : 'hover:bg-[#027c7d] hover:text-white' }}">
+                    Review Journal
+                </a>
+                <a href="{{ route('guest.home', ['section' => 'conferences']) }}"
+                    class="block px-4 py-3 rounded transition cursor-pointer
+                    {{ $currentSection === 'conferences' ? 'bg-[#027c7d] text-white' : 'hover:bg-[#027c7d] hover:text-white' }}">
+                    Review Conference
+                </a>
+            @endif
+
+            <a href="{{ route('guest.home', ['section' => 'about']) }}"
+                class="block px-4 py-3 rounded transition cursor-pointer
+                {{ $currentSection === 'about' ? 'bg-[#027c7d] text-white' : 'hover:bg-[#027c7d] hover:text-white' }}">
+                About
+            </a>
+
             <a href="{{ route('guest.home', ['section' => 'contact']) }}"
-                class="block hover:text-green-200">Contact</a>
+                class="block px-4 py-3 rounded transition cursor-pointer
+                {{ $currentSection === 'contact' ? 'bg-[#027c7d] text-white' : 'hover:bg-[#027c7d] hover:text-white' }}">
+                Contact
+            </a>
 
             @auth
-                <a href="{{ route('guest.home', ['section' => 'notification']) }}" class="block hover:text-green-200">
-                    Notifications ({{ $unreadCount }})
-                </a>
+                @if (Auth::user()->roles->contains('name', 'author'))
+                    <a href="{{ route('guest.home', ['section' => 'notification']) }}"
+                        class="block px-4 py-3 rounded transition cursor-pointer
+                        {{ $currentSection === 'notification' ? 'bg-[#027c7d] text-white' : 'hover:bg-[#027c7d] hover:text-white' }}">
+                        Notifications
+                        @if ($unreadCount > 0)
+                            <span
+                                class="absolute -top-2 -right-3 bg-[#d6dd42] text-[#000120] text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                                {{ $unreadCount }}
+                            </span>
+                        @endif
+                    </a>
+                @endif
             @endauth
 
             @guest
                 <a href="{{ route('guest.home', ['section' => 'register']) }}"
-                    class="block hover:text-green-200">Register</a>
-                <a href="{{ route('guest.home', ['section' => 'login']) }}" class="block hover:text-green-200">Login</a>
+                    class="text-[#027c7d] font-semibold text-sm hover:underline hover:text-[#d6dd42] transition px-2 py-1">
+                    Register
+                </a>
+                <span class="text-gray-400 select-none">|</span>
+                <a href="{{ route('guest.home', ['section' => 'login']) }}"
+                    class="text-[#027c7d] font-semibold text-sm hover:underline hover:text-[#d6dd42] transition px-2 py-1">
+                    Login
+                </a>
             @endguest
         </div>
     </div>
