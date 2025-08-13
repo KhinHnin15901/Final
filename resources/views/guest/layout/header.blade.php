@@ -1,4 +1,4 @@
-<header class="bg-white text-[#000120] font-[Arial,sans-serif] shadow-md shadow-[#027c7d] sticky top-0 z-50" x-data="{ mobileOpen: false }">
+<header class="bg-white text-[#000120] font-[Arial,sans-serif] shadow-md shadow-[#027c7d] sticky top-0 z-50 mb-10" x-data="{ mobileOpen: false }">
     {{-- #d6dd42 yellow --}}
     {{-- #027c7d green --}}
     {{-- #000120 black --}}

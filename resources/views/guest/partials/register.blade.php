@@ -1,117 +1,120 @@
-<div
-    class="min-h-screen flex items-center justify-center bg-gradient-to-tr from-blue-50 to-blue-100 py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-md w-full bg-white shadow-xl rounded-xl p-8 space-y-6">
-        <h2 class="text-center text-3xl font-bold text-gray-900">Register an Account</h2>
+<div class="flex items-center justify-center px-4 sm:px-6 lg:px-8 font-[Arial,sans-serif] my-6 max-w-3xl w-full">
+    <div class="max-w-4xl w-full bg-white rounded-xl p-8 space-y-6 border-t-4 border-[#027c7d] shadow-md shadow-[#d6dd42]">
 
-        <form class="space-y-5" method="POST" action="{{ route('register') }}">
+        <!-- Title -->
+        <div class="flex flex-col items-center gap-2 justify-center">
+            <h2 class="text-center text-xl font-bold text-[#000120]">Create an Account</h2>
+            <p class="text-center text-sm text-gray-600">Fill out the form to get started</p>
+        </div>
+
+        <!-- Form -->
+        <form class="grid grid-cols-1 md:grid-cols-2 gap-6" method="POST" action="{{ route('register') }}">
             @csrf
 
-            <!-- Name -->
+            <!-- Full Name -->
             <div>
-                <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
+                <label for="name" class="block text-sm font-semibold text-[#027c7d]">Full Name</label>
                 <input id="name" name="name" type="text" required autofocus
-                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
+                    class="w-full rounded-md border border-gray-300 px-4 py-2 text-[#000120] placeholder-gray-400
+                            focus:outline-none focus:ring-2 focus:ring-[#027c7d] focus:border-[#027c7d] text-sm shadow-sm mt-1" />
             </div>
 
             <!-- Email -->
             <div>
-                <label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
+                <label for="email" class="block text-sm font-semibold text-[#027c7d]">Email Address</label>
                 <input id="email" name="email" type="email" required
-                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
+                    class="w-full rounded-md border border-gray-300 px-4 py-2 text-[#000120] placeholder-gray-400
+                            focus:outline-none focus:ring-2 focus:ring-[#027c7d] focus:border-[#027c7d] text-sm shadow-sm mt-1" />
             </div>
 
-            <div x-data="{ showField: false }">
-                <!-- Role Selection -->
-                <div>
-                    <label for="role" class="block text-sm font-medium text-gray-700">Select Role</label>
-                    <select id="role" name="role" required
-                        x-on:change="showField = $event.target.options[$event.target.selectedIndex].text.toLowerCase() === 'reviewer'"
-                        class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                        <option value="" disabled selected>Select a role</option>
-                        @foreach ($roles as $role)
-                            <option value="{{ $role->id }}">{{ $role->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <!-- Field Input (Shown only if role is Reviewer) -->
-                <div x-show="showField" x-transition>
-                    <label for="field" class="block text-sm font-medium text-gray-700 mt-4">Field</label>
-                    <select id="field" name="field[]" multiple
-                        class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                        @foreach ($topics as $topic)
-                            @php
-                                $currentUser = Auth::user();
-                                $selectedFields = old('field');
-                                if (!$selectedFields && $currentUser && $currentUser->field) {
-                                    $selectedFields = explode(',', $currentUser->field);
-                                }
-                            @endphp
-
-                            <option value="{{ $topic->name }}"
-                                {{ is_array($selectedFields) && in_array($topic->name, $selectedFields) ? 'selected' : '' }}>
-                                {{ $topic->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                    <p class="text-xs text-gray-500 mt-1">Hold Ctrl (Windows) or Command (Mac) to select multiple.</p>
-                </div>
-            </div>
-
-
-
-
-            <!-- Password -->
+            <!-- Role -->
             <div>
-                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                <input id="password" name="password" type="password" required
-                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
-            </div>
-
-            <!-- Confirm Password -->
-            <div>
-                <label for="password_confirmation" class="block text-sm font-medium text-gray-700">Confirm
-                    Password</label>
-                <input id="password_confirmation" name="password_confirmation" type="password" required
-                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
-            </div>
-            <!-- Position -->
-            <div>
-                <label for="position" class="block text-sm font-medium text-gray-700">Position</label>
-                <input id="position" name="position" type="text"
-                    value="{{ old('position', $user->position ?? '') }}" required
-                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
-            </div>
-
-            <!-- Department -->
-            <div>
-                <label for="department" class="block text-sm font-medium text-gray-700">Department</label>
-                <input id="department" name="department" type="text"
-                    value="{{ old('department', $user->department ?? '') }}" required
-                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
+                <label for="role" class="block text-sm font-semibold text-[#027c7d] font-[Arial,sans-serif]">Select Role</label>
+                <select id="role" name="role" required
+                    class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm bg-white focus:ring-[#027c7d] focus:border-[#027c7d] text-sm font-[Arial,sans-serif] appearance-none"
+                    style="
+                    background-image: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22%23027c7d%22><path d=%22M6 8l4 4 4-4%22 stroke=%22%23027c7d%22 stroke-width=%222%22 fill=%22none%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>');
+                    background-repeat: no-repeat;
+                    background-position: right 0.75rem center;
+                    background-size: 1rem;
+                    padding-right: 2.5rem;">
+                    <option value="" disabled selected>Select a role</option>
+                    @foreach ($roles as $role)
+                        <option value="{{ $role->id }}">{{ $role->name }}</option>
+                    @endforeach
+                </select>
             </div>
 
             <!-- Organization -->
             <div>
-                <label for="organization" class="block text-sm font-medium text-gray-700">Organization</label>
-                <input id="organization" name="organization" type="text"
-                    value="{{ old('organization', $user->organization ?? '') }}" required
-                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
+                <label for="organization" class="block text-sm font-semibold text-[#027c7d]">Organization</label>
+                <input id="organization" name="organization" type="text" required
+                    value="{{ old('organization', $user->organization ?? '') }}"
+                    class="w-full rounded-md border border-gray-300 px-4 py-2 text-[#000120] placeholder-gray-400
+                            focus:outline-none focus:ring-2 focus:ring-[#027c7d] focus:border-[#027c7d] text-sm shadow-sm mt-1" />
             </div>
 
-            <!-- Submit -->
+            <!-- Password -->
+            <div>
+                <label for="password" class="block text-sm font-semibold text-[#027c7d]">Password</label>
+                <input id="password" name="password" type="password" required
+                    class="w-full rounded-md border border-gray-300 px-4 py-2 text-[#000120] placeholder-gray-400
+                            focus:outline-none focus:ring-2 focus:ring-[#027c7d] focus:border-[#027c7d] text-sm shadow-sm mt-1" />
+            </div>
+
+            <!-- Confirm Password -->
+            <div>
+                <label for="password_confirmation" class="block text-sm font-semibold text-[#027c7d]">Confirm Password</label>
+                <input id="password_confirmation" name="password_confirmation" type="password" required
+                    class="w-full rounded-md border border-gray-300 px-4 py-2 text-[#000120] placeholder-gray-400
+                            focus:outline-none focus:ring-2 focus:ring-[#027c7d] focus:border-[#027c7d] text-sm shadow-sm mt-1" />
+            </div>
+
+            <!-- Position -->
+            <div>
+                <label for="position" class="block text-sm font-semibold text-[#027c7d]">Position</label>
+                <input id="position" name="position" type="text" required
+                    value="{{ old('position', $user->position ?? '') }}"
+                    class="w-full rounded-md border border-gray-300 px-4 py-2 text-[#000120] placeholder-gray-400
+                            focus:outline-none focus:ring-2 focus:ring-[#027c7d] focus:border-[#027c7d] text-sm shadow-sm mt-1" />
+            </div>
+
+            <!-- Department -->
+            <div>
+                <label for="department" class="block text-sm font-semibold text-[#027c7d]">Department</label>
+                <input id="department" name="department" type="text" required
+                    value="{{ old('department', $user->department ?? '') }}"
+                    class="w-full rounded-md border border-gray-300 px-4 py-2 text-[#000120] placeholder-gray-400
+                            focus:outline-none focus:ring-2 focus:ring-[#027c7d] focus:border-[#027c7d] text-sm shadow-sm mt-1" />
+            </div>
+
+            <!-- Reviewer Field (conditional) -->
+            <div class="md:col-span-2" x-data="{ showField: false }" x-show="showField" x-transition>
+                <label for="field" class="block text-sm font-semibold text-[#027c7d]">Field</label>
+                <select id="field" name="field[]" multiple
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-[#027c7d] focus:border-[#027c7d] text-sm">
+                    @foreach ($topics as $topic)
+                        <option value="{{ $topic->name }}">{{ $topic->name }}</option>
+                    @endforeach
+                </select>
+                <p class="text-xs text-gray-500 mt-1">Hold Ctrl (Windows) or Command (Mac) to select multiple.</p>
+            </div>
+        </form>
+        <div class="flex flex-row items-center justify-between">
+            <!-- Login Link -->
+            <p class="text-center text-sm text-gray-600">
+                Already have an account?
+                <a href="{{ route('guest.home', ['section' => 'login']) }}" class="text-[#027c7d] hover:underline font-medium">
+                    Log in
+                </a>
+            </p>
+
             <div>
                 <button type="submit"
-                    class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-md text-white bg-blue-600 hover:bg-blue-700 transition duration-300">
+                    class="w-full py-2.5 px-4 rounded-md shadow-md text-white bg-[#027c7d] hover:bg-[#026a6b] transition duration-300 text-sm font-semibold">
                     Register
                 </button>
             </div>
-        </form>
-
-        <p class="text-center text-sm text-gray-600">
-            Already have an account?
-            <a href="{{ route('guest.home', ['section' => 'login']) }}"
-                class="text-blue-500 hover:underline font-medium">Log in</a>
-        </p>
+        </div>
     </div>
 </div>

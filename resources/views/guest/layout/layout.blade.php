@@ -20,12 +20,12 @@
             crossorigin="anonymous" referrerpolicy="no-referrer" />
     </head>
 
-    <body class="bg-gray-100 text-gray-800 antialiased font-arial">
+    <body class="min-h-screen flex flex-col bg-gray-100 text-gray-800 antialiased font-arial">
         {{-- Header --}}
         @include('guest.layout.header')
 
         {{-- Main Content --}}
-        <main class="px-4 sm:px-6 lg:px-8">
+        <main class="px-4 sm:px-6 lg:px-8 flex-grow flex items-center justify-center">
             @yield('main-content')
         </main>
 
