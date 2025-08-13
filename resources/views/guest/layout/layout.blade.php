@@ -25,7 +25,7 @@
         @include('guest.layout.header')
 
         {{-- Main Content --}}
-        <main class="min-h-screen px-4 sm:px-6 lg:px-8">
+        <main class="px-4 sm:px-6 lg:px-8">
             @yield('main-content')
         </main>
 
