@@ -1,4 +1,4 @@
-<section class="flex items-center justify-center px-4 sm:px-6 lg:px-8 font-[Arial,sans-serif] my-6 max-w-3xl w-full">
+<section class="flex items-center justify-center px-4 sm:px-6 lg:px-8 font-[Arial,sans-serif] max-w-3xl w-full">
     <div class="max-w-4xl w-full bg-white rounded-xl p-8 space-y-6 border-t-4 border-[#027c7d] shadow-md shadow-[#d6dd42]">
         <div class="text-center max-w-xl mx-auto mb-5">
             <h2 class="text-lg font-semibold text-[#000120]">Get in Touch</h2>
