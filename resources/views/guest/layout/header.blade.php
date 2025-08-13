@@ -8,7 +8,7 @@
     @endphp
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center py-4">
+        <div class="flex justify-end gap-12 items-center py-4">
             <!-- Logo -->
             <div class="absolute top-0 left-6 p-2 m-2 rounded-md bg-white shadow-[#d6dd42] shadow-sm">
                 <a href="/" class="flex items-center gap-2 hover:opacity-90 transition">
@@ -25,11 +25,11 @@
                     Home
                 </a>
 
-                <a href="{{ route('guest.home', ['section' => 'events']) }}"
+                {{-- <a href="{{ route('guest.home', ['section' => 'events']) }}"
                     class="relative transition cursor-pointer
                     {{ $currentSection === 'events' ? 'text-[#027c7d] font-bold' : 'hover:text-[#027c7d] hover:underline' }}">
                     Events
-                </a>
+                </a> --}}
 
                 <div class="relative group inline-block cursor-pointer">
                     <button
@@ -112,7 +112,7 @@
             </nav>
 
             <!-- Auth Buttons / Profile -->
-            <div class="flex items-center gap-3">
+            <div class="flex items-center gap-2">
                 @auth
                     <div class="relative" x-data="{ open: false }">
                         <button @click="open = !open" class="flex items-center gap-2">
@@ -142,12 +142,11 @@
 
                 @guest
                     <a href="{{ route('guest.home', ['section' => 'register']) }}"
-                        class="text-[#027c7d] font-semibold text-sm hover:bg-[#027c7d] rounded-md hover:text-[#d6dd42] transition px-3 py-2">
+                        class="text-white font-semibold uppercase text-xs bg-[#027c7d] rounded-md hover:bg-[#027c7d]/90 border-2 border-[#d6dd42] transition px-3 py-2">
                         Register
                     </a>
-                    <span class="text-gray-400 select-none">|</span>
                     <a href="{{ route('guest.home', ['section' => 'login']) }}"
-                        class="text-[#027c7d] font-semibold text-sm hover:bg-[#027c7d] rounded-md hover:text-[#d6dd42] transition px-3 py-2">
+                        class="text-white font-semibold uppercase text-xs bg-[#027c7d] rounded-md hover:bg-[#027c7d]/90 border-2 border-[#d6dd42] transition px-3 py-2">
                         Login
                     </a>
                 @endguest
@@ -175,11 +174,11 @@
                 Home
             </a>
 
-            <a href="{{ route('guest.home', ['section' => 'events']) }}"
+            {{-- <a href="{{ route('guest.home', ['section' => 'events']) }}"
                 class="block px-4 py-3 rounded transition cursor-pointer
                 {{ $currentSection === 'events' ? 'bg-[#027c7d] text-white' : 'hover:bg-[#027c7d] hover:text-white' }}">
                 Events
-            </a>
+            </a> --}}
 
             <a href="{{ route('guest.home', ['section' => 'journal']) }}"
                 class="block px-4 py-3 rounded transition cursor-pointer

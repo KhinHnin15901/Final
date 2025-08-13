@@ -1,36 +1,61 @@
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 font-[Arial,sans-serif] w-full">
     @forelse ($conference as $conferences)
-        <div class="bg-white rounded-xl shadow-md p-6 hover:shadow-xl transition border border-gray-200">
-            <h2 class="text-xl font-semibold text-green-700 mb-2">{{ $conferences->description }}</h2>
-
-            <div class="text-sm text-gray-700 space-y-1">
-
-                <p><strong>Topic:</strong> {{ $conferences->topic->name ?? 'N/A' }}</p>
-                <p><strong>Author:</strong> {{ $conferences->author->name ?? 'N/A' }}</p>
-                <p><strong>Website:</strong> {{ $conferences->conference_website ?? 'N/A' }}</p>
-                <p><strong>Publication Date:</strong> {{ $conferences->publication_date ?? 'N/A' }}</p>
-                <p><strong>Contact Email:</strong> {{ $conferences->contact_email ?? 'N/A' }}</p>
+        <div class="bg-white rounded-2xl shadow-md shadow-[#d6dd42] transition-all duration-300 border border-gray-200 overflow-hidden">
+            <!-- Header -->
+            <div class="bg-[#027c7d] text-white p-4 flex items-center justify-between">
+                <h2 class="text-md font-semibold">{{ $conferences->topic->name ?? 'N/A' }}</h2>
+                <a href="#"
+                    class="bg-white text-[#027c7d] px-3 py-1 text-sm font-semibold rounded-full hover:bg-white/90">
+                    Detail
+                </a>
             </div>
 
-            <div class="mt-4">
+            <div class="p-6 space-y-3 text-gray-700 text-sm">
+                <div class="flex">
+                    <span class="w-[9vw] font-semibold text-gray-800">Author:</span>
+                    <span class="flex-1">{{ $conferences->author->name ?? 'N/A' }}</span>
+                </div>
+                <div class="flex">
+                    <span class="w-[9vw] font-semibold text-gray-800">Website:</span>
+                    <span class="flex-1">{{ $conferences->journal_website ?? 'N/A' }}</span>
+                </div>
+                <div class="flex">
+                    <span class="w-[9vw] font-semibold text-gray-800">Published:</span>
+                    <span class="flex-1">{{ $conferences->publication_date ?? 'N/A' }}</span>
+                </div>
+                <div class="flex">
+                    <span class="w-[9vw] font-semibold text-gray-800">Email:</span>
+                    <span class="flex-1 text-blue-500 hover:underline cursor-pointer">{{ $conferences->contact_email ?? 'N/A' }}</span>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 px-6 py-4 flex justify-between items-center border-t">
                 @if ($conferences->paper_path)
-                    <a href="{{ asset('storage/' . $conferences->paper_path) }}" target="_blank"
-                        class="inline-block bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2 rounded transition">
+                    <a href="
+                        #
+                        {{ asset('storage/' . $conferences->paper_path) }}
+                        "
+                        target="_blank"
+                        class="inline-block bg-blue-500 hover:bg-blue-500/90 text-white text-sm font-semibold px-4 py-2 rounded transition">
                         View Paper
                     </a>
 
-                    <a href="{{ asset('storage/' . $conferences->paper_path) }}" download
-                        class="inline-block bg-green-600 hover:bg-green-700 text-white text-sm font-semibold px-4 py-2 rounded transition ml-2">
+                    <a href="
+                        #
+                        {{ asset('storage/' . $conferences->paper_path) }}
+                        "
+                        download
+                        class="inline-block bg-[#027c7d] hover:bg-[#027c7d]/90 text-white text-sm font-semibold px-4 py-2 rounded transition ml-2">
                         Download PDF
                     </a>
                 @else
-                    <p class="text-red-500 mt-2">No paper uploaded</p>
+                    <p class="text-red-500 mt-2 text-sm font-medium">No paper uploaded</p>
                 @endif
             </div>
         </div>
     @empty
-        <div class="col-span-3 text-center text-gray-600 text-lg py-12">
-            No conferences available at the moment.
+        <div class="text-center col-span-full text-gray-500">
+            <p class="text-md font-medium">No conferences available at the moment.</p>
         </div>
     @endforelse
 </div>

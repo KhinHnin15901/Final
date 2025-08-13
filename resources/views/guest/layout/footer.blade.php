@@ -2,7 +2,7 @@
     class="bg-white text-gray-700 py-8 mt-10 font-[Arial,sans-serif] shadow-md"
     style="box-shadow: 0 -8px 6px -6px rgba(2,124,125,0.4);"
 >
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t-4 border-[#d6dd42] pt-6">
+    <div class="max-w-[80vw] mx-auto px-4 sm:px-6 lg:px-8 border-t-4 border-[#d6dd42] pt-6">
         <div class="flex flex-col md:flex-row justify-between items-center gap-6">
             <div class="text-sm text-center md:text-left text-[#000120] select-none font-medium">
                 &copy;
