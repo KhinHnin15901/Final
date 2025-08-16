@@ -10,12 +10,12 @@
     $conferences = request()->routeIs('admin.conferences.*');
 @endphp
 
-<aside id="sidebar" class="sidebar">
+<aside class="sidebar">
 
     <ul class="sidebar-nav" id="sidebar-nav">
 
-        <li class="nav-item {{ Request::is('/dashboard') ? 'active' : '' }}">
-            <a class="nav-link" href="{{ url('/dashboard') }}">
+        <li class="nav-item">
+            <a class="nav-link {{ Request::is('dashboard') ? 'active' : '' }}" href="{{ url('/dashboard') }}">
                 <i class="bi bi-grid"></i>
                 <span>Dashboard</span>
             </a>
@@ -23,7 +23,7 @@
         <li class="nav-item">
             <a class="nav-link {{ $user ? '' : 'collapsed' }}" data-bs-target="#user-nav" data-bs-toggle="collapse"
                 href="#" aria-expanded="{{ $user ? 'true' : 'false' }}">
-                <i class="bi bi-list"></i><span>Manage User</span>
+                <i class="bi bi-list"></i><span class="{{ (request()->routeIs('admin.user.reviewer') || request()->routeIs('admin.user.author')) ? 'active' : '' }}">Manage Users</span>
                 <i class="bi bi-chevron-down ms-auto"></i>
             </a>
 
@@ -42,45 +42,11 @@
                 </li>
             </ul>
         </li>
-        {{-- categories --}}
-        {{-- Manage Categories --}}
-        {{-- @php
-            $manageCategoriesActive = request()->routeIs('admin.categories.*');
-        @endphp
-
-        <li class="nav-item">
-            <a class="nav-link {{ $manageCategoriesActive ? '' : 'collapsed' }}" data-bs-target="#categories-nav"
-                data-bs-toggle="collapse" href="#"
-                aria-expanded="{{ $manageCategoriesActive ? 'true' : 'false' }}">
-                <i class="bi bi-list"></i><span>Manage Categories</span>
-                <i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-
-            <ul id="categories-nav" class="nav-content collapse {{ $manageCategoriesActive ? 'show' : '' }}"
-                data-bs-parent="#sidebar-nav">
-
-                <li>
-                    <a class="{{ request()->routeIs('admin.categories.create') ? 'active' : '' }}">
-                        href="{{ route('admin.categories.create') }}">
-                        <i class="bi bi-circle"></i><span>Create Category</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a class="{{ request()->routeIs('admin.categories.index') ? 'active' : '' }}"
-                        href="{{ route('admin.categories.index') }}">
-                        <i class="bi bi-circle"></i><span>View Categories</span>
-                    </a>
-                </li>
-
-            </ul>
-        </li> --}}
-        {{-- End Manage Categories --}}
 
         <li class="nav-item">
             <a class="nav-link {{ $committee ? '' : 'collapsed' }}" data-bs-target="#committee-nav"
                 data-bs-toggle="collapse" href="#" aria-expanded="{{ $committee ? 'true' : 'false' }}">
-                <i class="bi bi-people-fill text-purple-700"></i><span>Manage Committee</span>
+                <i class="bi bi-people-fill text-purple-700"></i><span class="{{ (request()->routeIs('admin.committee.create') || request()->routeIs('admin.committee.index')) ? 'active' : '' }}">Manage Committee</span>
                 <i class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="committee-nav" class="nav-content collapse {{ $committee ? 'show' : '' }}"
@@ -102,7 +68,7 @@
         <li class="nav-item">
             <a class="nav-link {{ $fees ? '' : 'collapsed' }}" data-bs-target="#fees-nav" data-bs-toggle="collapse"
                 href="#" aria-expanded="{{ $fees ? 'true' : 'false' }}">
-                <i class="bi bi-currency-dollar text-green-700"></i><span>Manage Fees</span>
+                <i class="bi bi-currency-dollar text-green-700"></i><span class="{{ (request()->routeIs('admin.fees.create') || request()->routeIs('admin.fees.index')) ? 'active' : '' }}">Manage Fees</span>
                 <i class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="fees-nav" class="nav-content collapse {{ $fees ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
@@ -123,7 +89,7 @@
         <li class="nav-item">
             <a class="nav-link {{ $journals ? '' : 'collapsed' }}" data-bs-target="#journal-nav"
                 data-bs-toggle="collapse" href="#" aria-expanded="{{ $journals ? 'true' : 'false' }}">
-                <i class="bi bi-book text-indigo-700"></i><span>Manage Journals</span>
+                <i class="bi bi-book text-indigo-700"></i><span class="{{ (request()->routeIs('admin.journals.create') || request()->routeIs('admin.journals.index')) ? 'active' : '' }}">Manage Journals</span>
                 <i class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="journal-nav" class="nav-content collapse {{ $journals ? 'show' : '' }}"
@@ -145,7 +111,7 @@
         <li class="nav-item">
             <a class="nav-link {{ $conferences ? '' : 'collapsed' }}" data-bs-target="#conference-nav"
                 data-bs-toggle="collapse" href="#" aria-expanded="{{ $conferences ? 'true' : 'false' }}">
-                <i class="bi bi-calendar-event text-indigo-700"></i><span>Manage Conferences</span>
+                <i class="bi bi-calendar-event text-indigo-700"></i><span class="{{ (request()->routeIs('admin.conferences.create') || request()->routeIs('admin.conferences.index')) ? 'active' : '' }}">Manage Conferences</span>
                 <i class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="conference-nav" class="nav-content collapse {{ $conferences ? 'show' : '' }}"
@@ -169,7 +135,7 @@
         <li class="nav-item">
             <a class="nav-link {{ $manageTopicsActive ? '' : 'collapsed' }}" data-bs-target="#forms-nav"
                 data-bs-toggle="collapse" href="#" aria-expanded="{{ $manageTopicsActive ? 'true' : 'false' }}">
-                <i class="bi bi-journal-richtext"></i><span>Manage Topics</span>
+                <i class="bi bi-journal-richtext"></i><span class="{{ (request()->routeIs('admin.topics.create') || request()->routeIs('admin.topics.index')) ? 'active' : '' }}">Manage Topics</span>
                 <i class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="forms-nav" class="nav-content collapse {{ $manageTopicsActive ? 'show' : '' }}"
@@ -177,7 +143,7 @@
                 <li>
                     <a class="{{ request()->routeIs('admin.topics.create') ? 'active' : '' }}"
                         href="{{ route('admin.topics.create') }}">
-                        <i class="bi bi-journal-text"></i>
+                        <i class="bi bi-circle"></i>
                         <span>Create Topics</span>
                     </a>
                 </li>
@@ -185,7 +151,7 @@
                 <li>
                     <a class="{{ request()->routeIs('admin.topics.index') ? 'active' : '' }}"
                         href="{{ route('admin.topics.index') }}">
-                        <i class="bi bi-journal-text"></i>
+                        <i class="bi bi-circle"></i>
                         <span>View Topics</span>
                     </a>
                 </li>
@@ -196,7 +162,7 @@
 
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#event-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-easel2 text-green-600 text-xl"></i><span>Manage Events</span><i
+                <i class="bi bi-easel2 text-green-600 text-xl"></i><span class="{{ (request()->routeIs('admin.events.create') || request()->routeIs('admin.events.index')) ? 'active' : '' }}">Manage Events</span><i
                     class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="event-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
@@ -222,20 +188,20 @@
             <a class="nav-link {{ $requestAuthorPaper ? '' : 'collapsed' }}" data-bs-target="#forms-navs"
                 data-bs-toggle="collapse" href="#"
                 aria-expanded="{{ $requestAuthorPaper ? 'true' : 'false' }}">
-                <i class="bi bi-journal-text"></i><span>Author Paper Request</span>
+                <i class="bi bi-circle"></i><span class="{{ (request()->routeIs('admin.papers.journals') || request()->routeIs('admin.papers.conferences')) ? 'active' : '' }}">Author Paper Request</span>
                 <i class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="forms-navs" class="nav-content collapse {{ $requestAuthorPaper ? 'show' : '' }}"
                 data-bs-parent="#sidebar-nav">
                 <a class="{{ request()->routeIs('admin.papers.journals') ? 'active' : '' }}"
                     href="{{ route('admin.papers.journals') }}">
-                    <i class="bi bi-journal-text"></i>
+                    <i class="bi bi-circle"></i>
                     <span>Journals</span>
                 </a>
 
                 <a class="{{ request()->routeIs('admin.papers.conferences') ? 'active' : '' }}"
                     href="{{ route('admin.papers.conferences') }}">
-                    <i class="bi bi-journal-text"></i>
+                    <i class="bi bi-circle"></i>
                     <span>Conferences</span>
                 </a>
 
@@ -246,7 +212,15 @@
         <li class="nav-item">
             <a class="nav-link {{ $schedule ? '' : 'collapsed' }}" data-bs-target="#schedule-nav"
                 data-bs-toggle="collapse" href="#" aria-expanded="{{ $schedule ? 'true' : 'false' }}">
-                <i class="bi bi-list"></i><span>Manage Reviewer Assign</span>
+                <i class="bi bi-list"></i><span class="{{
+                (
+                    request()->routeIs('admin.schedule.journal') ||
+                    request()->routeIs('admin.schedule.conference')) ||
+                    request()->routeIs('admin.schedule.journalview') ||
+                    request()->routeIs('admin.schedule.conferenceview') ||
+                    request()->routeIs('admin.schedule.journalreview') ||
+                    request()->routeIs('admin.schedule.conferencereview'
+                ) ? 'active' : '' }}">Manage Reviewer Assign</span>
                 <i class="bi bi-chevron-down ms-auto"></i>
             </a>
 

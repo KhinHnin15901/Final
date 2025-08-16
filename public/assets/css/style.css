@@ -13,8 +13,16 @@
   scroll-behavior: smooth;
 }
 
+.bg-custom-green {
+    background-color: #027c7d !important;
+}
+
+.custom-green-shadow {
+    box-shadow: 0 4px 6px rgba(2, 124, 125, 0.5); /* Adjust opacity if needed */
+}
+
 body {
-  font-family: "Open Sans", sans-serif;
+  font-family: "Arial", sans-serif;
   background: #f6f9ff;
   color: #444444;
 }
@@ -35,7 +43,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Nunito", sans-serif;
+  font-family: "Arial", sans-serif;
 }
 
 /*--------------------------------------------------------------
@@ -217,12 +225,6 @@ h6 {
 }
 
 /* Card */
-.card {
-  margin-bottom: 30px;
-  border: none;
-  border-radius: 5px;
-  box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
-}
 
 .card-header,
 .card-footer {
@@ -233,11 +235,8 @@ h6 {
 }
 
 .card-title {
-  padding: 20px 0 15px 0;
-  font-size: 18px;
-  font-weight: 500;
-  color: #012970;
-  font-family: "Poppins", sans-serif;
+  font-size: 20px;
+  font-family: "Arial", sans-serif;
 }
 
 .card-title span {
@@ -370,18 +369,16 @@ h6 {
 }
 
 .logo span {
-  font-size: 26px;
   font-weight: 700;
-  color: #012970;
-  font-family: "Nunito", sans-serif;
+  color: #000120;
 }
 
 .header {
   transition: all 0.5s;
   z-index: 997;
+  font-family: "Arial", sans-serif;
   height: 60px;
-  box-shadow: 0px 2px 20px rgba(1, 41, 112, 0.1);
-  background-color: #fff;
+  background-color: white;
   padding-left: 20px;
   /* Toggle Sidebar Button */
   /* Search Bar */
@@ -391,7 +388,7 @@ h6 {
   font-size: 32px;
   padding-left: 10px;
   cursor: pointer;
-  color: #012970;
+  color: #027c7d;
 }
 
 .header .search-bar {
@@ -474,11 +471,15 @@ h6 {
 }
 
 .header-nav .nav-profile {
-  color: #012970;
+  color: #027c7d;
 }
 
 .header-nav .nav-profile img {
-  max-height: 36px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #d6dd42;
 }
 
 .header-nav .nav-profile span {
@@ -562,20 +563,22 @@ h6 {
 }
 
 .header-nav .profile {
-  min-width: 240px;
+  min-width: 200px;
   padding-bottom: 0;
   top: 8px !important;
 }
 
 .header-nav .profile .dropdown-header h6 {
-  font-size: 18px;
+  font-size: 16px;
+  font-family: 'Arial', sans-serif;
   margin-bottom: 0;
   font-weight: 600;
-  color: #444444;
+  color: #000120;
 }
 
 .header-nav .profile .dropdown-header span {
   font-size: 14px;
+  color: #027c7d;
 }
 
 .header-nav .profile .dropdown-item {
@@ -609,7 +612,7 @@ h6 {
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: #aab7cf transparent;
-  box-shadow: 0px 0px 20px rgba(1, 41, 112, 0.1);
+  box-shadow: 4px 0 7px rgba(214, 221, 66, 0.5);
   background-color: #fff;
 }
 
@@ -682,11 +685,10 @@ h6 {
 .sidebar-nav .nav-link {
   display: flex;
   align-items: center;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
-  color: #4154f1;
+  color: #000120;
   transition: 0.3;
-  background: #f6f9ff;
   padding: 10px 15px;
   border-radius: 4px;
 }
@@ -694,25 +696,24 @@ h6 {
 .sidebar-nav .nav-link i {
   font-size: 16px;
   margin-right: 10px;
-  color: #4154f1;
+  color: #027c7d;
 }
 
 .sidebar-nav .nav-link.collapsed {
-  color: #012970;
+  color: #000120;
   background: #fff;
 }
 
 .sidebar-nav .nav-link.collapsed i {
-  color: #899bbd;
+  color: #027c7d;
 }
 
 .sidebar-nav .nav-link:hover {
-  color: #4154f1;
   background: #f6f9ff;
 }
 
 .sidebar-nav .nav-link:hover i {
-  color: #4154f1;
+  color: #027c7d;
 }
 
 .sidebar-nav .nav-link .bi-chevron-down {
@@ -735,7 +736,7 @@ h6 {
   align-items: center;
   font-size: 14px;
   font-weight: 600;
-  color: #012970;
+  color: #000120;
   transition: 0.3;
   padding: 10px 0 10px 40px;
   transition: 0.3s;
@@ -750,11 +751,19 @@ h6 {
 
 .sidebar-nav .nav-content a:hover,
 .sidebar-nav .nav-content a.active {
-  color: #4154f1;
+  color: #027c7d;
 }
 
 .sidebar-nav .nav-content a.active i {
-  background-color: #4154f1;
+  background-color: #027c7d;
+}
+
+.sidebar-nav a.active {
+  color: #027c7d;
+}
+
+.sidebar-nav .nav-item .nav-link span.active {
+  color: #027c7d;
 }
 
 /*--------------------------------------------------------------

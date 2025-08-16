@@ -1,101 +1,76 @@
 @extends('admin.layout.layout')
 
 @section('main-content')
-    <div class="neo-card p-10 max-w-5xl mx-auto mt-12 bg-gray-100 shadow-md rounded-3xl overflow-x-auto">
-        <h2 class="text-4xl font-bold text-center text-gray-800 mb-10">📝 Journal Reviews</h2>
+<div class="table-responsive mt-8" style="font-family: Arial, sans-serif;">
+    <h2 class="mb-3" style="color: #027c7d; font-weight: bold; font-size: large;">📝 Conference Reviews</h2>
 
-        <table class="min-w-full border text-sm">
-            <thead class="bg-gray-200 text-gray-700 uppercase">
+    @if (session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
+
+    <table class="table table-hover align-middle" style="border-color: #e2e8f0; border-radius: 0.5rem; overflow: hidden; font-size: medium;">
+        <thead class="text-white" style="background-color: #027c7d;">
+            <tr>
+                <th class="py-2 px-3">#</th>
+                <th class="py-2 px-3">Submission ID</th>
+                <th class="py-2 px-3">Reviewer 1</th>
+                <th class="py-2 px-3">Reviewer 2</th>
+                <th class="py-2 px-3">Reviewer 3</th>
+                <th class="py-2 px-3">Evaluation</th>
+                <th class="py-2 px-3">Comments</th>
+                <th class="py-2 px-3">Actions</th>
+            </tr>
+        </thead>
+        <tbody style="color: #000120;">
+            @forelse ($reviews as $index => $review)
                 <tr>
-                    <th class="px-4 py-2">Review ID</th>
-                    <th class="px-4 py-2">Submission ID</th>
-                    <th class="px-4 py-2">Reviewer1</th>
-                    <th class="px-4 py-2">Reviewer2</th>
-                    <th class="px-4 py-2">Reviewer3</th>
-                    <th class="px-4 py-2">Evaluation</th>
-                    <th class="px-4 py-2">Comments</th>
-                    <th class="px-4 py-2">Action</th>
-                </tr>
-            </thead>
-            <tbody class="text-gray-800">
-                @forelse ($reviews as $index => $review)
-                    <tr class="border-t hover:bg-gray-50 transition">
-                        <td class="px-4 py-2 font-mono text-blue-600"> {{ str_pad($index + 1, 3, '0', STR_PAD_LEFT) }}</td>
-
-                        {{-- Show Paper Title --}}
-                        <td class="px-4 py-2">
-                            {{ $review->conferenceSubmission ? $review->conferenceSubmission->id : 'N/A' }}
-                        </td>
-                        <td class="px-4 py-2">
-                            {{ $review->reviewer1->name ?? 'Unknown' }}
-                        </td>
-                        <td class="px-4 py-2">
-                            {{ $review->reviewer2->name ?? 'Unknown' }}
-                        </td>
-                        <td class="px-4 py-2">
-                            {{ $review->reviewer3->name ?? 'Unknown' }}
-                        </td>
-                        <td class="px-4 py-2 capitalize">
-                            {{ str_replace('_', ' ', $review->evaluation) }}
-                        </td>
-                        <td class="px-4 py-2">
-                            {{ \Illuminate\Support\Str::limit($review->reviewer_comments) }}
-                        </td>
-                        <td class="px-6 py-2 text-center">
-                            <!-- Edit Button -->
-
-                            @if ($review->status === 'sent')
-                                <a href="#"
-                                    onclick="event.preventDefault(); if(confirm('Unsend this review?')) { document.getElementById('toggle-status-{{ $review->id }}').submit(); }"
-                                    class="inline-flex items-center px-1 py-1 bg-red-500 rounded hover:bg-red-600 text-sm ">
-                                    <i class="fas fa-undo mr-1"></i>
-                                @else
-                                    <a href="#"
-                                        onclick="event.preventDefault(); if(confirm('Send this review?')) { document.getElementById('toggle-status-{{ $review->id }}').submit(); }"
-                                        class="inline-flex items-center px-1 py-1 bg-green-500 rounded hover:bg-green-600 text-sm ">
-                                        <i class="fas fa-paper-plane mr-1"></i>
-                                    </a>
-                            @endif
-
-                            <form id="toggle-status-{{ $review->id }}"
-                                action="{{ route('admin.schedule.conferencetoggleStatus', $review->id) }}" method="POST"
-                                style="display: none;">
-                                @csrf
-                                @method('PUT')
-                            </form>
-
-
-
-
-                            <!-- Delete Button (uses JS to submit hidden form) -->
+                    <td class="py-2 px-3" style="font-family: monospace; color: #027c7d; font-size: large;">
+                        {{ str_pad($index + 1, 3, '0', STR_PAD_LEFT) }}
+                    </td>
+                    <td class="py-2 px-3">{{ $review->conferenceSubmission ? $review->conferenceSubmission->id : 'N/A' }}</td>
+                    <td class="py-2 px-3">{{ $review->reviewer1->name ?? 'Unknown' }}</td>
+                    <td class="py-2 px-3">{{ $review->reviewer2->name ?? 'Unknown' }}</td>
+                    <td class="py-2 px-3">{{ $review->reviewer3->name ?? 'Unknown' }}</td>
+                    <td class="py-2 px-3 capitalize">{{ str_replace('_', ' ', $review->evaluation) }}</td>
+                    <td class="py-2 px-3">{{ \Illuminate\Support\Str::limit($review->reviewer_comments, 50) }}</td>
+                    <td class="py-2 px-3 text-nowrap">
+                        <!-- Send/Unsend Button -->
+                        @if ($review->status === 'sent')
                             <a href="#"
-                                onclick="event.preventDefault(); if(confirm('Are you sure you want to delete this schedule?')) { document.getElementById('delete-form-{{ $review->id }}').submit(); }"
-                                class="inline-flex items-center px-1 py-1 bg-red-500 text-danger  rounded hover:bg-red-600 transition text-sm">
-                                <i class="fas fa-trash mr-1"></i>
+                               onclick="event.preventDefault(); if(confirm('Unsend this review?')) { document.getElementById('toggle-status-{{ $review->id }}').submit(); }"
+                               class="btn btn-info btn-sm me-1">
+                               <i class="fas fa-undo"></i>
                             </a>
+                        @else
+                            <a href="#"
+                               onclick="event.preventDefault(); if(confirm('Send this review?')) { document.getElementById('toggle-status-{{ $review->id }}').submit(); }"
+                               class="btn btn-success btn-sm me-1">
+                               <i class="fas fa-paper-plane"></i>
+                            </a>
+                        @endif
+                        <form id="toggle-status-{{ $review->id }}" action="{{ route('admin.schedule.conferencetoggleStatus', $review->id) }}" method="POST" style="display: none;">
+                            @csrf
+                            @method('PUT')
+                        </form>
 
-                            <!-- Approach Button (uses JS to submit hidden form) -->
-
-
-                            <!-- Hidden Delete Form -->
-                            <form id="delete-form-{{ $review->id }}"
-                                action="{{ route('admin.schedule.conferencereturndestroy', $review->id) }}" method="POST"
-                                style="display: none;">
-                                @csrf
-                                @method('DELETE')
-                            </form>
-
-
-                            <!-- Hidden Approach Form -->
-
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="6" class="text-center py-4 text-gray-500">No reviews found.</td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
-    </div>
+                        <!-- Delete Button -->
+                        <a href="#"
+                           onclick="event.preventDefault(); if(confirm('Are you sure you want to delete this review?')) { document.getElementById('delete-form-{{ $review->id }}').submit(); }"
+                           class="btn btn-danger btn-sm">
+                           <i class="fas fa-trash"></i>
+                        </a>
+                        <form id="delete-form-{{ $review->id }}" action="{{ route('admin.schedule.conferencereturndestroy', $review->id) }}" method="POST" style="display: none;">
+                            @csrf
+                            @method('DELETE')
+                        </form>
+                    </td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="8" class="text-center" style="color: #000120;">No reviews found.</td>
+                </tr>
+            @endforelse
+        </tbody>
+    </table>
+</div>
 @endsection

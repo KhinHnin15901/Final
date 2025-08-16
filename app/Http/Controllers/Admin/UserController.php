@@ -12,8 +12,6 @@ class UserController extends Controller
 {
     public function reviewer()
     {
-
-
         $reviewers = User::whereHas('roles', function ($query) {
             $query->where('name', 'reviewer');
         })->get();

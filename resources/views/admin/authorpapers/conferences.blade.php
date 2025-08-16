@@ -1,114 +1,96 @@
 @extends('admin.layout.layout')
+
 @section('main-content')
-    <div class="overflow-x-auto mt-6">
-        <h2 class="text-2xl font-bold mb-4">Conference Submissions</h2>
+<div class="overflow-x-auto mt-6" style="font-family: Arial, sans-serif;">
+    <h2 class="mb-3" style="color: #027c7d; font-weight: bold; font-size: 1.5rem;">Conference Submissions</h2>
 
-        <table class="min-w-full border border-gray-300 shadow-lg rounded-lg overflow-hidden text-sm">
-            <thead class="bg-gray-100 text-gray-700 uppercase">
+    @if (session('success'))
+        <div class="alert alert-success mb-3">{{ session('success') }}</div>
+    @endif
+
+    <table class="table table-hover align-middle" style="border-color: #e2e8f0; border-radius: 0.5rem; overflow: hidden; font-size: medium;">
+        <thead class="text-white" style="background-color: #027c7d;">
+            <tr>
+                <th class="py-2 px-3">#</th>
+                <th class="py-2 px-3">User</th>
+                <th class="py-2 px-3">Topic</th>
+                <th class="py-2 px-3">Category</th>
+                <th class="py-2 px-3">Abstract</th>
+                <th class="py-2 px-3">Keywords</th>
+                <th class="py-2 px-3">Paper</th>
+                <th class="py-2 px-3">Department Rule</th>
+                <th class="py-2 px-3">Professor Rule</th>
+                <th class="py-2 px-3">Start Date</th>
+                <th class="py-2 px-3">End Date</th>
+                <th class="py-2 px-3">Action</th>
+            </tr>
+        </thead>
+        <tbody style="color: #000120;">
+            @forelse ($conferenceSubmissions as $index => $submission)
                 <tr>
-                    <th class="px-4 py-2 text-left">Count</th>
-                    <th class="px-4 py-2 text-left">User</th>
-                    <th class="px-4 py-2 text-left">Topic</th>
-                    <th class="px-4 py-2 text-left">Category</th>
-                    <th class="px-4 py-2 text-left">Abstrat</th>
-                    <th class="px-4 py-2 text-left">Keyword</th>
-                    <th class="px-4 py-2 text-left">Paper</th>
-                    <th class="px-4 py-2 text-left">Department Rule</th>
-                    <th class="px-4 py-2 text-left">Professor Rule</th>
-                    <th class="px-4 py-2 text-left">Start Date</th>
-                    <th class="px-4 py-2 text-left">End Date</th>
-                    <th class="px-4 py-2 text-left">Action</th>
+                    <td class="py-2 px-3" style="font-family: monospace; color: #027c7d; font-size: large;">
+                        {{ str_pad($index + 1, 3, '0', STR_PAD_LEFT) }}
+                    </td>
+                    <td class="py-2 px-3 text-center">{{ $submission->user_id ?? 'User ' . $submission->user_id }}</td>
+                    <td class="py-2 px-3 text-center">{{ $submission->topic_id ?? '-' }}</td>
+                    <td class="py-2 px-3 text-center">{{ $submission->category_id ?? '-' }}</td>
+                    <td class="py-2 px-3">{{ $submission->abstract ?? '-' }}</td>
+                    <td class="py-2 px-3">{{ $submission->keywords ?? '-' }}</td>
+
+                    <!-- Paper -->
+                    <td class="py-2 px-3 text-center">
+                        @if ($submission->paper_path)
+                            <a href="{{ route('admin.conferencepaper.download', $submission->id) }}" class="text-success text-decoration-underline">Download</a>
+                        @else
+                            <span class="text-muted">N/A</span>
+                        @endif
+                    </td>
+
+                    <!-- Department Rule -->
+                    <td class="py-2 px-3 text-center">
+                        @if ($submission->department_rule_path)
+                            <a href="{{ route('admin.conferencedprule.download', $submission->id) }}" class="text-success text-decoration-underline">Download</a>
+                        @else
+                            <span class="text-muted">N/A</span>
+                        @endif
+                    </td>
+
+                    <!-- Professor Rule -->
+                    <td class="py-2 px-3 text-center">
+                        @if ($submission->professor_rule_path)
+                            <a href="{{ route('admin.conferenceprorule.download', $submission->id) }}" class="text-success text-decoration-underline">Download</a>
+                        @else
+                            <span class="text-muted">N/A</span>
+                        @endif
+                    </td>
+
+                    <td class="py-2 px-3 text-center">{{ $submission->start_date ? $submission->start_date->format('d-m-Y') : '-' }}</td>
+                    <td class="py-2 px-3 text-center">{{ $submission->end_date ? $submission->end_date->format('d-m-Y') : '-' }}</td>
+
+                    <td class="py-2 px-3 text-nowrap text-center">
+                        <!-- Edit -->
+                        <a href="{{ route('admin.papers.conferencesedit', $submission->id) }}" class="btn btn-warning btn-sm me-1">
+                            <i class="fas fa-pen"></i>
+                        </a>
+                        <!-- Delete -->
+                        <a href="#"
+                           onclick="event.preventDefault(); if(confirm('Are you sure you want to delete this paper?')) { document.getElementById('delete-form-{{ $submission->id }}').submit(); }"
+                           class="btn btn-danger btn-sm">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                        <!-- Hidden Delete Form -->
+                        <form id="delete-form-{{ $submission->id }}" action="{{ route('admin.papers.conferencesdestroy', $submission->id) }}" method="POST" style="display: none;">
+                            @csrf
+                            @method('DELETE')
+                        </form>
+                    </td>
                 </tr>
-            </thead>
-            <tbody class="text-gray-800">
-                @forelse ($conferenceSubmissions as $index => $submission)
-                    <tr class="border-t hover:bg-gray-50 transition">
-                        <td class="px-4 py-2 font-mono text-blue-600 text-center">
-                            {{ str_pad($index + 1, 3, '0', STR_PAD_LEFT) }}
-                        </td>
-                        <td class="px-4 py-2 text-center">{{ $submission->user_id ?? 'User ' . $submission->user_id }}</td>
-                        <td class="px-4 py-2 text-center">{{ $submission->topic_id ?? '-' }}</td>
-                        <td class="px-4 py-2 text-center">{{ $submission->category_id ?? '-' }}</td>
-                        <td class="px-4 py-2">{{ $submission->abstract ?? '-' }}</td>
-                        <td class="px-4 py-2">{{ $submission->keywords ?? '-' }}</td>
-                        <!-- Paper -->
-                        <td class="px-4 py-2 text-center">
-                            @if ($submission->paper_path)
-                                <a href="{{ route('admin.conferencepaper.download', $submission->id) }}"
-                                    class="text-green-600 underline hover:text-green-800" download>
-                                    Download
-                                </a>
-                            @else
-                                N/A
-                            @endif
-                        </td>
-
-                        <!-- Department Rule -->
-                        <td class="px-4 py-2 text-center">
-                            @if ($submission->department_rule_path)
-                                <a href="{{ route('admin.conferencedprule.download', $submission->id) }}"
-                                    class="text-green-600 underline hover:text-green-800" download>
-                                    Download
-                                </a>
-                            @else
-                                N/A
-                            @endif
-                        </td>
-
-                        <!-- Professor Rule -->
-                        <td class="px-4 py-2 text-center">
-                            @if ($submission->professor_rule_path)
-                                <a href="{{ route('admin.conferenceprorule.download', $submission->id) }}"
-                                    class="text-green-600 underline hover:text-green-800" download>
-                                    Download
-                                </a>
-                            @else
-                                N/A
-                            @endif
-                        </td>
-
-                        <td class="text-center">
-                            {{ $submission->start_date ? $submission->start_date->format('d-m-Y') : '-' }}</td>
-                        <td class="text-center">{{ $submission->end_date ? $submission->end_date->format('d-m-Y') : '-' }}
-                        </td>
-
-                        <td class="px-6 py-2 text-center">
-                            <!-- Edit Button -->
-                            <a href="{{ route('admin.papers.conferencesedit', $submission->id) }}"
-                                class="inline-flex items-center px-1 py-1 bg-blue-500  rounded hover:bg-blue-600 transition text-sm">
-                                <i class="fas fa-pen mr-1"></i>
-                            </a>
-
-
-                            <!-- Delete Button (uses JS to submit hidden form) -->
-                            <a href="#"
-                                onclick="event.preventDefault(); if(confirm('Are you sure you want to delete this paper?')) { document.getElementById('delete-form-{{ $submission->id }}').submit(); }"
-                                class="inline-flex items-center px-1 py-1 bg-red-500 text-danger  rounded hover:bg-red-600 transition text-sm">
-                                <i class="fas fa-trash mr-1"></i>
-                            </a>
-
-                            <!-- Approach Button (uses JS to submit hidden form) -->
-
-
-                            <!-- Hidden Delete Form -->
-                            <form id="delete-form-{{ $submission->id }}"
-                                action="{{ route('admin.papers.conferencesdestroy', $submission->id) }}" method="POST"
-                                style="display: none;">
-                                @csrf
-                                @method('DELETE')
-                            </form>
-
-
-                            <!-- Hidden Approach Form -->
-
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="8" class="text-center py-4 text-gray-500">No journal submissions found.</td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
-    </div>
+            @empty
+                <tr>
+                    <td colspan="12" class="text-center" style="color: #000120;">No conference submissions found.</td>
+                </tr>
+            @endforelse
+        </tbody>
+    </table>
+</div>
 @endsection

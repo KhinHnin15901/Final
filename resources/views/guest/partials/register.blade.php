@@ -99,22 +99,22 @@
                 </select>
                 <p class="text-xs text-gray-500 mt-1">Hold Ctrl (Windows) or Command (Mac) to select multiple.</p>
             </div>
-        </form>
-        <div class="flex flex-row items-center justify-between">
-            <!-- Login Link -->
-            <p class="text-center text-sm text-gray-600">
-                Already have an account?
-                <a href="{{ route('guest.home', ['section' => 'login']) }}" class="text-[#027c7d] hover:underline font-medium">
-                    Log in
-                </a>
-            </p>
+            <div class="flex flex-row items-center justify-between">
+                <!-- Login Link -->
+                <p class="text-center text-sm text-gray-600">
+                    Already have an account?
+                    <a href="{{ route('guest.home', ['section' => 'login']) }}" class="text-[#027c7d] hover:underline font-medium">
+                        Log in
+                    </a>
+                </p>
 
-            <div>
-                <button type="submit"
-                    class="w-full py-2.5 px-4 rounded-md shadow-md text-white bg-[#027c7d] hover:bg-[#026a6b] transition duration-300 text-sm font-semibold">
-                    Register
-                </button>
+                <div>
+                    <button type="submit"
+                        class="w-full py-2.5 px-4 rounded-md shadow-md text-white bg-[#027c7d] hover:bg-[#026a6b] transition duration-300 text-sm font-semibold">
+                        Register
+                    </button>
+                </div>
             </div>
-        </div>
+        </form>
     </div>
 </div>

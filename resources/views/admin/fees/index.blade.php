@@ -1,76 +1,67 @@
 @extends('admin.layout.layout')
 
 @section('main-content')
-    <div class="pagetitle">
-        <h1>Registration Fees & Contact Info</h1>
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('guest.home') }}">Home</a></li>
-                <li class="breadcrumb-item active">Registration Info</li>
-            </ol>
-        </nav>
-    </div>
+<div class="table-responsive mt-4" style="font-family: Arial, sans-serif;">
+    <h2 class="mb-3" style="color: #027c7d; font-weight: bold; font-size: large;">REGISTRATION FEES & CONTACT INFO</h2>
 
-    <section class="section">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">List of Fees & Emails</h5>
+    @if (session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
 
-                @if (session('success'))
-                    <div class="alert alert-success">{{ session('success') }}</div>
-                @endif
+    <a href="{{ route('admin.fees.create') }}" class="btn btn-primary mb-3">Add New</a>
 
-                <a href="{{ route('admin.fees.create') }}" class="btn btn-primary mb-3">Add New</a>
+    <table class="table table-hover align-middle" style="border-color: #e2e8f0; border-radius: 0.5rem; overflow: hidden; font-size: medium;">
+        <thead class="text-white" style="background-color: #027c7d;">
+            <tr>
+                <th class="py-2 px-3">#</th>
+                <th class="py-2 px-3">Type</th>
+                <th class="py-2 px-3">Label</th>
+                <th class="py-2 px-3">Value</th>
+                <th class="py-2 px-3">Actions</th>
+            </tr>
+        </thead>
+        <tbody style="color: #000120;">
+            @forelse ($infos as $index => $info)
+                <tr>
+                    <td class="py-2 px-3" style="font-family: monospace; color: #027c7d; font-size: large;">
+                        {{ str_pad($index + 1, 3, '0', STR_PAD_LEFT) }}
+                    </td>
+                    <td class="py-2 px-3">
+                        <span class="badge bg-{{ $info->type === 'fee' ? 'success' : 'info' }}">
+                            {{ ucfirst($info->type) }}
+                        </span>
+                    </td>
+                    <td class="py-2 px-3">{{ $info->label }}</td>
+                    <td class="py-2 px-3">
+                        @if ($info->type === 'email')
+                            <a href="mailto:{{ $info->value }}" class="text-primary">{{ $info->value }}</a>
+                        @else
+                            {{ $info->value }}
+                        @endif
+                    </td>
+                    <td class="text-nowrap py-2 px-3">
+                        <a href="{{ route('admin.fees.edit', $info->id) }}"
+                           class="btn btn-warning btn-sm me-1">
+                            <i class="fas fa-pen"></i>
+                        </a>
 
-                <table class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Type</th>
-                            <th>Label</th>
-                            <th>Value</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse ($infos as $index => $info)
-                            <tr>
-                                <td>{{ $index + 1 }}</td>
-                                <td>
-                                    <span class="badge bg-{{ $info->type === 'fee' ? 'success' : 'info' }}">
-                                        {{ ucfirst($info->type) }}
-                                    </span>
-                                </td>
-                                <td>{{ $info->label }}</td>
-                                <td>
-                                    @if ($info->type === 'email')
-                                        <a href="mailto:{{ $info->value }}" class="text-primary">{{ $info->value }}</a>
-                                    @else
-                                        {{ $info->value }}
-                                    @endif
-                                </td>
-                                <td>
-                                    <div class="d-flex gap-2">
-                                        <a href="{{ route('admin.fees.edit', $info->id) }}"
-                                            class="btn btn-sm btn-warning">Edit</a>
-                                        <form action="{{ route('admin.fees.destroy', $info->id) }}" method="POST"
-                                            onsubmit="return confirm('Are you sure you want to delete this item?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="btn btn-sm btn-danger">Delete</button>
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="5" class="text-center">No registration info found.</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-
-            </div>
-        </div>
-    </section>
+                        <form action="{{ route('admin.fees.destroy', $info->id) }}" method="POST"
+                              style="display:inline;"
+                              onsubmit="return confirm('Are you sure you want to delete this item?');">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-danger btn-sm">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="5" class="text-center" style="color: #000120;">No registration info found.</td>
+                </tr>
+            @endforelse
+        </tbody>
+    </table>
+</div>
 @endsection
