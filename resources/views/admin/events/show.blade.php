@@ -1,14 +1,16 @@
 @extends('admin.layout.layout')
 
 @section('main-content')
-<div class="card">
-    <div class="card-body">
-        <h3 class="card-title">Event Details</h3>
+<section class="section d-flex justify-content-center" style="font-family: Arial, sans-serif; padding: 30px;">
+    <div class="card" style="max-width: 900px; width: 100%; box-shadow: 0 4px 15px rgba(214, 221, 66, 0.6); border-radius: 12px; padding: 24px; background: #fff; border-top: 4px solid #027c7d;">
+        <h4 class="text-center mb-4 fw-bold" style="color: #000120; font-size: 20px;">
+            Event Details
+        </h4>
 
-        <table class="table table-bordered">
+        <table class="table table-bordered table-striped" style="font-size: 0.9rem;">
             <tbody>
                 <tr>
-                    <th>Title</th>
+                    <th style="width: 35%;">Title</th>
                     <td>{{ $event->title }}</td>
                 </tr>
                 <tr>
@@ -41,7 +43,7 @@
                 </tr>
                 <tr>
                     <th>Event Website</th>
-                    <td><a href="{{ $event->event_website }}" target="_blank">{{ $event->event_website }}</a></td>
+                    <td><a href="{{ $event->event_website }}" target="_blank" style="color:#027c7d;">{{ $event->event_website }}</a></td>
                 </tr>
                 <tr>
                     <th>Organizer</th>
@@ -72,7 +74,24 @@
             </tbody>
         </table>
 
-        <a href="{{ route('admin.events.index') }}" class="btn btn-secondary mt-3">Back</a>
+        <div class="text-left mt-4">
+            <a href="{{ route('admin.events.index') }}" class="btn text-white px-4 py-2 shadow" style="background-color:#027c7d; font-weight:600; border-radius:8px; transition:all 0.3s; font-size:0.95rem;">Back</a>
+        </div>
     </div>
-</div>
+</section>
+
+<style>
+    table th {
+        background-color: #f5f5f5;
+        font-weight: 600;
+        color: #027c7d;
+    }
+    table td {
+        vertical-align: middle;
+    }
+    a:hover {
+        color: #026a6b;
+        text-decoration: none;
+    }
+</style>
 @endsection

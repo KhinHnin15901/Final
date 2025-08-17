@@ -66,7 +66,7 @@
                             </svg>
                         </button>
                         <div
-                            class="absolute left-0 mt-1 hidden group-hover:block bg-white text-[#000120] rounded-md shadow-lg min-w-[160px] z-20">
+                            class="absolute left-0 hidden group-hover:block bg-white text-[#000120] rounded-md shadow-lg min-w-[160px] z-20">
                             <a href="{{ route('guest.home', ['section' => 'journals']) }}"
                                 class="block px-4 py-3 transition
                                 {{ $currentSection === 'journals' ? 'bg-[#027c7d] text-white' : 'hover:bg-[#027c7d] hover:text-white' }}">
@@ -97,7 +97,7 @@
                     @php $unreadCount = auth()->user()->unreadNotifications->count(); @endphp
                     @if (Auth::user()->roles->contains('name', 'author'))
                         <a href="{{ route('guest.home', ['section' => 'notification']) }}"
-                            class="relative px-3 py-2 transition cursor-pointer
+                            class="relative py-2 transition cursor-pointer
                             {{ $currentSection === 'notification' ? 'text-[#027c7d] font-bold' : 'hover:text-[#027c7d] hover:underline' }}">
                             Notifications
                             @if ($unreadCount > 0)
@@ -120,7 +120,7 @@
                                 class="w-9 h-9 rounded-full border-2 border-[#d6dd42] object-cover" alt="Avatar">
                             <div class="text-left text-sm">
                                 <span class="block font-bold">{{ Auth::user()->name }}</span>
-                                <span class="block text-[#d6dd42] text-xs">
+                                <span class="block text-[#027c7d] text-xs">
                                     {{ optional(Auth::user()->roles->first())->name ?? 'No Role' }}
                                 </span>
                             </div>

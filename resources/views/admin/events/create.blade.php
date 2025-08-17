@@ -1,147 +1,100 @@
 @extends('admin.layout.layout')
 
 @section('main-content')
-    <div class="container">
-        <h1>Create Event</h1>
+<section class="section d-flex justify-content-center" style="font-family: Arial, sans-serif; padding: 30px;">
+    <div class="card" style="max-width: 1000px; width: 100%; box-shadow: 0 4px 15px rgba(214, 221, 66, 0.6); border-radius: 12px; padding: 24px; background: #fff; border-top: 4px solid #027c7d;">
+        <h4 class="text-center mb-4 fw-bold" style="color: #000120; font-size: 20px;">
+            Create Event
+        </h4>
 
-        <form method="POST" action="{{ route('admin.events.store') }}">
+        <form method="POST" action="{{ route('admin.events.store') }}" class="row g-3">
             @csrf
 
-            {{-- ✅ Validation Errors Display --}}
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul class="mb-0">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-
-            <div class="mb-3">
-                <label for="title" class="form-label">Title</label>
-                <input type="text" name="title" class="form-control @error('title') is-invalid @enderror"
-                    value="{{ old('title') }}" required>
-                @error('title')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+            {{-- Title --}}
+            <div class="col-md-6">
+                <label for="title" class="form-label fw-semibold" style="color:#027c7d; font-size: 0.875rem;">Title</label>
+                <input type="text" name="title" class="form-control shadow-sm @error('title') is-invalid @enderror" value="{{ old('title') }}" required style="padding:0.625rem; font-size:0.875rem;">
+                @error('title') <div class="invalid-feedback">{{ $message }}</div> @enderror
             </div>
 
-            <div class="mb-3">
-                <label for="description" class="form-label">Description</label>
-                <textarea name="description" class="form-control @error('description') is-invalid @enderror">{{ old('description') }}</textarea>
-                @error('description')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+            {{-- Location --}}
+            <div class="col-md-6">
+                <label for="location" class="form-label fw-semibold" style="color:#027c7d; font-size:0.875rem;">Location</label>
+                <input type="text" name="location" class="form-control shadow-sm @error('location') is-invalid @enderror" value="{{ old('location') }}" required style="padding:0.625rem; font-size:0.875rem;">
+                @error('location') <div class="invalid-feedback">{{ $message }}</div> @enderror
             </div>
 
-            <div class="mb-3">
-                <label for="location" class="form-label">Location</label>
-                <input type="text" name="location" class="form-control @error('location') is-invalid @enderror"
-                    value="{{ old('location') }}" required>
-                @error('location')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+            {{-- Description --}}
+            <div class="col-md-6">
+                <label for="description" class="form-label fw-semibold" style="color:#027c7d; font-size: 0.875rem;">Description</label>
+                <textarea name="description" class="form-control shadow-sm @error('description') is-invalid @enderror" style="padding:0.625rem; font-size:0.875rem;">{{ old('description') }}</textarea>
+                @error('description') <div class="invalid-feedback">{{ $message }}</div> @enderror
             </div>
 
-            <div class="mb-3">
-                <label for="start_date" class="form-label">Start Date</label>
-                <input type="date" name="start_date" class="form-control @error('start_date') is-invalid @enderror"
-                    value="{{ old('start_date') }}" required>
-                @error('start_date')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+            {{-- Dates --}}
+            <div class="col-md-3">
+                <label for="start_date" class="form-label fw-semibold" style="color:#027c7d; font-size:0.875rem;">Start Date</label>
+                <input type="date" name="start_date" class="form-control shadow-sm @error('start_date') is-invalid @enderror" value="{{ old('start_date') }}" required style="padding:0.625rem; font-size:0.875rem;">
+                @error('start_date') <div class="invalid-feedback">{{ $message }}</div> @enderror
             </div>
 
-            <div class="mb-3">
-                <label for="end_date" class="form-label">End Date</label>
-                <input type="date" name="end_date" class="form-control @error('end_date') is-invalid @enderror"
-                    value="{{ old('end_date') }}" required>
-                @error('end_date')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+            <div class="col-md-3">
+                <label for="end_date" class="form-label fw-semibold" style="color:#027c7d; font-size:0.875rem;">End Date</label>
+                <input type="date" name="end_date" class="form-control shadow-sm @error('end_date') is-invalid @enderror" value="{{ old('end_date') }}" required style="padding:0.625rem; font-size:0.875rem;">
+                @error('end_date') <div class="invalid-feedback">{{ $message }}</div> @enderror
             </div>
 
-
-            <div class="mb-3">
-                <label for="publication_partner" class="form-label">Publication_partner</label>
-                <input type="text" name="publication_partner"
-                    class="form-control @error('publication_partner') is-invalid @enderror"
-                    value="{{ old('publication_partner') }}" required>
-                @error('publication_partner')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+            {{-- Other dates --}}
+            <div class="col-md-4">
+                <label for="submission_deadline" class="form-label fw-semibold" style="color:#027c7d; font-size:0.875rem;">Submission Deadline</label>
+                <input type="date" name="submission_deadline" class="form-control shadow-sm @error('submission_deadline') is-invalid @enderror" value="{{ old('submission_deadline') }}" required style="padding:0.625rem; font-size:0.875rem;">
+                @error('submission_deadline') <div class="invalid-feedback">{{ $message }}</div> @enderror
             </div>
 
-
-            <div class="mb-3">
-                <label for="submission_deadline" class="form-label">Submission Deadline</label>
-                <input type="date" name="submission_deadline"
-                    class="form-control @error('submission_deadline') is-invalid @enderror"
-                    value="{{ old('submission_deadline') }}" required>
-                @error('submission_deadline')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+            <div class="col-md-4">
+                <label for="acceptance_date" class="form-label fw-semibold" style="color:#027c7d; font-size:0.875rem;">Acceptance Date</label>
+                <input type="date" name="acceptance_date" class="form-control shadow-sm @error('acceptance_date') is-invalid @enderror" value="{{ old('acceptance_date') }}" required style="padding:0.625rem; font-size:0.875rem;">
+                @error('acceptance_date') <div class="invalid-feedback">{{ $message }}</div> @enderror
             </div>
 
-
-            <div class="mb-3">
-                <label for="acceptance_date" class="form-label">Acceptance Date</label>
-                <input type="date" name="acceptance_date"
-                    class="form-control @error('acceptance_date') is-invalid @enderror"
-                    value="{{ old('acceptance_date') }}" required>
-                @error('acceptance_date')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+            <div class="col-md-4">
+                <label for="camera_ready_deadline" class="form-label fw-semibold" style="color:#027c7d; font-size:0.875rem;">Camera Ready Deadline</label>
+                <input type="date" name="camera_ready_deadline" class="form-control shadow-sm @error('camera_ready_deadline') is-invalid @enderror" value="{{ old('camera_ready_deadline') }}" required style="padding:0.625rem; font-size:0.875rem;">
+                @error('camera_ready_deadline') <div class="invalid-feedback">{{ $message }}</div> @enderror
             </div>
 
-
-            <div class="mb-3">
-                <label for="camera_ready_deadline" class="form-label">Camera Ready Deadline</label>
-                <input type="date" name="camera_ready_deadline"
-                    class="form-control @error('camera_ready_deadline') is-invalid @enderror"
-                    value="{{ old('camera_ready_deadline') }}" required>
-                @error('camera_ready_deadline')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+            {{-- Publication Partner --}}
+            <div class="col-md-6">
+                <label for="publication_partner" class="form-label fw-semibold" style="color:#027c7d; font-size:0.875rem;">Publication Partner</label>
+                <input type="text" name="publication_partner" class="form-control shadow-sm @error('publication_partner') is-invalid @enderror" value="{{ old('publication_partner') }}" required style="padding:0.625rem; font-size:0.875rem;">
+                @error('publication_partner') <div class="invalid-feedback">{{ $message }}</div> @enderror
             </div>
 
-
-            <div class="mb-3">
-                <label for="event_website" class="form-label">Event Website</label>
-                <input type="text" name="event_website" class="form-control @error('event_website') is-invalid @enderror"
-                    value="{{ old('event_website') }}" required>
-                @error('event_website')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+            {{-- Organizer --}}
+            <div class="col-md-6">
+                <label for="organizer" class="form-label fw-semibold" style="color:#027c7d; font-size:0.875rem;">Organizer</label>
+                <input type="text" name="organizer" class="form-control shadow-sm @error('organizer') is-invalid @enderror" value="{{ old('organizer') }}" required style="padding:0.625rem; font-size:0.875rem;">
+                @error('organizer') <div class="invalid-feedback">{{ $message }}</div> @enderror
             </div>
 
-
-            <div class="mb-3">
-                <label for="organizer" class="form-label">Organizer</label>
-                <input type="text" name="organizer" class="form-control @error('organizer') is-invalid @enderror"
-                    value="{{ old('organizer') }}" required>
-                @error('organizer')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+            {{-- Event Website --}}
+            <div class="col-md-6">
+                <label for="event_website" class="form-label fw-semibold" style="color:#027c7d; font-size:0.875rem;">Event Website</label>
+                <input type="text" name="event_website" class="form-control shadow-sm @error('event_website') is-invalid @enderror" value="{{ old('event_website') }}" required style="padding:0.625rem; font-size:0.875rem;">
+                @error('event_website') <div class="invalid-feedback">{{ $message }}</div> @enderror
             </div>
 
-
-            <div class="mb-3">
-                <label for="contact_email" class="form-label">Contact Email</label>
-                <input type="email" name="contact_email"
-                    class="form-control @error('contact_email') is-invalid @enderror" value="{{ old('contact_email') }}"
-                    required>
-                @error('contact_email')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+            {{-- Contact Email --}}
+            <div class="col-md-6">
+                <label for="contact_email" class="form-label fw-semibold" style="color:#027c7d; font-size:0.875rem;">Contact Email</label>
+                <input type="email" name="contact_email" class="form-control shadow-sm @error('contact_email') is-invalid @enderror" value="{{ old('contact_email') }}" required style="padding:0.625rem; font-size:0.875rem;">
+                @error('contact_email') <div class="invalid-feedback">{{ $message }}</div> @enderror
             </div>
 
-
-            <div class="mb-3">
-                <label for="categories">Select Category</label>
-                <select name="category_id" class="form-control @error('category_id') is-invalid @enderror"
-                    id="categories">
+            {{-- Category --}}
+            <div class="col-md-6">
+                <label for="category_id" class="form-label fw-semibold" style="color:#027c7d; font-size:0.875rem;">Select Category</label>
+                <select name="category_id" class="form-select shadow-sm @error('category_id') is-invalid @enderror" required style="padding:0.625rem; font-size:0.875rem;">
                     <option value="">-- Choose a Category --</option>
                     @foreach ($categories as $category)
                         <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
@@ -149,62 +102,55 @@
                         </option>
                     @endforeach
                 </select>
-
-                @error('category_id')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+                @error('category_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
             </div>
 
-            <div class="mb-3">
-                <label>Select Topics</label>
-                <div class="row">
-                    @foreach ($topics as $topic)
-                        <div class="col-md-4">
-                            <div class="form-check">
-                                <input class="form-check-input @error('topics') is-invalid @enderror" type="checkbox"
-                                    name="topics[]" value="{{ $topic->id }}" id="topic_{{ $topic->id }}"
-                                    {{ in_array($topic->id, old('topics', [])) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="topic_{{ $topic->id }}">
-                                    {{ $topic->name }}
-                                </label>
-                            </div>
-                        </div>
-                    @endforeach
-
-                    @error('topics')
-                        <div class="invalid-feedback d-block">{{ $message }}</div>
-                    @enderror
-                </div>
-            </div>
-
-
-            {{-- <div class="row mb-3">
-                  <div class="col-sm-10 offset-sm-2">
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="gridCheck1">
-                      <label class="form-check-label" for="gridCheck1">
-                        Select Topics
-                      </label>
-                    </div>
-                  </div>
-                </div> --}}
-
-
-            <div class="mb-3">
-                <label for="status" class="form-label">Status</label>
-                <select name="status" class="form-control @error('status') is-invalid @enderror" required>
+            {{-- Status --}}
+            <div class="col-md-6">
+                <label for="status" class="form-label fw-semibold" style="color:#027c7d; font-size:0.875rem;">Status</label>
+                <select name="status" class="form-select shadow-sm @error('status') is-invalid @enderror" required style="padding:0.625rem; font-size:0.875rem;">
                     <option value="">-- Choose Status --</option>
                     <option value="upcoming" {{ old('status') == 'upcoming' ? 'selected' : '' }}>Upcoming</option>
                     <option value="open" {{ old('status') == 'open' ? 'selected' : '' }}>Open</option>
                     <option value="closed" {{ old('status') == 'closed' ? 'selected' : '' }}>Closed</option>
                     <option value="published" {{ old('status') == 'published' ? 'selected' : '' }}>Published</option>
                 </select>
-                @error('status')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+                @error('status') <div class="invalid-feedback">{{ $message }}</div> @enderror
             </div>
 
-            <button type="submit" class="btn btn-success">Create Event</button>
+            {{-- Topics --}}
+            <div class="col-12">
+                <label class="form-label fw-semibold" style="color:#027c7d; font-size:0.875rem;">Select Topics</label>
+                <div class="row">
+                    @foreach ($topics as $topic)
+                        <div class="col-md-4">
+                            <div class="form-check">
+                                <input class="form-check-input @error('topics') is-invalid @enderror" type="checkbox" name="topics[]" value="{{ $topic->id }}" id="topic_{{ $topic->id }}" {{ in_array($topic->id, old('topics', [])) ? 'checked' : '' }}>
+                                <label class="form-check-label" for="topic_{{ $topic->id }}">{{ $topic->name }}</label>
+                            </div>
+                        </div>
+                    @endforeach
+                    @error('topics') <div class="invalid-feedback d-block">{{ $message }}</div> @enderror
+                </div>
+            </div>
+
+            <div class="col-12 text-center mt-4">
+                <button type="submit" class="btn text-white px-4 py-2 shadow" style="background-color:#027c7d; font-weight:600; border-radius:8px; transition:all 0.3s; font-size:0.95rem;">
+                    Create Event
+                </button>
+            </div>
         </form>
     </div>
+</section>
+
+<style>
+    .form-control:focus, .form-select:focus {
+        border-color: #027c7d;
+        box-shadow: 0 0 0 0.2rem rgba(2,124,125,0.25);
+        outline: none;
+    }
+    .btn:hover {
+        background-color: #026a6b !important;
+    }
+</style>
 @endsection
