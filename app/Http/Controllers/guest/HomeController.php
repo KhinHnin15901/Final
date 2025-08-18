@@ -14,13 +14,16 @@ use App\Models\Role;
 use App\Models\Topic;
 use App\Models\CommitteeMember;
 use App\Models\Conference;
+use App\Models\Event;
 use App\Models\Journal;
 use App\Models\RegistrationInfo;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $reg_role = $request->role;
         // Date
         $topics = Topic::all();
         $roles = Role::whereNotIn('name', ['admin'])->get();
@@ -123,8 +126,10 @@ class HomeController extends Controller
         $journal = Journal::where('status', 'published')->get();
         $conference = Conference::where('status', 'published')->get();
 
+        $event = Event::latest('id')->first();
+
         $infos = RegistrationInfo::all()->groupBy('type');
-        return view('guest.dashboard', compact('infos', 'currentDate', 'conferences', 'conference', 'journals', 'journal', 'topics', 'allKeywords', 'roles', 'conferencesubmissions', 'journalsubmissions', 'topics', 'notifications'), [
+        return view('guest.dashboard', compact('event', 'reg_role', 'infos', 'currentDate', 'conferences', 'conference', 'journals', 'journal', 'topics', 'allKeywords', 'roles', 'conferencesubmissions', 'journalsubmissions', 'topics', 'notifications'), [
             'generalChair' => CommitteeMember::where('position', 'General Chair')->first(),
             'programChair' => CommitteeMember::where('position', 'Program Chair')->first(),
             'members' => CommitteeMember::where('position', 'Member')->orderBy('name')->get(),

@@ -25,11 +25,29 @@
                     Home
                 </a>
 
-                {{-- <a href="{{ route('guest.home', ['section' => 'events']) }}"
-                    class="relative transition cursor-pointer
-                    {{ $currentSection === 'events' ? 'text-[#027c7d] font-bold' : 'hover:text-[#027c7d] hover:underline' }}">
-                    Events
-                </a> --}}
+                 <div class="relative group inline-block cursor-pointer">
+                    <button
+                        class="flex items-center gap-1 transition
+                        {{ in_array($currentSection, ['committee', 'reviewer']) ? 'text-[#027c7d] font-bold' : 'hover:text-[#027c7d] hover:underline' }}">
+                        Committee
+                        <svg class="w-3 h-3 stroke-current" fill="none" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M6 9l6 6 6-6" />
+                        </svg>
+                    </button>
+                    <div
+                        class="absolute left-0 hidden group-hover:block bg-white text-[#000120] rounded-md shadow-lg min-w-[180px] z-20">
+                        <a href="{{ route('guest.home', ['section' => 'committee']) }}"
+                            class="block px-4 py-3 transition
+                            {{ $currentSection === 'committee' ? 'bg-[#027c7d] text-white' : 'hover:bg-[#027c7d] hover:text-white' }}">
+                            Committee Members
+                        </a>
+                        <a href="{{ route('guest.home', ['section' => 'reviewer']) }}"
+                            class="block px-4 py-3 transition
+                            {{ $currentSection === 'reviewer' ? 'bg-[#027c7d] text-white' : 'hover:bg-[#027c7d] hover:text-white' }}">
+                            For Reviewer
+                        </a>
+                    </div>
+                </div>
 
                 <div class="relative group inline-block cursor-pointer">
                     <button
@@ -141,7 +159,7 @@
                 @endauth
 
                 @guest
-                    <a href="{{ route('guest.home', ['section' => 'register']) }}"
+                    <a href="{{ route('guest.home', ['section' => 'register', 'role' => 'author']) }}"
                         class="text-white font-semibold uppercase text-xs bg-[#027c7d] rounded-md hover:bg-[#027c7d]/90 border-2 border-[#d6dd42] transition px-3 py-2">
                         Register
                     </a>
@@ -234,7 +252,7 @@
             @endauth
 
             @guest
-                <a href="{{ route('guest.home', ['section' => 'register']) }}"
+                <a href="{{ route('guest.home', ['section' => 'register','role' => 'author']) }}"
                     class="text-[#027c7d] font-semibold text-sm hover:underline hover:text-[#d6dd42] transition px-2 py-1">
                     Register
                 </a>

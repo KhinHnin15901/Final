@@ -29,6 +29,10 @@
         @include('guest.partials.journaledit')
     @elseif ($section === 'home')
         @include('guest.partials.home')
+    @elseif ($section === 'committee')
+        @include('guest.partials.committee')
+    @elseif ($section === 'reviewer')
+        @include('guest.partials.reviewer')
     @else
         @include('guest.partials.events')
     @endif
