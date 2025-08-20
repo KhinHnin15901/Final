@@ -28,7 +28,7 @@
                     </li>
 
                     <li>
-                        <a class="dropdown-item d-flex align-items-center" href="">
+                        <a class="dropdown-item d-flex align-items-center" href="{{ route('profile.edit', auth()->user()->id) }}">
                             <i class="bi bi-person" style="color: #027c7d;"></i>
                             <span>My Profile</span>
                         </a>

@@ -33,6 +33,8 @@
         @include('guest.partials.committee')
     @elseif ($section === 'reviewer')
         @include('guest.partials.reviewer')
+    @elseif ($section === 'profile')
+        @include('guest.profile.edit')
     @else
         @include('guest.partials.events')
     @endif

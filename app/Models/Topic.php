@@ -28,5 +28,4 @@ public function events()
     return $this->belongsToMany(Event::class, 'event_topic');
 }
 
-
 }

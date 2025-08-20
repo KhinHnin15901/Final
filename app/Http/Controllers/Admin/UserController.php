@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\JournalSubmission;
 use App\Models\User;
 use App\Models\ReviewSchedule;
+use App\Models\UserPrefix;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -19,8 +21,6 @@ class UserController extends Controller
     }
     public function author()
     {
-
-
         $authors = User::whereHas('roles', function ($query) {
             $query->where('name', 'author');
         })->get();
@@ -30,8 +30,9 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::findOrFail($id);
+        $user_prefixes = UserPrefix::get();
         // Return an edit view with user data
-        return view('admin.user.edit', compact('user'));
+        return view('admin.user.edit', compact('user', 'user_prefixes'));
     }
 
     // Update user info
@@ -39,24 +40,70 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        $validated = $request->validate([
+        $validate_fields = [
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $id,
-            'address' => 'nullable|string|max:255',
-            'position' => 'nullable|string|max:255',
-            'department' => 'nullable|string|max:255',
+        ];
 
-        ]);
+        if ($user->roles()->first()->name === 'author') {
+            $validate_fields += [
+                'address' => 'nullable|string|max:255',
+                'position' => 'nullable|string|max:255',
+                'department' => 'nullable|string|max:255',
+            ];
+        } elseif ($user->roles()->first()->name === 'reviewer') {
+            $validate_fields += [
+                'field' => 'required',
+                'qualification' => 'required|string',
+                'institute_name' => 'required|string',
+                'user_prefix_id' => 'required',
+                'phone' => 'required',
+                'cv_form' => 'nullable|file|mimes:pdf,doc,docx|max:5048', // Changed to nullable
+                'latest_qualification' => 'nullable|file|mimes:pdf,doc,docx|max:5048', // Changed to nullable
+            ];
+        }
+
+        $validated = $request->validate($validate_fields);
+
+        // Handle CV upload
+        if ($request->hasFile('cv_form')) {
+            // Delete old CV if exists
+            if ($user->cv_form && Storage::disk('public')->exists($user->cv_form)) {
+                Storage::disk('public')->delete($user->cv_form);
+            }
+            $validated['cv_form'] = Storage::disk('public')->put('reviewer_cv', $request->cv_form);
+        } else {
+            $validated['cv_form'] = $user->cv_form; // Keep old
+        }
+
+        // Handle Latest Qualification upload
+        if ($request->hasFile('latest_qualification')) {
+            // Delete old file if exists
+            if ($user->latest_qualification && Storage::disk('public')->exists($user->latest_qualification)) {
+                Storage::disk('public')->delete($user->latest_qualification);
+            }
+            $validated['latest_qualification'] = Storage::disk('public')->put('reviewer_latest_qualification', $request->latest_qualification);
+        } else {
+            $validated['latest_qualification'] = $user->latest_qualification; // Keep old
+        }
 
         $user->update($validated);
 
-        return redirect()->route('admin.user.userlist')->with('success', 'User updated successfully!');
+        return redirect()->back()->with('success', 'User updated successfully.');
     }
 
     // Delete user
     public function destroy($id)
     {
         $user = User::findOrFail($id);
+        if ($user->cv_form) {
+            Storage::disk('public')->delete($user->cv_form);
+        }
+
+        if ($user->latest_qualification) {
+            Storage::disk('public')->delete($user->latest_qualification);
+        }
+
         $user->delete();
 
         return redirect()->back()->with('success', 'User deleted successfully!');

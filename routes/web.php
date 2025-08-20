@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\JournalManagementController;
 use App\Http\Controllers\Admin\ConferenceManagementController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\auth\AuthController;
 use App\Http\Controllers\guest\HomeController;
@@ -132,6 +133,11 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     // Approach action (POST or GET depending on your use case)
     Route::post('user/approach/{id}', [UserController::class, 'approach'])->name('user.approach');
 });
+
+Route::resource('profile', ProfileController::class)->parameters([
+    'profile' => 'user'
+])->middleware('auth');
+
 Route::get('/about', function () {
     return view('author.pages.about');
 });

@@ -17,6 +17,7 @@ use App\Models\Conference;
 use App\Models\Event;
 use App\Models\Journal;
 use App\Models\RegistrationInfo;
+use App\Models\UserPrefix;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -129,10 +130,11 @@ class HomeController extends Controller
         $event = Event::latest('id')->first();
 
         $infos = RegistrationInfo::all()->groupBy('type');
-        return view('guest.dashboard', compact('event', 'reg_role', 'infos', 'currentDate', 'conferences', 'conference', 'journals', 'journal', 'topics', 'allKeywords', 'roles', 'conferencesubmissions', 'journalsubmissions', 'topics', 'notifications'), [
+        return view('guest.dashboard', compact('event', 'reg_role', 'infos', 'currentDate', 'conferences', 'conference', 'journals', 'journal', 'topics', 'allKeywords', 'roles', 'conferencesubmissions', 'journalsubmissions', 'topics', 'notifications', 'user'), [
             'generalChair' => CommitteeMember::where('position', 'General Chair')->first(),
             'programChair' => CommitteeMember::where('position', 'Program Chair')->first(),
             'members' => CommitteeMember::where('position', 'Member')->orderBy('name')->get(),
+            'user_prefixes' => UserPrefix::get(),
         ]);
     }
 }

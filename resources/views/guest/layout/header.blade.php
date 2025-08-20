@@ -73,6 +73,9 @@
                     </div>
                 </div>
 
+                <a href="{{ route('guest.home', ['section' => 'events']) }}" class="text-black hover:text-green-200 transition"
+                    style="text-shadow: 2px 2px 4px rgba(222, 222, 222, 0.936);">Events</a>
+
                 @if (Auth::check() && Auth::user()->roles->contains('name', 'reviewer'))
                     <div class="relative group inline-block cursor-pointer">
                         <button
@@ -149,7 +152,7 @@
                         </button>
                         <div x-show="open" @click.away="open = false"
                             class="absolute right-0 mt-2 w-48 bg-white text-[#000120] rounded-md shadow-lg py-2" x-transition>
-                            <a href="#" class="block px-4 py-2 hover:bg-[#d6dd42] hover:text-[#000120]">View Profile</a>
+                            <a href="{{ route('guest.home', ['section' => 'profile']) }}" class="block px-4 py-2 hover:bg-[#d6dd42] hover:text-[#000120]">View Profile</a>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <button class="w-full text-left px-4 py-2 hover:bg-[#d6dd42] hover:text-[#000120]">Logout</button>

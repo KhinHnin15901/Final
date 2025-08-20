@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\UserPrefix;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,14 +16,23 @@ return new class extends Migration
         if (!Schema::hasTable('users')) {
             Schema::create('users', function (Blueprint $table) {
                 $table->id();
+                //reviewer
+                $table->foreignIdFor(UserPrefix::class)->nullable()->constrained()->nullOnDelete();
+                $table->text('qualification')->nullable();
+                $table->text('institute_name')->nullable();
+                $table->string('phone')->nullable();
+                $table->text('cv_form')->nullable();
+                $table->text('latest_qualification')->nullable();
+                $table->text('field')->nullable();
+                //both
                 $table->string('name');
                 $table->string('email')->unique();
-                $table->timestamp('email_verified_at')->nullable();
                 $table->string('password');
+                $table->timestamp('email_verified_at')->nullable();
+                //author
                 $table->string('position')->nullable();
                 $table->string('department')->nullable();
                 $table->string('organization')->nullable();
-                $table->string('field')->nullable();
                 $table->rememberToken();
                 $table->timestamps();
             });

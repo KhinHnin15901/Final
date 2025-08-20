@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
             JournalSeeder::class,
             CommitteeMemberSeeder::class,
             RegistrationInfoSeeder::class,
+            UserPrefixSeeder::class,
 
         ]);
     }

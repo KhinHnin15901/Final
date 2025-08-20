@@ -26,7 +26,13 @@ class User extends Authenticatable
         'address',
         'position',
         'department',
+        'user_prefix_id',
         'organization',
+        'qualification',
+        'institute_name',
+        'phone',
+        'cv_form',
+        'latest_qualification',
         'field' // if using role relationship
     ];
 
@@ -71,5 +77,9 @@ class User extends Authenticatable
         return $this->hasMany(ReviewSchedule::class, 'reviewer1_id')
             ->orWhere('reviewer2_id', $this->id)
             ->orWhere('reviewer3_id', $this->id);
+    }
+
+    public function user_prefix(){
+        return $this->belongsTo(UserPrefix::class);
     }
 }

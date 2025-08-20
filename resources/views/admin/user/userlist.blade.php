@@ -9,10 +9,12 @@
                 <th class="py-2 px-3">ID</th>
                 <th class="py-2 px-3">Name</th>
                 <th class="py-2 px-3">Email</th>
-                <th class="py-2 px-3">Position</th>
-                <th class="py-2 px-3">Department</th>
-                <th class="py-2 px-3">Organization</th>
+                <th class="py-2 px-3">Phone</th>
+                <th class="py-2 px-3">Qualification</th>
+                <th class="py-2 px-3">Institution</th>
                 <th class="py-2 px-3">Field</th>
+                <th class="py-2 px-3">Cv Form</th>
+                <th class="py-2 px-3">Latest Qualification</th>
                 <th class="py-2 px-3">Action</th>
             </tr>
         </thead>
@@ -22,12 +24,59 @@
                 <td class="py-2 px-3" style="font-family: monospace; color: #027c7d; font-size: large;">
                     {{ str_pad($index + 1, 3, '0', STR_PAD_LEFT) }}
                 </td>
-                <td class="py-2 px-3">{{ $reviewer->name ?? '-' }}</td>
+                <td class="py-2 px-3">{{ $reviewer->user_prefix?->name.$reviewer->name ?? '-' }}</td>
                 <td class="py-2 px-3">{{ $reviewer->email ?? '-' }}</td>
-                <td class="py-2 px-3">{{ $reviewer->position ?? '-' }}</td>
-                <td class="py-2 px-3">{{ $reviewer->department ?? '-' }}</td>
-                <td class="py-2 px-3">{{ $reviewer->organization ?? '-' }}</td>
-                <td class="py-2 px-3">{{ $reviewer->field ?? '-' }}</td>
+                <td class="py-2 px-3">{{ $reviewer->phone ?? '-' }}</td>
+                <td class="py-2 px-3">{{ $reviewer->qualification ?? '-' }}</td>
+                <td class="py-2 px-3">{{ $reviewer->institute_name ?? '-' }}</td>
+                <td class="py-2 px-3" style="max-width: 600px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                    @php
+                        $reviewer_fields = $reviewer->field ? explode(',', $reviewer->field) : [];
+                    @endphp
+
+                    @if (!empty($reviewer_fields))
+                        <ul class="list-disc list-inside">
+                            @foreach ($reviewer_fields as $field)
+                                <li>{{ trim($field) }}</li>
+                            @endforeach
+                        </ul>
+                    @else
+                        -
+                    @endif
+                </td>
+
+                <td class="py-2 px-3">
+                    @if ($reviewer->cv_form)
+                        @php
+                            $cvExt = pathinfo($reviewer->cv_form, PATHINFO_EXTENSION);
+                        @endphp
+                        <a href="{{ asset('storage/' . $reviewer->cv_form) }}"
+                            class="btn btn-primary"
+                            target="_blank"
+                            download="CV_{{ $reviewer->name ?? 'Reviewer' }}.{{ $cvExt }}">
+                            View
+                        </a>
+                    @else
+                        -
+                    @endif
+                </td>
+
+                <td class="py-2 px-3">
+                    @if ($reviewer->latest_qualification)
+                        @php
+                            $qualExt = pathinfo($reviewer->latest_qualification, PATHINFO_EXTENSION);
+                        @endphp
+                        <a href="{{ asset('storage/' . $reviewer->latest_qualification) }}"
+                            class="btn btn-primary"
+                            target="_blank"
+                            download="Qualification_{{ $reviewer->name ?? 'Reviewer' }}.{{ $qualExt }}">
+                        View
+                        </a>
+                    @else
+                        -
+                    @endif
+                </td>
+
                 <td class="text-nowrap py-2 px-3">
                     <a href="{{ route('admin.user.edit', $reviewer->id) }}"
                        class="btn btn-primary btn-sm me-1">
