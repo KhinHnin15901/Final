@@ -45,7 +45,7 @@ class ProfileController extends Controller
      */
     public function edit(User $user)
     {
-        if ($user->role == 1) {
+        if ($user->roles()->first()->name == 'admin') {
             return view('admin.profile.edit', ['user' => $user]);
         }
 
