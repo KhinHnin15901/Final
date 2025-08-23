@@ -7,6 +7,19 @@
         <h4 class="text-center mb-5 fw-bold" style="color: #000120; font-size: 22px;">
             📅 Create Journal Review Schedule
         </h4>
+        @if (session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+
+        @if ($errors->any())
+            <div class="alert alert-danger mb-3">
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
         {{-- Topic Filter Form --}}
         <form method="GET" action="{{ route('admin.schedule.journal') }}" class="row g-3 mb-4">
@@ -23,12 +36,6 @@
             </div>
         </form>
 
-        @if (session('error'))
-            <div class="alert alert-danger mb-3">
-                ⚠️ {{ session('error') }}
-            </div>
-        @endif
-
         {{-- Schedule Submission Form --}}
         <form action="{{ route('admin.schedule.journalstore') }}" method="POST" class="row g-3">
             @csrf
@@ -40,7 +47,7 @@
                     <option value="">-- Choose Paper --</option>
                     @foreach ($papers as $paper)
                         <option value="{{ $paper->id }}">
-                            {{ $paper->title ?? \Illuminate\Support\Str::of($paper->paper_path)->afterLast('/') }}
+                            PJ{{ str_pad($paper->id, 3, '0', STR_PAD_LEFT) }}
                         </option>
                     @endforeach
                 </select>

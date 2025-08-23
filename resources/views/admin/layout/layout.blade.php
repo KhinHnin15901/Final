@@ -43,7 +43,7 @@
     @unless (request()->routeIs('login'))
     @include('admin.layout.sidebar')
     @endunless --}}
-
+    @yield('header_sec')
     @include('admin.layout.header')
     @include('admin.layout.sidebar')
     <main id="main" class="main">

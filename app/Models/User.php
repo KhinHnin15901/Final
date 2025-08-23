@@ -82,4 +82,16 @@ class User extends Authenticatable
     public function user_prefix(){
         return $this->belongsTo(UserPrefix::class);
     }
+
+    public function returnJournal() {
+        return \App\Models\JournalReview::where('status', 'draft')->count();
+    }
+
+    public function journalSubCount() {
+        return JournalSubmission::count();
+    }
+
+    public function conferenceSubCount() {
+        return ConferenceSubmission::count();
+    }
 }

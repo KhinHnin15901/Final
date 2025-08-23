@@ -14,6 +14,7 @@ class JournalReview extends Model
         'reviewer3_id',
         'evaluation',
         'reviewer_comments',
+        'kpay_receipt',
         'status',
     ];
 

@@ -51,7 +51,13 @@
             </div>
 
             {{-- Keywords --}}
-            <div class="col-12">
+            <div class="col-md-12">
+                <label class="form-label fw-semibold" style="color:#027c7d;">Keywords</label>
+                <input type="text" name="keywords" class="form-control shadow-sm @error('keywords') is-invalid @enderror" value="{{ old('keywords', $submission->keywords) }}" required>
+                @error('keywords') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
+
+            {{-- <div class="col-12">
                 <label class="form-label fw-semibold" style="color:#027c7d;">Keywords</label>
                 <select name="keywords" class="form-select shadow-sm @error('keywords') is-invalid @enderror">
                     <option value="">-- Choose Keyword --</option>
@@ -62,7 +68,7 @@
                     @endforeach
                 </select>
                 @error('keywords') <div class="invalid-feedback">{{ $message }}</div> @enderror
-            </div>
+            </div> --}}
 
             {{-- Start & End Date --}}
             <div class="col-md-6">

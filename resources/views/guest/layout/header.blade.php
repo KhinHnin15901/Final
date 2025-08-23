@@ -25,7 +25,19 @@
                     Home
                 </a>
 
-                 <div class="relative group inline-block cursor-pointer">
+                <a href="{{ route('guest.home', ['section' => 'past_issue']) }}"
+                    class="relative transition cursor-pointer
+                    {{ $currentSection === 'home' ? 'text-[#027c7d] font-bold' : 'hover:text-[#027c7d] hover:underline' }}">
+                    Past Issues
+                </a>
+
+                <a href="{{ route('guest.home', ['section' => 'current_issue']) }}"
+                    class="relative transition cursor-pointer
+                    {{ $currentSection === 'home' ? 'text-[#027c7d] font-bold' : 'hover:text-[#027c7d] hover:underline' }}">
+                    Current Issue
+                </a>
+
+                <div class="relative group inline-block cursor-pointer">
                     <button
                         class="flex items-center gap-1 transition
                         {{ in_array($currentSection, ['committee', 'reviewer']) ? 'text-[#027c7d] font-bold' : 'hover:text-[#027c7d] hover:underline' }}">
@@ -72,31 +84,53 @@
                         </a>
                     </div>
                 </div>
-
-                <a href="{{ route('guest.home', ['section' => 'events']) }}" class="text-black hover:text-green-200 transition"
-                    style="text-shadow: 2px 2px 4px rgba(222, 222, 222, 0.936);">Events</a>
+                @if (Auth::check() && Auth::user()->roles->contains('name', 'author'))
+                    <a href="{{ route('guest.home', ['section' => 'events']) }}"
+                        class="relative transition cursor-pointer
+                        {{ $currentSection === 'events' ? 'text-[#027c7d] font-bold' : 'hover:text-[#027c7d] hover:underline' }}">
+                        Events
+                    </a>
+                @endif
 
                 @if (Auth::check() && Auth::user()->roles->contains('name', 'reviewer'))
+                    @php $review_count = $journalsubmissionsCount + $conferencesubmissionsCount @endphp
                     <div class="relative group inline-block cursor-pointer">
                         <button
                             class="flex items-center gap-1 transition
                             {{ in_array($currentSection, ['journals', 'conferences']) ? 'text-[#027c7d] font-bold' : 'hover:text-[#027c7d] hover:underline' }}">
                             Review
-                            <svg class="w-3 h-3 stroke-current" fill="none" stroke-width="2" viewBox="0 0 24 24">
-                                <path d="M6 9l6 6 6-6" />
-                            </svg>
+                            @if ($review_count > 0)
+                                <span
+                                    class="bg-[#d6dd42] text-[#000120] text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                                    {{ $review_count }}
+                                </span>
+                            @else
+                                <svg class="w-3 h-3 stroke-current" fill="none" stroke-width="2" viewBox="0 0 24 24">
+                                    <path d="M6 9l6 6 6-6" />
+                                </svg>
+                            @endif
                         </button>
                         <div
                             class="absolute left-0 hidden group-hover:block bg-white text-[#000120] rounded-md shadow-lg min-w-[160px] z-20">
                             <a href="{{ route('guest.home', ['section' => 'journals']) }}"
-                                class="block px-4 py-3 transition
+                                class="block px-4 py-3 transition flex flex-row gap-2 items-center
                                 {{ $currentSection === 'journals' ? 'bg-[#027c7d] text-white' : 'hover:bg-[#027c7d] hover:text-white' }}">
-                                Journal
+                                <div>Journal</div>
+                                @if ($journalsubmissionsCount > 0)
+                                    <div class="bg-[#d6dd42] text-[#000120] text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                                        {{ $journalsubmissionsCount }}
+                                    </div>
+                                @endif
                             </a>
                             <a href="{{ route('guest.home', ['section' => 'conferences']) }}"
-                                class="block px-4 py-3 transition
+                                class="block px-4 py-3 transition flex flex-row gap-2 items-center
                                 {{ $currentSection === 'conferences' ? 'bg-[#027c7d] text-white' : 'hover:bg-[#027c7d] hover:text-white' }}">
-                                Conference
+                                <div>Conference</div>
+                                @if ($conferencesubmissionsCount > 0)
+                                    <div class="bg-[#d6dd42] text-[#000120] text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                                        {{ $conferencesubmissionsCount }}
+                                    </div>
+                                @endif
                             </a>
                         </div>
                     </div>
@@ -195,11 +229,13 @@
                 Home
             </a>
 
-            {{-- <a href="{{ route('guest.home', ['section' => 'events']) }}"
-                class="block px-4 py-3 rounded transition cursor-pointer
-                {{ $currentSection === 'events' ? 'bg-[#027c7d] text-white' : 'hover:bg-[#027c7d] hover:text-white' }}">
-                Events
-            </a> --}}
+            @if (Auth::check() && Auth::user()->roles->contains('name', 'author'))
+                <a href="{{ route('guest.home', ['section' => 'events']) }}"
+                    class="block px-4 py-3 rounded transition cursor-pointer
+                    {{ $currentSection === 'events' ? 'bg-[#027c7d] text-white' : 'hover:bg-[#027c7d] hover:text-white' }}">
+                    Events
+                </a>
+            @endif
 
             <a href="{{ route('guest.home', ['section' => 'journal']) }}"
                 class="block px-4 py-3 rounded transition cursor-pointer

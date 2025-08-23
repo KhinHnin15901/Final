@@ -117,7 +117,7 @@ class UserController extends Controller
             $user->email_verified_at = null;
             $user->save();
             // For demonstration, just redirect back with success message
-            return redirect()->back()->with('success', "DisApproached user {$user->name} successfully!");
+            return redirect()->back()->with('success', "DisApproved user {$user->name} successfully!");
         }
         // Perform some action, e.g., mark as approached or send notification
         // Example: $user->approached = true; $user->save();
@@ -126,7 +126,7 @@ class UserController extends Controller
             $user->email_verified_at = now();
             $user->save();
             // For demonstration, just redirect back with success message
-            return redirect()->back()->with('success', "Approached user {$user->name} successfully!");
+            return redirect()->back()->with('success', "Approved user {$user->name} successfully!");
         }
     }
 }

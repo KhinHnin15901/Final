@@ -63,10 +63,10 @@
             <!-- Header -->
             <div class="bg-[#027c7d] text-white p-4 flex items-center justify-between">
                 <h2 class="text-lg font-semibold uppercase">{{-- {{ $journals->topic->name ?? 'N/A' }} --}} Journal Topic</h2>
-                <a href="#"
+                {{-- <a href="#"
                     class="bg-white text-[#027c7d] px-3 py-1 text-sm font-semibold rounded-full hover:bg-white/90">
                     Detail
-                </a>
+                </a> --}}
             </div>
 
             <div class="p-6 space-y-3 text-gray-700 text-sm">

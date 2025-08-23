@@ -14,8 +14,7 @@
 
             {{-- Current Paper --}}
             <div class="col-12">
-                <label class="form-label fw-semibold" style="color:#027c7d;">Current Paper</label>
-                <input type="text" class="form-control" value="{{ $schedules->journalSubmission->title ?? \Illuminate\Support\Str::of($schedules->journalSubmission->paper_path)->afterLast('/') }}" readonly>
+                <a href="{{ asset('storage/' . $schedules->journalSubmission->paper_path) }}" class="btn btn-primary" target="_blank">Download Current Paper</a>
             </div>
 
             {{-- Upload New Paper --}}

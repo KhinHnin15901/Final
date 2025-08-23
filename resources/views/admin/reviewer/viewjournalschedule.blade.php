@@ -12,13 +12,13 @@
         <thead class="text-white" style="background-color: #027c7d;">
             <tr>
                 <th class="py-2 px-3">#</th>
-                <th class="py-2 px-3">Paper</th>
-                <th class="py-2 px-3">Reviewer 1</th>
-                <th class="py-2 px-3">Reviewer 2</th>
-                <th class="py-2 px-3">Reviewer 3</th>
-                <th class="py-2 px-3">Start Date</th>
-                <th class="py-2 px-3">End Date</th>
-                <th class="py-2 px-3">Actions</th>
+                <th class="py-2 px-3 text-nowrap">Paper</th>
+                <th class="py-2 px-3 text-nowrap">Reviewer 1</th>
+                <th class="py-2 px-3 text-nowrap">Reviewer 2</th>
+                <th class="py-2 px-3 text-nowrap">Reviewer 3</th>
+                <th class="py-2 px-3 text-nowrap">Start Date</th>
+                <th class="py-2 px-3 text-nowrap">End Date</th>
+                <th class="py-2 px-3 text-nowrap">Actions</th>
             </tr>
         </thead>
         <tbody style="color: #000120;">
@@ -27,7 +27,9 @@
                     <td class="py-2 px-3" style="font-family: monospace; color: #027c7d; font-size: large;">
                         {{ str_pad($index + 1, 3, '0', STR_PAD_LEFT) }}
                     </td>
-                    <td class="py-2 px-3">{{ $schedule->journalSubmission->id ?? '-' }}</td>
+                    <td class="py-2 px-3" style="font-family: monospace; color: #027c7d; font-size: large;">
+                        PJ{{ str_pad($schedule->journalSubmission->id, 3, '0', STR_PAD_LEFT) }}
+                    </td>
                     <td class="py-2 px-3">{{ $schedule->reviewer1->name ?? 'N/A' }}</td>
                     <td class="py-2 px-3">{{ $schedule->reviewer2->name ?? 'N/A' }}</td>
                     <td class="py-2 px-3">{{ $schedule->reviewer3->name ?? 'N/A' }}</td>

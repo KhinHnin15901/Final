@@ -17,10 +17,7 @@ class JournalManagementController extends Controller
     public function journals()
     {
         $user = Auth::user(); // assuming only their own submissions
-
         $journalSubmissions = JournalSubmission::latest()->get();
-
-
         return view('admin.authorpapers.journals', compact('journalSubmissions'));
     }
     public function edit($id)
@@ -151,7 +148,6 @@ class JournalManagementController extends Controller
     public function returnJournal()
     {
         $reviews = \App\Models\JournalReview::with(['journalSubmission', 'reviewer1', 'reviewer2', 'reviewer3'])->get();
-
 
         return view('admin.reviewer.responsejournal', compact('reviews'));
     }

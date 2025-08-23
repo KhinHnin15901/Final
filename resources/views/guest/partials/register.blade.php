@@ -1,10 +1,14 @@
 <div class="flex items-center justify-center px-4 sm:px-6 lg:px-8 font-[Arial,sans-serif] max-w-3xl w-full">
     <div class="max-w-4xl w-full bg-white rounded-xl p-8 space-y-6 border-t-4 border-[#027c7d] shadow-md shadow-[#d6dd42]">
-
+        @if (session('success'))
+            <div class="bg-green-100 text-green-800 border border-green-300 px-4 py-3 rounded relative mx-auto shadow mb-2">
+                {{ session('success') }}
+            </div>
+        @endif
         <!-- Title -->
         <div class="flex flex-col items-center gap-2 justify-center">
             <h2 class="text-center text-xl font-bold text-[#000120]">
-                Create an {{ $reg_role == 'author' ? 'Author' : 'Reviewer' }} Account
+                Create an {{ $reg_role == 'author' ? 'Author' : 'Reviewer' }} Account {{ $reg_role }}
             </h2>
             <p class="text-center text-sm text-gray-600">Fill out the form to get started</p>
         </div>

@@ -32,23 +32,13 @@ class Event extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function topics()
+    {
+        return $this->belongsToMany(Topic::class, 'event_topic');
+    }
 
-// Optional: Get topics through the category
-// public function topics()
-// {
-//     return $this->category ? $this->category->topics() : collect();
-// }
-
-// public function topics()
-// {
-//     return $this->belongsToMany(Topic::class, 'category_topic', 'event_topic');
-// }
-
-public function topics()
-{
-    return $this->belongsToMany(Topic::class, 'event_topic');
-}
-
-
+    public function journal_submissions(){
+        return $this->hasMany(JournalSubmission::class);
+    }
 
 }

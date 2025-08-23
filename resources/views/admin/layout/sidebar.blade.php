@@ -188,21 +188,32 @@
             <a class="nav-link {{ $requestAuthorPaper ? '' : 'collapsed' }}" data-bs-target="#forms-navs"
                 data-bs-toggle="collapse" href="#"
                 aria-expanded="{{ $requestAuthorPaper ? 'true' : 'false' }}">
-                <i class="bi bi-circle"></i><span class="{{ (request()->routeIs('admin.papers.journals') || request()->routeIs('admin.papers.conferences')) ? 'active' : '' }}">Author Paper Request</span>
+                <i class="bi bi-circle"></i><span class="d-flex align-items-center gap-1 {{ (request()->routeIs('admin.papers.journals') || request()->routeIs('admin.papers.conferences')) ? 'active' : '' }}">
+                    Author Paper Request
+                    @if (auth()->user()->journalSubCount() > 0 || auth()->user()->conferenceSubCount() > 0)
+                        <span class="badge bg-danger">{{ auth()->user()->journalSubCount() + auth()->user()->conferenceSubCount()}}</span>
+                    @endif
+                </span>
                 <i class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="forms-navs" class="nav-content collapse {{ $requestAuthorPaper ? 'show' : '' }}"
                 data-bs-parent="#sidebar-nav">
-                <a class="{{ request()->routeIs('admin.papers.journals') ? 'active' : '' }}"
+                <a class="{{ request()->routeIs('admin.papers.journals') ? 'active' : '' }} d-flex align-items-center gap-1"
                     href="{{ route('admin.papers.journals') }}">
                     <i class="bi bi-circle"></i>
                     <span>Journals</span>
+                    @if (auth()->user()->journalSubCount() > 0)
+                        <span class="badge bg-danger">{{ auth()->user()->journalSubCount()}}</span>
+                    @endif
                 </a>
 
-                <a class="{{ request()->routeIs('admin.papers.conferences') ? 'active' : '' }}"
+                <a class="{{ request()->routeIs('admin.papers.conferences') ? 'active' : '' }} d-flex align-items-center gap-1"
                     href="{{ route('admin.papers.conferences') }}">
                     <i class="bi bi-circle"></i>
                     <span>Conferences</span>
+                    @if (auth()->user()->conferenceSubCount() > 0)
+                        <span class="badge bg-danger">{{ auth()->user()->conferenceSubCount()}}</span>
+                    @endif
                 </a>
 
 
@@ -253,7 +264,13 @@
                 <li>
                     <a class="{{ request()->routeIs('admin.schedule.journalreview') ? 'active' : '' }}"
                         href="{{ route('admin.schedule.journalreview') }}">
-                        <i class="bi bi-circle"></i><span>View Return Journal</span>
+                        <i class="bi bi-circle"></i>
+                        <span class="d-flex align-items-center gap-1">
+                            View Return Journal
+                            @if (auth()->user()->returnJournal() > 0)
+                                <span class="badge bg-danger">{{ auth()->user()->returnJournal() }}</span>
+                            @endif
+                        </span>
                     </a>
                 </li>
                 <li>

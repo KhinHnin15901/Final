@@ -35,9 +35,4 @@ class ReviewJournalSchedule extends Model
     {
         return $this->belongsTo(User::class, 'reviewer3_id');
     }
-
-    public function submission()
-    {
-        return $this->belongsTo(JournalSubmission::class, 'journal_submission_id'); // <- correct FK
-    }
 }

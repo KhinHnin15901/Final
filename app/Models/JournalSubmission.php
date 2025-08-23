@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class JournalSubmission extends Model
 {
     protected $fillable = [
+        'name',
         'topic_id',
         'user_id',
         'event_id',
@@ -54,5 +55,9 @@ class JournalSubmission extends Model
     public function review()
     {
         return $this->hasOne(JournalReview::class, 'journal_submission_id');
+    }
+
+    public function status(){
+        return $this->belongsTo(Status::class);
     }
 }

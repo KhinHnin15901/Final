@@ -23,9 +23,10 @@ return new class extends Migration
                 $table->foreignId('reviewer1_id')->nullable()->constrained('users')->onDelete('cascade');
                 $table->foreignId('reviewer2_id')->nullable()->constrained('users')->onDelete('cascade');
                 $table->foreignId('reviewer3_id')->nullable()->constrained('users')->onDelete('cascade');
-                $table->enum('evaluation', ['acceptable', 'minor_revisions', 'major_revisions', 'reject']);
+                $table->enum('evaluation', ['acceptable', 'minor_revisions', 'major_revisions', 'reject', 'publish_draft', 'published']);
                 $table->text('reviewer_comments');
-                $table->enum('status', ['draft', 'sent'])->default('draft');
+                $table->text('kpay_receipt')->nullable();
+                $table->enum('status', ['draft', 'sent', 'resubmit', 'publish_draft', 'published'])->default('draft');
                 $table->timestamps();
             });
         }

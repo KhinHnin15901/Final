@@ -2,11 +2,14 @@
 @section('main-content')
 <div class="table-responsive mt-4" style="font-family: Arial, sans-serif;">
     <h2 class="mb-4" style="color: #027c7d; font-weight: bold; font-size: large;">REVIEWERS</h2>
-
+    @if (session('success'))
+        <div class="alert alert-success mb-3">{{ session('success') }}</div>
+    @endif
     <table class="table table-hover align-middle" style="border-color: #e2e8f0; border-radius: 0.5rem; overflow: hidden; font-size: medium;">
         <thead class="text-white" style="background-color: #027c7d;">
             <tr>
-                <th class="py-2 px-3">ID</th>
+                <th class="py-2 px-3">#</th>
+                <th class="py-2 px-3 text-nowrap">Reviewer ID</th>
                 <th class="py-2 px-3">Name</th>
                 <th class="py-2 px-3">Email</th>
                 <th class="py-2 px-3">Phone</th>
@@ -23,6 +26,13 @@
             <tr>
                 <td class="py-2 px-3" style="font-family: monospace; color: #027c7d; font-size: large;">
                     {{ str_pad($index + 1, 3, '0', STR_PAD_LEFT) }}
+                </td>
+                <td class="py-2 px-3" style="font-family: monospace; color: #027c7d; font-size: large;">
+                    @if ($reviewer->email_verified_at)
+                        PJR{{ str_pad($reviewer->id, 3, '0', STR_PAD_LEFT) }}
+                    @else
+                        {{ str_pad($reviewer->id, 3, '0', STR_PAD_LEFT) }}
+                    @endif
                 </td>
                 <td class="py-2 px-3">{{ $reviewer->user_prefix?->name.$reviewer->name ?? '-' }}</td>
                 <td class="py-2 px-3">{{ $reviewer->email ?? '-' }}</td>

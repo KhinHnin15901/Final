@@ -12,6 +12,7 @@
         <thead class="text-white" style="background-color: #027c7d;">
             <tr>
                 <th class="py-2 px-3">#</th>
+                <th class="py-2 px-3">ID</th>
                 <th class="py-2 px-3">User</th>
                 <th class="py-2 px-3">Topic</th>
                 <th class="py-2 px-3">Category</th>
@@ -31,9 +32,12 @@
                     <td class="py-2 px-3" style="font-family: monospace; color: #027c7d; font-size: large;">
                         {{ str_pad($index + 1, 3, '0', STR_PAD_LEFT) }}
                     </td>
-                    <td class="py-2 px-3 text-center">{{ $submission->user_id ?? 'User ' . $submission->user_id }}</td>
-                    <td class="py-2 px-3 text-center">{{ $submission->topic_id ?? '-' }}</td>
-                    <td class="py-2 px-3 text-center">{{ $submission->category_id ?? '-' }}</td>
+                    <td class="py-2 px-3 text-nowrap" style="font-family: monospace; color: #027c7d; font-size: large;">
+                        PJ{{ str_pad($submission->id, 3, '0', STR_PAD_LEFT) }}
+                    </td>
+                    <td class="py-2 px-3 text-center">{{ $submission->name ?? '-' }}</td>
+                    <td class="py-2 px-3 text-center">{{ $submission->topics->name ?? '-' }}</td>
+                    <td class="py-2 px-3 text-center text-capitalize">{{ $submission->category->name ?? '-' }}</td>
                     <td class="py-2 px-3">{{ $submission->abstract ?? '-' }}</td>
                     <td class="py-2 px-3">{{ $submission->keywords ?? '-' }}</td>
                     <td class="py-2 px-3 text-center">

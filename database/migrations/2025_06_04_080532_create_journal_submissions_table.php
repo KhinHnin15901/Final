@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Status;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,7 +15,7 @@ return new class extends Migration
         if (!Schema::hasTable('journal_submissions')) {
             Schema::create('journal_submissions', function (Blueprint $table) {
                 $table->bigIncrements('id'); // this is UNSIGNED by default
-
+                $table->text('name')->nullable();
                 $table->unsignedBigInteger('event_id')->nullable();
                 $table->foreign('event_id')->references('id')->on('events')->onDelete('set null');
                 $table->foreignId('user_id')->constrained()->onDelete('cascade');
@@ -28,6 +29,7 @@ return new class extends Migration
                 $table->string('professor_rule_path')->nullable();
                 $table->date('start_date')->nullable();
                 $table->date('end_date')->nullable();
+                $table->foreignIdFor(Status::class)->nullable()->constrained()->nullOnDelete();
                 $table->unsignedTinyInteger('edit_count')->default(0);
                 $table->timestamps();
             });

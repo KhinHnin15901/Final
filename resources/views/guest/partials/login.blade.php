@@ -6,6 +6,12 @@
             <p class="text-center text-sm text-gray-600">Enter your credentials to continue</p>
         </div>
 
+        @if (session('success'))
+            <div class="bg-green-100 text-green-800 border border-green-300 px-4 py-3 rounded relative mx-auto shadow mb-2">
+                {{ session('success') }}
+            </div>
+        @endif
+
         <!-- Error message (optional) -->
         @if (session('error'))
             <div class="text-red-600 text-sm text-center bg-red-50 p-2 rounded-md">
@@ -38,10 +44,10 @@
 
             <!-- Login Button and Register Link -->
             <div class="flex items-center justify-between">
-                <p class="text-sm text-gray-600">
+                {{-- <p class="text-sm text-gray-600">
                     Don't have an account?
-                    <a href="{{ route('guest.home', ['section' => 'register']) }}" class="text-[#027c7d] hover:underline font-medium">Register</a>
-                </p>
+                    <a href="{{ route('guest.home', ['section' => 'register', 'role' => 'author']) }}" class="text-[#027c7d] hover:underline font-medium">Register</a>
+                </p> --}}
 
                 <button type="submit" class="py-2.5 px-6 rounded-md shadow-md text-white bg-[#027c7d] hover:bg-[#026a6b] transition duration-300 text-sm font-semibold">
                     Login

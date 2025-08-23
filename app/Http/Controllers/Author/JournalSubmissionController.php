@@ -19,6 +19,7 @@ class JournalSubmissionController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
+            'name' => 'required|string',
             'topic_id' => 'required|integer|exists:topics,id',
             'abstract' => 'required|string',
             'keywords' => 'required|string',
@@ -54,12 +55,7 @@ class JournalSubmissionController extends Controller
 
         // Validation rules
         $rules = [
-
-            'abstract' => 'required|string',
-            'keywords' => 'required|string',
             'paper' => 'nullable|file|mimes:pdf,doc,docx|max:10240', // max 10MB
-            'department_rule_file' => 'nullable|file|mimes:pdf,doc,docx|max:10240',
-            'professor_rule_file' => 'nullable|file|mimes:pdf,doc,docx|max:10240',
         ];
 
         $validated = $request->validate($rules);
@@ -69,16 +65,12 @@ class JournalSubmissionController extends Controller
 
         if ($submission->edit_count >= 3) {
             $review->evaluation = 'reject';
+        } else {
+            $review->status = 'resubmit';
         }
-
         $review->save();
 
         $submission->edit_count += 1;
-
-        // Update basic fields
-
-        $submission->abstract = $validated['abstract'];
-        $submission->keywords = $validated['keywords'];
 
         // Handle file uploads
         if ($request->hasFile('paper')) {
@@ -88,22 +80,6 @@ class JournalSubmissionController extends Controller
             }
             $paperPath = $request->file('paper')->store('journals/papers', 'public');
             $submission->paper_path = $paperPath;
-        }
-
-        if ($request->hasFile('department_rule_file')) {
-            if ($submission->department_rule_path && Storage::disk('public')->exists($submission->department_rule_path)) {
-                Storage::disk('public')->delete($submission->department_rule_path);
-            }
-            $deptRulePath = $request->file('department_rule_file')->store('journals/dept_rules', 'public');
-            $submission->department_rule_path = $deptRulePath;
-        }
-
-        if ($request->hasFile('professor_rule_file')) {
-            if ($submission->professor_rule_path && Storage::disk('public')->exists($submission->professor_rule_path)) {
-                Storage::disk('public')->delete($submission->professor_rule_path);
-            }
-            $profRulePath = $request->file('professor_rule_file')->store('journals/prof_rules', 'public');
-            $submission->professor_rule_path = $profRulePath;
         }
 
         $submission->save();

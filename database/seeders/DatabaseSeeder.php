@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
             CommitteeMemberSeeder::class,
             RegistrationInfoSeeder::class,
             UserPrefixSeeder::class,
-
+            StatusSeeder::class,
         ]);
     }
 }

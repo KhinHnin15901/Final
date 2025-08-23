@@ -138,7 +138,6 @@ class ReviewerResponseController extends Controller
         } else {
             $userId = Auth::id();
             $evaluationChanged = false;
-
             if ($review->reviewer1_id === null) {
                 $review->reviewer1_id = $userId;
                 $evaluationChanged = true;
@@ -170,21 +169,34 @@ class ReviewerResponseController extends Controller
 
                 // Normalize to collection
                 $evalCollection = collect($evaluations)->filter();
+                $counts = $evalCollection->countBy();
+                $total  = $evalCollection->count();
 
-                // Final decision logic:
-                if ($evalCollection->contains('reject')) {
+                // --- Decision rules (simple & explicit) ---
+                if ($counts->has('reject')) {
                     $review->evaluation = 'reject';
-                } elseif (
-                    $evalCollection->count() === 3 &&
-                    $evalCollection->every(fn($e) => $e === 'accept')
-                ) {
+                }
+                // All accept (handles 1, 2, or 3 accepts only)
+                elseif ($counts->get('accept', 0) === $total) {
                     $review->evaluation = 'accept';
-                } elseif ($evalCollection->count() >= 2) {
-                    // Use majority vote
-                    $frequencies = $evalCollection->countBy();
-                    $review->evaluation = $frequencies->sortDesc()->keys()->first(); // most frequent value
-                } else {
-                    $review->evaluation = $request->evaluation; // fallback
+                }
+                // Special rule: if accept is majority (>=2) but there is a revision, choose that revision
+                elseif ($counts->get('accept', 0) >= 2 && ($counts->has('major_revisions') || $counts->has('minor_revisions'))) {
+                    $review->evaluation = $counts->has('major_revisions') ? 'major_revisions' : 'minor_revisions';
+                }
+                // Normal majority (>=2 of same non-accept) wins
+                elseif ($counts->max() >= 2) {
+                    $review->evaluation = $counts->sortDesc()->keys()->first(); // e.g., 2 major vs 1 minor → major
+                }
+                // No majority → priority: major > minor > accept
+                else {
+                    if ($counts->has('major_revisions')) {
+                        $review->evaluation = 'major_revisions';
+                    } elseif ($counts->has('minor_revisions')) {
+                        $review->evaluation = 'minor_revisions';
+                    } else {
+                        $review->evaluation = 'accept';
+                    }
                 }
 
                 $review->save();

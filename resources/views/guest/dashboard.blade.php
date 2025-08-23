@@ -1,4 +1,8 @@
 @extends('guest.layout.layout')
+@section('header')
+    {{-- Header --}}
+    @include('guest.layout.header')
+@endsection
 @section('main-content')
     @php
         $section = request('section', 'home');
@@ -35,6 +39,12 @@
         @include('guest.partials.reviewer')
     @elseif ($section === 'profile')
         @include('guest.profile.edit')
+    @elseif ($section === 'publish')
+        @include('guest.partials.publish')
+    @elseif ($section === 'current_issue')
+        @include('guest.partials.current_issue')
+    @elseif ($section === 'past_issue')
+        @include('guest.partials.past_issue')
     @else
         @include('guest.partials.events')
     @endif

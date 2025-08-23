@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\JournalManagementController;
 use App\Http\Controllers\Admin\ConferenceManagementController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PublishController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\auth\AuthController;
 use App\Http\Controllers\guest\HomeController;
@@ -137,6 +138,7 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
 Route::resource('profile', ProfileController::class)->parameters([
     'profile' => 'user'
 ])->middleware('auth');
+Route::resource('publish', PublishController::class)->middleware('auth');
 
 Route::get('/about', function () {
     return view('author.pages.about');

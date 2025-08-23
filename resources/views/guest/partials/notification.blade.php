@@ -1,11 +1,16 @@
 @if ($section === 'notification')
-    <div class="author-notifications p-4 bg-white rounded shadow max-w-md mx-auto">
+    <div class="author-notifications font-[Arial,sans-serif] p-4 bg-white rounded-md shadow-md shadow-[#d6dd42] w-[50vw] mx-auto border-4 border-t-[#027c7d]">
 
-        <h2 class="text-xl font-semibold mb-4">Your Notifications</h2>
-
+        <h2 class="text-lg font-semibold mb-4 text-[#027c7d]">Your Notifications</h2>
+        <!-- Success Message -->
+        @if (session('success'))
+            <div class="bg-green-100 text-green-800 border border-green-300 px-4 py-3 rounded relative mx-auto shadow mb-2">
+                {{ session('success') }}
+            </div>
+        @endif
 
         @if ($notifications->count() > 0)
-            <ul class="space-y-3">
+            <ul class="space-y-3 text-sm">
                 @foreach ($notifications as $notification)
                     <li class="border p-3 rounded bg-blue-50 flex justify-between items-center">
                         <div>
@@ -37,7 +42,7 @@
                                     <!-- Modal -->
                                     <div x-show="show" class="fixed inset-0 z-50 flex items-center justify-center p-4">
                                         <div @click.away="show = false"
-                                            class="bg-white rounded-lg shadow-lg overflow-y-auto max-h-[90vh] max-w-2xl w-full p-6">
+                                            class="bg-white overflow-y-auto max-h-[90vh] max-w-2xl w-full p-6 border-t-4 border-t-[#027c7d] shadow-md shadow-[#d6dd42] rounded-md">
                                             <h2 class="text-xl font-semibold mb-4 text-gray-700">Edit Your Paper</h2>
 
                                             <!-- FORM LOGIC -->
@@ -56,23 +61,6 @@
                                                         </div>
                                                     @endif
 
-
-
-
-                                                    <div>
-                                                        <label for="abstract"
-                                                            class="block font-medium text-gray-700">Abstract</label>
-                                                        <textarea name="abstract" id="abstract" rows="4" class="w-full border rounded px-3 py-2"
-                                                            placeholder="Enter abstract" required></textarea>
-                                                    </div>
-
-                                                    <div>
-                                                        <label for="keywords"
-                                                            class="block font-medium text-gray-700">Keywords</label>
-                                                        <input type="text" name="keywords" id="keywords"
-                                                            class="w-full border rounded px-3 py-2"
-                                                            placeholder="Enter Keyword" required maxlength="255">
-                                                    </div><br><br>
                                                     <div>
                                                         <label for="paper"
                                                             class="block font-medium text-gray-700">Paper
@@ -82,27 +70,6 @@
                                                             accept=".pdf,.doc,.docx"
                                                             class="w-full border rounded px-3 py-2">
                                                     </div>
-
-                                                    {{-- <div>
-                                                        <label for="department_rule_file"
-                                                            class="block font-medium text-gray-700">Department Aggrement
-                                                            (PDF,
-                                                            DOC, DOCX)
-                                                        </label>
-                                                        <input type="file" name="department_rule_file"
-                                                            id="department_rule_file" accept=".pdf,.doc,.docx"
-                                                            class="w-full border rounded px-3 py-2">
-                                                    </div>
-
-                                                    <div>
-                                                        <label for="professor_rule_file"
-                                                            class="block font-medium text-gray-700">University Rule
-                                                            (PDF,
-                                                            DOC, DOCX)</label>
-                                                        <input type="file" name="professor_rule_file"
-                                                            id="professor_rule_file" accept=".pdf,.doc,.docx"
-                                                            class="w-full border rounded px-3 py-2">
-                                                    </div> --}}
 
                                                     <div class="text-right">
                                                         <button type="submit"
@@ -116,7 +83,7 @@
 
                                             <template x-if="category === 'journal'">
                                                 <form method="POST" :action="`/journal/${submissionId}`"
-                                                    class="space-y-4" enctype="multipart/form-data" class="space-y-4">
+                                                    class="space-y-4" enctype="multipart/form-data">
                                                     @csrf
                                                     @method('PUT')
                                                     @if ($errors->any())
@@ -129,54 +96,15 @@
                                                         </div>
                                                     @endif
 
-
-
-
-                                                    <div>
-                                                        <label for="abstract"
-                                                            class="block font-medium text-gray-700">Abstract</label>
-                                                        <textarea name="abstract" id="abstract" rows="4" class="w-full border rounded px-3 py-2"
-                                                            placeholder="Enter abstract" required></textarea>
-                                                    </div>
-
-                                                    <div>
-                                                        <label for="keywords"
-                                                            class="block font-medium text-gray-700">Keywords</label>
-                                                        <input type="text" name="keywords" id="keywords"
-                                                            class="w-full border rounded px-3 py-2"
-                                                            placeholder="Enter Keyword" required maxlength="255">
-                                                    </div><br><br>
-
                                                     <div>
                                                         <label for="paper"
-                                                            class="block font-medium text-gray-700">Paper
+                                                            class="block text-sm font-semibold text-[#027c7d]">Paper
                                                             (PDF, DOC, DOCX)
                                                         </label>
                                                         <input type="file" name="paper" id="paper"
                                                             accept=".pdf,.doc,.docx"
-                                                            class="w-full border rounded px-3 py-2">
+                                                            class="w-full rounded-md border border-gray-300 px-4 py-2 text-[#000120] focus:outline-none focus:ring-2 focus:ring-[#027c7d] focus:border-[#027c7d] text-sm shadow-sm mt-1">
                                                     </div>
-
-                                                    {{-- <div>
-                                                        <label for="department_rule_file"
-                                                            class="block font-medium text-gray-700">Department Aggrement
-                                                            (PDF,
-                                                            DOC, DOCX)
-                                                        </label>
-                                                        <input type="file" name="department_rule_file"
-                                                            id="department_rule_file" accept=".pdf,.doc,.docx"
-                                                            class="w-full border rounded px-3 py-2">
-                                                    </div>
-
-                                                    <div>
-                                                        <label for="professor_rule_file"
-                                                            class="block font-medium text-gray-700">University Rule
-                                                            (PDF,
-                                                            DOC, DOCX)</label>
-                                                        <input type="file" name="professor_rule_file"
-                                                            id="professor_rule_file" accept=".pdf,.doc,.docx"
-                                                            class="w-full border rounded px-3 py-2">
-                                                    </div> --}}
 
                                                     <div class="text-right">
                                                         <button type="submit"
@@ -192,41 +120,28 @@
                                     </div>
                                 </div>
                             @endif
-
-
-
-
-
-                            {{--
-                            @if (isset($notification->data['submission_id']))
-                                <a href="{{ url('/submissions/' . $notification->data['submission_id']) }}"
-                                    class="text-blue-600 underline">View submission</a>
-                            @endif --}}
                         </div>
                         <form method="POST" action="{{ route('notifications.markRead', $notification->id) }}">
                             @csrf
-                            <div class="bg-white rounded-lg shadow-lg overflow-y-auto max-h-[20vh] max-w-l  p-1">
-                                <button type="submit" class="text-sm text-dark-600 hover:text-green-900">Mark
-                                    read</button>
+                            <div class="bg-white rounded-lg shadow-lg overflow-y-auto max-h-[20vh] max-w-l p-2">
+                                <button type="submit" class="text-sm text-dark-600 hover:text-green-900 whitespace-nowrap">{{in_array($notification->data['evaluation'], ['major_revisions', 'minor_revisions']) ? "Mark Done" : "Mark Read"}}</button>
                             </div>
                         </form>
                     </li>
                 @endforeach
             </ul>
         @else
-            <p class="text-gray-600">You have no new notifications.</p>
+            <p class="text-gray-600 text-sm">You have no new notifications.</p>
         @endif
         <br><br>
-        <h2 class="text-xl font-semibold mb-4">Read Notifications</h2>
+        <h2 class="text-lg font-semibold mb-4 text-[#027c7d]">Read Notifications</h2>
         @php
             $readNotifications = auth()->user()->readNotifications()->get()->sortByDesc('created_at');
 
         @endphp
 
         @if ($readNotifications->count() > 0)
-            <ul class="space-y-3">
-
-
+            <ul class="space-y-3 text-sm">
                 @foreach ($readNotifications as $notification)
                     <li class="border p-3 rounded bg-blue-50 flex justify-between items-center">
                         <div>
@@ -245,6 +160,6 @@
         @endif
         </ul>
     @else
-        <p class="text-gray-600">You have no new notifications.</p>
-@endif
+        <p class="text-gray-600 text-sm">You have no new notifications.</p>
+    @endif
 </div>

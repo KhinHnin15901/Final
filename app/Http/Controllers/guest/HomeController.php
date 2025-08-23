@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\guest;
 
 use App\Http\Controllers\Controller;
+use App\Models\JournalReview;
 use App\Models\ReviewConferenceSchedule;
 use App\Models\ReviewJournalSchedule;
 use App\Models\JournalSubmission;
@@ -46,13 +47,7 @@ class HomeController extends Controller
         // Exclude those topics
         $topics = \App\Models\Topic::whereNotIn('id', $usedTopics)->get();
 
-
-
         $currentDate = Carbon::now()->isoFormat('dddd, Do MMMM, YYYY'); // Example: Friday, 12th July, 2025
-
-        // Weather from OpenWeatherMap
-
-
 
         // Get conferences with status 'open' and end_date >= today
         $conferences = DB::table('events')
@@ -64,15 +59,13 @@ class HomeController extends Controller
             ->select('events.*') // Or include category data if needed
             ->get();
 
-
-        // Get journals with status 'published' and end_date >= today
-        $journals = DB::table('events')
-            ->join('categories', 'events.category_id', '=', 'categories.id')
-            ->where('events.status', 'published')
-            // ->whereDate('events.submission_deadline', '>=', Carbon::today())
-            ->where('categories.name', 'journal')
-            ->orderByDesc('events.created_at')
-            ->select('events.*') // Or include category data if needed
+        // Get journals with status 'published'
+        $journals = Event::with('journal_submissions')
+            ->whereHas('category', function ($query) {
+                $query->where('name', 'journal');
+            })
+            ->where('status', 'published')
+            ->orderByDesc('created_at')
             ->get();
 
 
@@ -88,49 +81,70 @@ class HomeController extends Controller
 
         $today = Carbon::today();
         $conferencesubmissions = collect(); // default empty collection
+        $conferencesubmissionsCount = null;
         $journalsubmissions = collect();
+        $journalsubmissionsCount = null;
         if ($user) {
-            $conferencesubmissions = ReviewConferenceSchedule::where(function ($query) use ($user) {
-                $query->whereHas('conferenceSubmission', function ($subQuery) use ($user) {
-                    $subQuery->where('user_id', $user->id);
-                })
-                    ->orWhere(function ($orQuery) use ($user) {
-                        $orQuery->where('reviewer1_id', $user->id)
-                            ->orWhere('reviewer2_id', $user->id)
-                            ->orWhere('reviewer3_id', $user->id);
-                    });
-            })
-                ->where('status', 'send')
-                ->whereHas('conferenceSubmission.event', function ($q) use ($today) {
-                    $q->whereDate('submission_deadline', '<', $today);
-                })
-                ->with(['conferenceSubmission.event']) // eager load event if needed
-                ->get();
+            $baseConferencesQuery = ReviewConferenceSchedule::where(function ($query) use ($user) {
+                                        $query->whereHas('conferenceSubmission', function ($subQuery) use ($user) {
+                                            $subQuery->where('user_id', $user->id);
+                                        })
+                                        ->orWhere(function ($orQuery) use ($user) {
+                                            $orQuery->where('reviewer1_id', $user->id)
+                                                ->orWhere('reviewer2_id', $user->id)
+                                                ->orWhere('reviewer3_id', $user->id);
+                                        });
+                                    })
+                                    ->where('status', 'send')
+                                    ->whereHas('conferenceSubmission.event', function ($q) use ($today) {
+                                        $q->whereDate('submission_deadline', '<', $today);
+                                    })
+                                    ->with(['conferenceSubmission.event']);
+            $conferencesubmissions = $baseConferencesQuery->get();
+            $conferencesubmissionsCount = (clone $baseConferencesQuery)->count();
 
-            $journalsubmissions = ReviewJournalSchedule::where(function ($query) use ($user) {
-                $query->whereHas('journalSubmission', function ($subQuery) use ($user) {
-                    $subQuery->where('user_id', $user->id);
-                })
-                    ->orWhere(function ($orQuery) use ($user) {
-                        $orQuery->where('reviewer1_id', $user->id)
-                            ->orWhere('reviewer2_id', $user->id)
-                            ->orWhere('reviewer3_id', $user->id);
-                    });
-            })
-                ->where('status', 'send')
-                ->whereHas('journalSubmission.event', function ($q) use ($today) {
-                    $q->whereDate('submission_deadline', '<', $today);
-                })
-                ->with(['journalSubmission.event']) // optional eager loading
-                ->get();
+            $baseJournalQuery = ReviewJournalSchedule::where(function ($q) use ($user) {
+                                $q->where('reviewer1_id', $user->id)
+                                ->orWhere('reviewer2_id', $user->id)
+                                ->orWhere('reviewer3_id', $user->id);
+                            })
+                            ->where('status', 'send')
+                            ->whereHas('journalSubmission.event', function ($q) use ($today) {
+                                $q->whereDate('submission_deadline', '<', $today);
+                            })
+                            ->with(['journalSubmission.event']);
+
+            $journalsubmissions = $baseJournalQuery->get();
+            $journalsubmissionsCount = (clone $baseJournalQuery)->whereDoesntHave('journalSubmission.review', function ($q) use ($userId) {
+                                            $q->where(function($q2) use ($userId) {
+                                                $q2->where('reviewer1_id', $userId)
+                                                ->orWhere('reviewer2_id', $userId)
+                                                ->orWhere('reviewer3_id', $userId);
+                                            });
+                                        })->count();
+
         }
         $journal = Journal::where('status', 'published')->get();
         $conference = Conference::where('status', 'published')->get();
 
+        $current_issue = JournalReview::latest('id')->first();
+
+        $past_issues = Event::with('journal_submissions')
+            ->whereHas('category', function ($query) {
+                $query->where('name', 'journal');
+            })
+            ->whereHas('journal_submissions.review', function($query){
+                $query->where('evaluation', 'published');
+            })
+            ->where('status', 'published')
+            ->orderByDesc('created_at')
+            ->get();
+
         $event = Event::latest('id')->first();
 
         $infos = RegistrationInfo::all()->groupBy('type');
-        return view('guest.dashboard', compact('event', 'reg_role', 'infos', 'currentDate', 'conferences', 'conference', 'journals', 'journal', 'topics', 'allKeywords', 'roles', 'conferencesubmissions', 'journalsubmissions', 'topics', 'notifications', 'user'), [
+        $journal_review = JournalReview::find($request->journal_review_id);
+        return view('guest.dashboard', compact('journalsubmissionsCount', 'journal_review', 'conferencesubmissionsCount', 'event', 'reg_role', 'infos', 'currentDate', 'conferences', 'conference', 'journals', 'journal', 'topics', 'allKeywords', 'roles', 'conferencesubmissions', 'journalsubmissions', 'topics', 'notifications', 'user', 'current_issue', 'past_issues'), [
             'generalChair' => CommitteeMember::where('position', 'General Chair')->first(),
             'programChair' => CommitteeMember::where('position', 'Program Chair')->first(),
             'members' => CommitteeMember::where('position', 'Member')->orderBy('name')->get(),
