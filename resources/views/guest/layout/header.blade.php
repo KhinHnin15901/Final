@@ -27,13 +27,13 @@
 
                 <a href="{{ route('guest.home', ['section' => 'past_issue']) }}"
                     class="relative transition cursor-pointer
-                    {{ $currentSection === 'home' ? 'text-[#027c7d] font-bold' : 'hover:text-[#027c7d] hover:underline' }}">
+                    {{ $currentSection === 'past_issue' ? 'text-[#027c7d] font-bold' : 'hover:text-[#027c7d] hover:underline' }}">
                     Past Issues
                 </a>
 
                 <a href="{{ route('guest.home', ['section' => 'current_issue']) }}"
                     class="relative transition cursor-pointer
-                    {{ $currentSection === 'home' ? 'text-[#027c7d] font-bold' : 'hover:text-[#027c7d] hover:underline' }}">
+                    {{ $currentSection === 'current_issue' ? 'text-[#027c7d] font-bold' : 'hover:text-[#027c7d] hover:underline' }}">
                     Current Issue
                 </a>
 
