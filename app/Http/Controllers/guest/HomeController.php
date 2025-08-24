@@ -26,6 +26,7 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $reg_role = $request->role;
+        $keyword_search = $request->keyword_search;
         // Date
         $topics = Topic::all();
         $roles = Role::whereNotIn('name', ['admin'])->get();
@@ -132,6 +133,11 @@ class HomeController extends Controller
         $past_issues = Event::with('journal_submissions')
             ->whereHas('category', function ($query) {
                 $query->where('name', 'journal');
+            })
+            ->when($keyword_search, function ($q, $v) {
+                $q->whereHas('journal_submissions', function ($query) use ($v) {
+                    $query->where('keywords', 'LIKE', "%{$v}%");
+                });
             })
             ->whereHas('journal_submissions.review', function($query){
                 $query->where('evaluation', 'published');

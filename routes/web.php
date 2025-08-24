@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Admin\JournalManagementController;
 use App\Http\Controllers\Admin\ConferenceManagementController;
+use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\AdminPublishController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublishController;
 use Illuminate\Support\Facades\Route;
@@ -54,7 +56,7 @@ Route::middleware('auth')->group(function () {
         ->name('journals.update');
     Route::post('/journal/submit', [JournalSubmissionController::class, 'store'])->name('journal.submit');
     Route::put('/journal/{id}', [JournalSubmissionController::class, 'update'])->name('journal.update');
-    Route::get('/dashboard', fn() => view('admin.dashboard'))->name('dashboard');
+    Route::get('/dashboard', [AdminDashboardController::class, 'admin_dash'])->name('dashboard');
     Route::get('/conference/download/{id}', [ReviewerResponseController::class, 'downloadConferenceReviewPaper'])->name('conference.download');
     Route::get('/journal/download/{id}', [ReviewerResponseController::class, 'downloadJournalReviewPaper'])->name('journal.download');
     Route::post('/notifications/{id}/mark-read', [NotificationController::class, 'markRead'])
@@ -91,6 +93,12 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::get('papers/conferences/edit/{id}', [ConferenceManagementController::class, 'edit'])->name('papers.conferencesedit');
     Route::put('papers/conferences/update/{id}', [ConferenceManagementController::class, 'update'])->name('papers.conferenceupdate');
     Route::delete('papers/conferences/delete/{id}', [ConferenceManagementController::class, 'destroy'])->name('papers.conferencesdestroy');
+});
+
+#Publish Papers
+Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
+    Route::get('publish/journal', [AdminPublishController::class, 'journal_publish'])->name('publish.journal');
+    Route::get('publish/conference', [AdminPublishController::class, 'conference_publish'])->name('publish.conference');
 });
 
 #Review Schedule

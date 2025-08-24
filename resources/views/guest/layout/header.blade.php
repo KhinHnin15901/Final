@@ -61,7 +61,7 @@
                     </div>
                 </div>
 
-                <div class="relative group inline-block cursor-pointer">
+                {{-- <div class="relative group inline-block cursor-pointer">
                     <button
                         class="flex items-center gap-1 transition
                         {{ in_array($currentSection, $journalSections) ? 'text-[#027c7d] font-bold' : 'hover:text-[#027c7d] hover:underline' }}">
@@ -83,7 +83,7 @@
                             Conference
                         </a>
                     </div>
-                </div>
+                </div> --}}
                 @if (Auth::check() && Auth::user()->roles->contains('name', 'author'))
                     <a href="{{ route('guest.home', ['section' => 'events']) }}"
                         class="relative transition cursor-pointer
@@ -122,7 +122,7 @@
                                     </div>
                                 @endif
                             </a>
-                            <a href="{{ route('guest.home', ['section' => 'conferences']) }}"
+                            {{-- <a href="{{ route('guest.home', ['section' => 'conferences']) }}"
                                 class="block px-4 py-3 transition flex flex-row gap-2 items-center
                                 {{ $currentSection === 'conferences' ? 'bg-[#027c7d] text-white' : 'hover:bg-[#027c7d] hover:text-white' }}">
                                 <div>Conference</div>
@@ -131,7 +131,7 @@
                                         {{ $conferencesubmissionsCount }}
                                     </div>
                                 @endif
-                            </a>
+                            </a> --}}
                         </div>
                     </div>
                 @endif

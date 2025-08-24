@@ -88,7 +88,7 @@ class User extends Authenticatable
     }
 
     public function journalSubCount() {
-        return JournalSubmission::count();
+        return JournalSubmission::whereDoesntHave('reviewSchedule')->count();
     }
 
     public function conferenceSubCount() {

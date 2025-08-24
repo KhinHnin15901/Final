@@ -145,10 +145,21 @@ class JournalManagementController extends Controller
         return Storage::disk('public')->download($path);
     }
 
-    public function returnJournal()
+    public function returnJournal(Request $request)
     {
-        $reviews = \App\Models\JournalReview::with(['journalSubmission', 'reviewer1', 'reviewer2', 'reviewer3'])->get();
+        $evaluations = [
+            'acceptable' => 'Accept',
+            'minor_revisions' => 'Minor Revision',
+            'major_revisions' => 'Major Revision',
+            'reject' => 'Reject',
+            'publish_draft' => 'Publish Draft',
+            'published' => 'Published',
+        ];
 
-        return view('admin.reviewer.responsejournal', compact('reviews'));
+        $reviews = \App\Models\JournalReview::when($request->search_evaluation, function($q, $v){
+            $q->where('evaluation', $v);
+        })->with(['journalSubmission', 'reviewer1', 'reviewer2', 'reviewer3'])->get();
+
+        return view('admin.reviewer.responsejournal', compact('reviews', 'evaluations'));
     }
 }

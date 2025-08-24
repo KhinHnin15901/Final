@@ -1,5 +1,15 @@
 <div class="font-[Arial,sans-serif] w-2/3">
     <h2 class="mb-6 text-lg font-bold text-[#027c7d]">Past Issues</h2>
+    <form method="GET" action="{{ route('guest.home') }}" class="flex flex-row items-center gap-2 w-full max-w-md mb-4">
+        <input type="hidden" name="section" value="past_issue">
+        <input id="keyword_search" name="keyword_search" type="text" value="{{ request('keyword_search') }}"
+            placeholder="Search issues with keyword..."
+            class="flex-1 rounded-md border border-gray-300 px-4 py-2 text-[#000120] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#027c7d] focus:border-[#027c7d] text-sm shadow-sm" />
+        <button type="submit"
+                class="px-6 py-2 rounded-md shadow-md text-white bg-[#027c7d] hover:bg-[#026a6b] transition duration-300 text-sm font-semibold">
+            Search
+        </button>
+    </form>
 
     @forelse ($past_issues as $event)
         <div class="mb-6 rounded-lg border border-gray-200 shadow p-4 bg-white">

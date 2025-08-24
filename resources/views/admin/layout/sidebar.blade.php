@@ -8,6 +8,7 @@
     $fees = request()->routeIs('admin.fees.*');
     $journals = request()->routeIs('admin.journals.*');
     $conferences = request()->routeIs('admin.conferences.*');
+    $publishes = request()->routeIs('admin.publish.*');
 @endphp
 
 <aside class="sidebar">
@@ -86,7 +87,7 @@
                 </li>
             </ul>
         </li>
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a class="nav-link {{ $journals ? '' : 'collapsed' }}" data-bs-target="#journal-nav"
                 data-bs-toggle="collapse" href="#" aria-expanded="{{ $journals ? 'true' : 'false' }}">
                 <i class="bi bi-book text-indigo-700"></i><span class="{{ (request()->routeIs('admin.journals.create') || request()->routeIs('admin.journals.index')) ? 'active' : '' }}">Manage Journals</span>
@@ -107,8 +108,8 @@
                     </a>
                 </li>
             </ul>
-        </li>
-        <li class="nav-item">
+        </li> --}}
+        {{-- <li class="nav-item">
             <a class="nav-link {{ $conferences ? '' : 'collapsed' }}" data-bs-target="#conference-nav"
                 data-bs-toggle="collapse" href="#" aria-expanded="{{ $conferences ? 'true' : 'false' }}">
                 <i class="bi bi-calendar-event text-indigo-700"></i><span class="{{ (request()->routeIs('admin.conferences.create') || request()->routeIs('admin.conferences.index')) ? 'active' : '' }}">Manage Conferences</span>
@@ -129,7 +130,7 @@
                     </a>
                 </li>
             </ul>
-        </li>
+        </li> --}}
 
 
         <li class="nav-item">
@@ -207,17 +208,14 @@
                     @endif
                 </a>
 
-                <a class="{{ request()->routeIs('admin.papers.conferences') ? 'active' : '' }} d-flex align-items-center gap-1"
+                {{-- <a class="{{ request()->routeIs('admin.papers.conferences') ? 'active' : '' }} d-flex align-items-center gap-1"
                     href="{{ route('admin.papers.conferences') }}">
                     <i class="bi bi-circle"></i>
                     <span>Conferences</span>
                     @if (auth()->user()->conferenceSubCount() > 0)
                         <span class="badge bg-danger">{{ auth()->user()->conferenceSubCount()}}</span>
                     @endif
-                </a>
-
-
-
+                </a> --}}
             </ul>
         </li>
         <li class="nav-item">
@@ -243,24 +241,24 @@
                         <i class="bi bi-circle"></i><span>Create Journal Schedule</span>
                     </a>
                 </li>
-                <li>
+                {{-- <li>
                     <a class="{{ request()->routeIs('admin.schedule.conference') ? 'active' : '' }}"
                         href="{{ route('admin.schedule.conference') }}">
                         <i class="bi bi-circle"></i><span>Create Conference Schedule</span>
                     </a>
-                </li>
+                </li> --}}
                 <li>
                     <a class="{{ request()->routeIs('admin.schedule.journalview') ? 'active' : '' }}"
                         href="{{ route('admin.schedule.journalview') }}">
                         <i class="bi bi-circle"></i><span>View Journal Schedule</span>
                     </a>
                 </li>
-                <li>
+                {{-- <li>
                     <a class="{{ request()->routeIs('admin.schedule.conferenceview') ? 'active' : '' }}"
                         href="{{ route('admin.schedule.conferenceview') }}">
                         <i class="bi bi-circle"></i><span>View Conference Schedule</span>
                     </a>
-                </li>
+                </li> --}}
                 <li>
                     <a class="{{ request()->routeIs('admin.schedule.journalreview') ? 'active' : '' }}"
                         href="{{ route('admin.schedule.journalreview') }}">
@@ -273,14 +271,12 @@
                         </span>
                     </a>
                 </li>
-                <li>
+                {{-- <li>
                     <a class="{{ request()->routeIs('admin.schedule.conferencereview') ? 'active' : '' }}"
                         href="{{ route('admin.schedule.conferencereview') }}">
                         <i class="bi bi-circle"></i><span>View Return Conference</span>
                     </a>
-                </li>
-
-
+                </li> --}}
 
                 {{-- <li>
                     <a class="{{ request()->routeIs('admin.categories.index') ? 'active' : '' }}"
@@ -290,8 +286,32 @@
                 </li> --}}
 
             </ul>
-        </li>
+            <ul>
 
+            </ul>
+            <li class="nav-item">
+                <a class="nav-link {{ $publishes ? '' : 'collapsed' }}" data-bs-target="#user-nav" data-bs-toggle="collapse"
+                    href="#" aria-expanded="{{ $publishes ? 'true' : 'false' }}">
+                    <i class="bi bi-list"></i><span class="{{ (request()->routeIs('admin.publish.journal') || request()->routeIs('admin.user.conference')) ? 'active' : '' }}">Published Papers</span>
+                    <i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+
+                <ul id="user-nav" class="nav-content collapse {{ $user ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a class="{{ request()->routeIs('admin.publish.journal') ? 'active' : '' }}"
+                            href="{{ route('admin.publish.journal') }}">
+                            <i class="bi bi-circle"></i><span>Published Journals</span>
+                        </a>
+                    </li>
+                    {{-- <li>
+                        <a class="{{ request()->routeIs('admin.user.conference') ? 'active' : '' }}"
+                            href="{{ route('admin.user.conference') }}">
+                            <i class="bi bi-circle"></i><span>Published Conferences</span>
+                        </a>
+                    </li> --}}
+                </ul>
+            </li>
+        </li>
     </ul>
 
     </li><!-- End Forms Nav -->

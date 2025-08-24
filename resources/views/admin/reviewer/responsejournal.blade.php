@@ -1,9 +1,29 @@
 @extends('admin.layout.layout')
-@section('header_sec')
-@endsection
 @section('main-content')
 <div class="table-responsive mt-8" style="font-family: Arial, sans-serif;">
     <h2 class="mb-3" style="color: #027c7d; font-weight: bold; font-size: large;">📝 Journal Reviews</h2>
+    <form method="GET" action="{{ route('admin.schedule.journalreview') }}" class="row g-2 align-items-center mb-4" style="max-width: 500px;">
+        <div class="col">
+            <select id="search_evaluation" name="search_evaluation"
+                    class="form-select shadow-sm"
+                    style="border-color:#ccc; color:#000120; font-size:14px;">
+                <option value="" {{ request('search_evaluation') == '' ? 'selected' : '' }}>Select Evaluation</option>
+                @foreach ($evaluations as $index => $evaluation)
+                    <option value="{{ $index }}" {{ request('search_evaluation') == $index ? 'selected' : '' }}>
+                        {{ $evaluation }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn text-white shadow-sm"
+                    style="background-color:#027c7d; font-size:14px;"
+                    onmouseover="this.style.backgroundColor='#026a6b';"
+                    onmouseout="this.style.backgroundColor='#027c7d';">
+                Search
+            </button>
+        </div>
+    </form>
 
     @if (session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
