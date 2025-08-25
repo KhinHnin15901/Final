@@ -1,4 +1,4 @@
-<div x-data="{ tab: 'conferences', showModal: false, selectedEventId: null }" class="container mx-auto px-4 font-[Arial,sans-serif]">
+<div x-data="{ tab: 'journals', showModal: false, selectedEventId: null }" class="container mx-auto px-4 font-[Arial,sans-serif]">
     <h1 class="text-3xl font-semibold text-center text-gray-800 mb-8">All Events</h1>
 
     @if (session('success'))
@@ -9,11 +9,11 @@
 
     <!-- Toggle Buttons -->
     <div class="flex justify-center gap-4 mb-6">
-        <button @click="tab = 'conferences'"
+        {{-- <button @click="tab = 'conferences'"
             :class="tab === 'conferences' ? 'bg-[#027c7d] text-white' : 'bg-gray-200 text-gray-800'"
             class="px-5 py-2 rounded-md font-semibold shadow transition">
             Conferences
-        </button>
+        </button> --}}
 
         <button @click="tab = 'journals'"
             :class="tab === 'journals' ? 'bg-[#027c7d] text-white' : 'bg-gray-200 text-gray-800'"
