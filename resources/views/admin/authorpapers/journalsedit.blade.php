@@ -22,11 +22,39 @@
                 </div>
             @endif
 
+            {{-- Menu Script Title --}}
+            <div class="col-12">
+                <label class="form-label fw-semibold" style="color:#027c7d;">Menu Script Title</label>
+                <input type="text" name="menu_script_title" class="form-control shadow-sm @error('menu_script_title') is-invalid @enderror" value="{{ old('menu_script_title', $submission->menu_script_title) }}" required>
+                @error('menu_script_title') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
+
             {{-- Name --}}
             <div class="col-12">
-                <label class="form-label fw-semibold" style="color:#027c7d;">Name</label>
-                <input type="text" name="name" class="form-control shadow-sm @error('name') is-invalid @enderror" value="{{ old('name', $submission->user->name) }}" required>
+                <label class="form-label fw-semibold" style="color:#027c7d;">Author Names</label>
+                <input type="text" name="name" class="form-control shadow-sm @error('name') is-invalid @enderror" value="{{ old('name', $submission->name) }}" required>
                 @error('name') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
+
+            {{-- Phone --}}
+            <div class="col-12">
+                <label class="form-label fw-semibold" style="color:#027c7d;">Phone</label>
+                <input type="text" name="phone" class="form-control shadow-sm @error('phone') is-invalid @enderror" value="{{ old('phone', $submission->phone) }}" required>
+                @error('name') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
+
+            {{-- Email --}}
+            <div class="col-12">
+                <label class="form-label fw-semibold" style="color:#027c7d;">Email</label>
+                <input type="email" name="email" class="form-control shadow-sm @error('email') is-invalid @enderror" value="{{ old('email', $submission->email) }}" required>
+                @error('email') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
+
+            {{-- Author Count --}}
+            <div class="col-12">
+                <label class="form-label fw-semibold" style="color:#027c7d;">Total No of Authors</label>
+                <input type="number" name="author_count" class="form-control shadow-sm @error('author_count') is-invalid @enderror" value="{{ old('author_count', $submission->author_count) }}" required>
+                @error('author_count') <div class="invalid-feedback">{{ $message }}</div> @enderror
             </div>
 
             {{-- Topic --}}

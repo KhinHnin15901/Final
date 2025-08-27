@@ -21,7 +21,7 @@
                         <thead class="bg-[#027c7d] text-white">
                             <tr>
                                 <th class="py-2 px-3 text-left text-sm font-medium">#</th>
-                                <th class="py-2 px-3 text-left text-sm font-medium">Author</th>
+                                <th class="py-2 px-3 text-left text-sm font-medium">Author/Authors</th>
                                 <th class="py-2 px-3 text-left text-sm font-medium">Paper</th>
                             </tr>
                         </thead>

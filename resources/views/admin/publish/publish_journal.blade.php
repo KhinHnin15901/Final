@@ -14,7 +14,7 @@
                                 <thead style="background-color:#027c7d; color:#fff;">
                                     <tr>
                                         <th scope="col" class="text-center">#</th>
-                                        <th scope="col">Author</th>
+                                        <th scope="col">Author(s)</th>
                                         <th scope="col">Paper</th>
                                     </tr>
                                 </thead>

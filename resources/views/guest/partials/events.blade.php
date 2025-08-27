@@ -312,10 +312,29 @@
                         @endif
 
                         <input type="hidden" name="event_id" :value="selectedEventId">
+                        <div>
+                            <label for="menu_script_title" class="block text-sm font-semibold text-[#027c7d]">Menu Script Title</label>
+                            <input type="text" name="menu_script_title" id="menu_script_title" class="w-full rounded-md border border-gray-300 px-4 py-2 text-[#000120] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#027c7d] focus:border-[#027c7d] text-sm shadow-sm mt-1"  placeholder="Enter Title" required maxlength="255">
+                        </div>
 
                         <div>
-                            <label for="name" class="block text-sm font-semibold text-[#027c7d]">Name</label>
-                            <input type="text" name="name" id="name" class="w-full rounded-md border border-gray-300 px-4 py-2 text-[#000120] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#027c7d] focus:border-[#027c7d] text-sm shadow-sm mt-1"  placeholder="Enter Author Name" required maxlength="255">
+                            <label for="name" class="block text-sm font-semibold text-[#027c7d]">Author Names</label>
+                            <input type="text" name="name" id="name" class="w-full rounded-md border border-gray-300 px-4 py-2 text-[#000120] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#027c7d] focus:border-[#027c7d] text-sm shadow-sm mt-1"  placeholder="Enter Author Names" required>
+                        </div>
+
+                        <div>
+                            <label for="phone" class="block text-sm font-semibold text-[#027c7d]">Phone</label>
+                            <input type="text" name="phone" id="phone" class="w-full rounded-md border border-gray-300 px-4 py-2 text-[#000120] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#027c7d] focus:border-[#027c7d] text-sm shadow-sm mt-1"  placeholder="Enter Phone No." required maxlength="255">
+                        </div>
+
+                        <div>
+                            <label for="email" class="block text-sm font-semibold text-[#027c7d]">Email</label>
+                            <input type="email" name="email" id="email" class="w-full rounded-md border border-gray-300 px-4 py-2 text-[#000120] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#027c7d] focus:border-[#027c7d] text-sm shadow-sm mt-1"  placeholder="Enter Email" required maxlength="255">
+                        </div>
+
+                        <div>
+                            <label for="author_count" class="block text-sm font-semibold text-[#027c7d]">Total Number of Authors</label>
+                            <input type="number" name="author_count" id="author_count" class="w-full rounded-md border border-gray-300 px-4 py-2 text-[#000120] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#027c7d] focus:border-[#027c7d] text-sm shadow-sm mt-1"  placeholder="Enter Total Number" required maxlength="255">
                         </div>
 
                         <div>

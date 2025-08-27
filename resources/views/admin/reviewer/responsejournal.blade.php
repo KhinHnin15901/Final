@@ -104,7 +104,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="8" class="text-center" style="color: #000120;">No reviews found.</td>
+                    <td colspan="9" class="text-center" style="color: #000120;">No reviews found.</td>
                 </tr>
             @endforelse
         </tbody>

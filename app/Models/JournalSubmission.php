@@ -8,6 +8,10 @@ class JournalSubmission extends Model
 {
     protected $fillable = [
         'name',
+        'menu_script_title',
+        'phone',
+        'email',
+        'author_count',
         'topic_id',
         'user_id',
         'event_id',

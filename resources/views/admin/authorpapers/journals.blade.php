@@ -13,7 +13,11 @@
             <tr>
                 <th class="py-2 px-3">#</th>
                 <th class="py-2 px-3">ID</th>
-                <th class="py-2 px-3">User</th>
+                <th class="py-2 px-3">Menu Script Title</th>
+                <th class="py-2 px-3">Author(s)</th>
+                <th class="py-2 px-3">Phone</th>
+                <th class="py-2 px-3">Email</th>
+                <th class="py-2 px-3">Total No of Authors</th>
                 <th class="py-2 px-3">Topic</th>
                 <th class="py-2 px-3">Category</th>
                 <th class="py-2 px-3">Abstract</th>
@@ -35,7 +39,11 @@
                     <td class="py-2 px-3 text-nowrap" style="font-family: monospace; color: #027c7d; font-size: large;">
                         PJ{{ str_pad($submission->id, 3, '0', STR_PAD_LEFT) }}
                     </td>
+                    <td class="py-2 px-3 text-center">{{ $submission->menu_script_title ?? '-' }}</td>
                     <td class="py-2 px-3 text-center">{{ $submission->name ?? '-' }}</td>
+                    <td class="py-2 px-3 text-center">{{ $submission->phone ?? '-' }}</td>
+                    <td class="py-2 px-3 text-center">{{ $submission->email ?? '-' }}</td>
+                    <td class="py-2 px-3 text-center">{{ $submission->author_count ?? '-' }}</td>
                     <td class="py-2 px-3 text-center">{{ $submission->topics->name ?? '-' }}</td>
                     <td class="py-2 px-3 text-center text-capitalize">{{ $submission->category->name ?? '-' }}</td>
                     <td class="py-2 px-3">{{ $submission->abstract ?? '-' }}</td>
@@ -84,7 +92,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="12" class="text-center" style="color: #000120;">No journal submissions found.</td>
+                    <td colspan="17" class="text-center" style="color: #000120;">No journal submissions found.</td>
                 </tr>
             @endforelse
         </tbody>

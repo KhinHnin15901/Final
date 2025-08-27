@@ -16,6 +16,10 @@ return new class extends Migration
             Schema::create('journal_submissions', function (Blueprint $table) {
                 $table->bigIncrements('id'); // this is UNSIGNED by default
                 $table->text('name')->nullable();
+                $table->text('menu_script_title')->nullable();
+                $table->text('phone')->nullable();
+                $table->text('email')->nullable();
+                $table->integer('author_count')->nullable();
                 $table->unsignedBigInteger('event_id')->nullable();
                 $table->foreign('event_id')->references('id')->on('events')->onDelete('set null');
                 $table->foreignId('user_id')->constrained()->onDelete('cascade');
