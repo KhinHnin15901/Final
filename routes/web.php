@@ -28,7 +28,11 @@ use App\Http\Controllers\NotificationController;
 use App\Models\Journal;
 
 #guest user route
-Route::get('/', [HomeController::class, 'index'])->name('guest.home');
+Route::get('/', function () {
+    return view('guest.intro');
+})->name('guest.index');
+
+Route::get('/home', [HomeController::class, 'index'])->name('guest.home');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);

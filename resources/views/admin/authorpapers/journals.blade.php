@@ -13,11 +13,11 @@
             <tr>
                 <th class="py-2 px-3">#</th>
                 <th class="py-2 px-3">ID</th>
-                <th class="py-2 px-3">Menu Script Title</th>
+                <th class="py-2 px-3 text-nowrap">Menu Script Title</th>
                 <th class="py-2 px-3">Author(s)</th>
                 <th class="py-2 px-3">Phone</th>
                 <th class="py-2 px-3">Email</th>
-                <th class="py-2 px-3">Total No of Authors</th>
+                <th class="py-2 px-3 text-nowrap">Total No of Authors</th>
                 <th class="py-2 px-3">Topic</th>
                 <th class="py-2 px-3">Category</th>
                 <th class="py-2 px-3">Abstract</th>
@@ -41,8 +41,8 @@
                     </td>
                     <td class="py-2 px-3 text-center">{{ $submission->menu_script_title ?? '-' }}</td>
                     <td class="py-2 px-3 text-center">{{ $submission->name ?? '-' }}</td>
-                    <td class="py-2 px-3 text-center">{{ $submission->phone ?? '-' }}</td>
-                    <td class="py-2 px-3 text-center">{{ $submission->email ?? '-' }}</td>
+                    <td class="py-2 px-3 text-nowrap">{{ $submission->phone ?? '-' }}</td>
+                    <td class="py-2 px-3 text-nowrap">{{ $submission->email ?? '-' }}</td>
                     <td class="py-2 px-3 text-center">{{ $submission->author_count ?? '-' }}</td>
                     <td class="py-2 px-3 text-center">{{ $submission->topics->name ?? '-' }}</td>
                     <td class="py-2 px-3 text-center text-capitalize">{{ $submission->category->name ?? '-' }}</td>
