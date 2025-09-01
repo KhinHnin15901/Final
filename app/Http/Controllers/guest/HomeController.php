@@ -130,17 +130,18 @@ class HomeController extends Controller
 
         $current_issue = JournalReview::latest('id')->first();
 
-        $past_issues = Event::with('journal_submissions')
+       $past_issues = Event::with('journal_submissions')
             ->whereHas('category', function ($query) {
                 $query->where('name', 'journal');
             })
-            ->when($keyword_search, function ($q, $v) {
-                $q->whereHas('journal_submissions', function ($query) use ($v) {
-                    $query->where('keywords', 'LIKE', "%{$v}%");
+            ->whereHas('journal_submissions', function ($q) use ($keyword_search) {
+                $q->whereHas('review', function($reviewQuery) {
+                    $reviewQuery->where('evaluation', 'published');
                 });
-            })
-            ->whereHas('journal_submissions.review', function($query){
-                $query->where('evaluation', 'published');
+
+                if ($keyword_search) {
+                    $q->where('keywords', 'LIKE', "%{$keyword_search}%");
+                }
             })
             ->where('status', 'published')
             ->orderByDesc('created_at')
