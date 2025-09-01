@@ -29,6 +29,8 @@
                             $journal_submissions = $event->journal_submissions()
                                 ->whereHas('review', function($q) {
                                     $q->where('evaluation', 'published');
+                                })->when(request('keyword_search'), function ($q1){
+                                    $q1->where('keywords', 'LIKE', '%'.request('keyword_search').'%');
                                 })
                                 ->get();
                         @endphp

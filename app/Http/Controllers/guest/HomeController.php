@@ -130,7 +130,7 @@ class HomeController extends Controller
 
         $current_issue = JournalReview::latest('id')->first();
 
-       $past_issues = Event::with('journal_submissions')
+        $past_issues = Event::with('journal_submissions')
             ->whereHas('category', function ($query) {
                 $query->where('name', 'journal');
             })
