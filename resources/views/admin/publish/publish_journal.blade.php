@@ -19,7 +19,15 @@
                                     </tr>
                                 </thead>
                                 <tbody style="color:#000120;">
-                                    @foreach ($event->journal_submissions as $index => $journal)
+                                    @php
+                                        $journal_submissions = $event->journal_submissions()
+                                            ->whereHas('review', function($q) {
+                                                $q->where('evaluation', 'published');
+                                            })
+                                            ->get();
+                                    @endphp
+
+                                    @foreach ($journal_submissions as $index => $journal)
                                         <tr>
                                             <td class="text-center fw-bold" style="color:#027c7d;">
                                                 {{ str_pad($index + 1, 3, '0', STR_PAD_LEFT) }}

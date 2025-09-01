@@ -19,7 +19,7 @@ class AdminDashboardController extends Controller
         })->count();
 
         $request_paper_journals_count = JournalSubmission::count();
-        $published_journals_count = $publish_journals = JournalReview::where('evaluation', 'published')->count();
+        $published_journals_count = JournalReview::where('evaluation', 'published')->count();
         return view('admin.dashboard', compact('reviewer_count', 'author_count', 'request_paper_journals_count', 'published_journals_count'));
     }
 }
