@@ -74,11 +74,19 @@
                                 <i class="fas fa-undo"></i>
                                 </a>
                             @else
-                                <a href="#"
-                                onclick="event.preventDefault(); if(confirm('Send this review?')) { document.getElementById('toggle-status-{{ $review->id }}').submit(); }"
-                                class="btn btn-success btn-sm me-1">
-                                <i class="fas fa-paper-plane"></i>
-                                </a>
+                                @if ($review->evaluation == 'publish_draft')
+                                    <a href="#"
+                                        onclick="event.preventDefault(); if(confirm('Publish?')) { document.getElementById('toggle-status-{{ $review->id }}').submit(); }"
+                                        class="btn btn-success btn-sm me-1">
+                                        <i class="fas fa-paper-plane"></i>
+                                    </a>
+                                @else
+                                    <a href="#"
+                                        onclick="event.preventDefault(); if(confirm('Send this review?')) { document.getElementById('toggle-status-{{ $review->id }}').submit(); }"
+                                        class="btn btn-success btn-sm me-1">
+                                        <i class="fas fa-paper-plane"></i>
+                                    </a>
+                                @endif
                             @endif
                             <form id="toggle-status-{{ $review->id }}" action="{{ route('admin.schedule.journaltoggleStatus', $review->id) }}" method="POST" style="display: none;">
                                 @csrf

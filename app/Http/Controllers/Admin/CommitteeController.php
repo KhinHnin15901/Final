@@ -22,7 +22,7 @@ class CommitteeController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'role' => 'required|in:general_chair,program_chair,member',
+            'position' => 'required|in:general_chair,program_chair,member',
             'title' => 'required|string|max:255',
             'name' => 'required|string|max:255',
             'affiliation' => 'required|string|max:255',
@@ -43,7 +43,7 @@ class CommitteeController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'role' => 'required|in:general_chair,program_chair,member',
+            'position' => 'required|in:general_chair,program_chair,member',
             'title' => 'required|string|max:255',
             'name' => 'required|string|max:255',
             'affiliation' => 'required|string|max:255',

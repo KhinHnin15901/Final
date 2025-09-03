@@ -128,7 +128,7 @@ class HomeController extends Controller
         $journal = Journal::where('status', 'published')->get();
         $conference = Conference::where('status', 'published')->get();
 
-        $current_issue = JournalReview::latest('id')->first();
+        $current_issue = Event::latest('id')->first();
 
         $past_issues = Event::with('journal_submissions')
             ->whereHas('category', function ($query) {

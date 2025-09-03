@@ -9,15 +9,15 @@
 
             <!-- Role -->
             <div class="col-md-6">
-                <label for="role" class="form-label fw-semibold" style="color: #027c7d; font-size: 0.875rem;">Role</label>
-                <select name="role" id="role" class="form-control shadow-sm rounded-md @error('role') is-invalid @enderror"
+                <label for="position" class="form-label fw-semibold" style="color: #027c7d; font-size: 0.875rem;">Role</label>
+                <select name="position" id="position" class="form-control shadow-sm rounded-md @error('position') is-invalid @enderror"
                     style="border-color: #ced4da; font-size: 0.875rem; padding: 0.625rem;" required>
                     <option value="">Select Role</option>
                     <option value="general_chair">General Chair</option>
                     <option value="program_chair">Program Chair</option>
                     <option value="member">Member</option>
                 </select>
-                @error('role')
+                @error('position')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
