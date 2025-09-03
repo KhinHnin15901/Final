@@ -3,6 +3,10 @@
 <div class="table-responsive mt-4" style="font-family: Arial, sans-serif;">
     <h2 class="mb-4" style="color: #027c7d; font-weight: bold; font-size: large;">AUTHORS</h2>
 
+    @if (session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
+
     <table class="table table-hover align-middle" style="border-color: #e2e8f0; border-radius: 0.5rem; overflow: hidden; font-size: medium;">
         <thead class="text-white" style="background-color: #027c7d;">
             <tr>
