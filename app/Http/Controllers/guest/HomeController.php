@@ -27,6 +27,7 @@ class HomeController extends Controller
     {
         $reg_role = $request->role;
         $keyword_search = $request->keyword_search;
+        $journal_or_conference = $request->journal_or_conference;
         // Date
         $topics = Topic::all();
         $roles = Role::whereNotIn('name', ['admin'])->get();
@@ -67,6 +68,7 @@ class HomeController extends Controller
             })
             ->where('status', 'published')
             ->orderByDesc('created_at')
+            ->with('topics')
             ->get();
 
 
@@ -156,6 +158,7 @@ class HomeController extends Controller
             'programChair' => CommitteeMember::where('position', 'Program Chair')->first(),
             'members' => CommitteeMember::where('position', 'Member')->orderBy('name')->get(),
             'user_prefixes' => UserPrefix::get(),
+            'journal_or_conference' => $journal_or_conference,
         ]);
     }
 }

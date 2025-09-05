@@ -4,6 +4,7 @@
     {{-- #000120 black --}}
     @php
         $currentSection = request('section') ?? 'home';
+        $journal_or_conferenece = request('journal_or_conference') ?? '';
         $journalSections = ['journal', 'conference'];
     @endphp
 
@@ -18,49 +19,70 @@
 
             <!-- Desktop Navigation -->
             <nav class="hidden md:flex items-center space-x-6 text-sm font-semibold select-none">
-
-                <a href="{{ route('guest.home', ['section' => 'home']) }}"
-                    class="relative transition cursor-pointer
-                    {{ $currentSection === 'home' ? 'text-[#027c7d] font-bold' : 'hover:text-[#027c7d] hover:underline' }}">
-                    Home
-                </a>
-
-                <a href="{{ route('guest.home', ['section' => 'past_issue']) }}"
-                    class="relative transition cursor-pointer
-                    {{ $currentSection === 'past_issue' ? 'text-[#027c7d] font-bold' : 'hover:text-[#027c7d] hover:underline' }}">
-                    Past Issues
-                </a>
-
-                <a href="{{ route('guest.home', ['section' => 'current_issue']) }}"
-                    class="relative transition cursor-pointer
-                    {{ $currentSection === 'current_issue' ? 'text-[#027c7d] font-bold' : 'hover:text-[#027c7d] hover:underline' }}">
-                    Current Issue
-                </a>
-
-                <div class="relative group inline-block cursor-pointer">
-                    <button
-                        class="flex items-center gap-1 transition
-                        {{ in_array($currentSection, ['committee', 'reviewer']) ? 'text-[#027c7d] font-bold' : 'hover:text-[#027c7d] hover:underline' }}">
-                        Committee
-                        <svg class="w-3 h-3 stroke-current" fill="none" stroke-width="2" viewBox="0 0 24 24">
-                            <path d="M6 9l6 6 6-6" />
-                        </svg>
-                    </button>
-                    <div
-                        class="absolute left-0 hidden group-hover:block bg-white text-[#000120] rounded-md shadow-lg min-w-[180px] z-20">
-                        <a href="{{ route('guest.home', ['section' => 'committee']) }}"
-                            class="block px-4 py-3 transition
-                            {{ $currentSection === 'committee' ? 'bg-[#027c7d] text-white' : 'hover:bg-[#027c7d] hover:text-white' }}">
-                            Committee Members
+                @if ($journal_or_conferenece == 'journal' || auth()->check())
+                    <div class="hidden md:flex items-center space-x-6 select-none">
+                        <a href="{{ route('guest.home', ['section' => 'home']) }}"
+                            class="relative transition cursor-pointer
+                            {{ $currentSection === 'home' ? 'text-[#027c7d] font-bold' : 'hover:text-[#027c7d] hover:underline' }}">
+                            Home
                         </a>
-                        <a href="{{ route('guest.home', ['section' => 'reviewer']) }}"
-                            class="block px-4 py-3 transition
-                            {{ $currentSection === 'reviewer' ? 'bg-[#027c7d] text-white' : 'hover:bg-[#027c7d] hover:text-white' }}">
-                            For Reviewer
+                        <a href="{{ route('guest.home', ['section' => 'past_issue']) }}"
+                            class="relative transition cursor-pointer
+                            {{ $currentSection === 'past_issue' ? 'text-[#027c7d] font-bold' : 'hover:text-[#027c7d] hover:underline' }}">
+                            Past Issues
                         </a>
+                        <a href="{{ route('guest.home', ['section' => 'current_issue']) }}"
+                            class="relative transition cursor-pointer
+                            {{ $currentSection === 'current_issue' ? 'text-[#027c7d] font-bold' : 'hover:text-[#027c7d] hover:underline' }}">
+                            Current Issue
+                        </a>
+                        <div class="relative group inline-block cursor-pointer">
+                            <button
+                                class="flex items-center gap-1 transition
+                                {{ in_array($currentSection, ['committee', 'reviewer']) ? 'text-[#027c7d] font-bold' : 'hover:text-[#027c7d] hover:underline' }}">
+                                Committee
+                                <svg class="w-3 h-3 stroke-current" fill="none" stroke-width="2" viewBox="0 0 24 24">
+                                    <path d="M6 9l6 6 6-6" />
+                                </svg>
+                            </button>
+                            <div
+                                class="absolute left-0 hidden group-hover:block bg-white text-[#000120] rounded-md shadow-lg min-w-[180px] z-20">
+                                <a href="{{ route('guest.home', ['section' => 'committee']) }}"
+                                    class="block px-4 py-3 transition
+                                    {{ $currentSection === 'committee' ? 'bg-[#027c7d] text-white' : 'hover:bg-[#027c7d] hover:text-white' }}">
+                                    Committee Members
+                                </a>
+                                <a href="{{ route('guest.home', ['section' => 'reviewer']) }}"
+                                    class="block px-4 py-3 transition
+                                    {{ $currentSection === 'reviewer' ? 'bg-[#027c7d] text-white' : 'hover:bg-[#027c7d] hover:text-white' }}">
+                                    For Reviewer
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                </div>
-
+                @endif
+                @if ($journal_or_conferenece == '' && !auth()->check())
+                    <div class="relative group inline-block cursor-pointer">
+                        <button
+                            class="flex items-center gap-1 transition hover:text-[#027c7d] hover:underline">
+                            Journal & Conference
+                            <svg class="w-3 h-3 stroke-current" fill="none" stroke-width="2" viewBox="0 0 24 24">
+                                <path d="M6 9l6 6 6-6" />
+                            </svg>
+                        </button>
+                        <div
+                            class="absolute left-0 hidden group-hover:block bg-white text-[#000120] rounded-md shadow-lg min-w-[180px] z-20">
+                            <a href="{{ route('guest.home', ['journal_or_conference' => 'journal']) }}"
+                                class="block px-4 py-3 transition hover:bg-[#027c7d] hover:text-white">
+                                Journal
+                            </a>
+                            <a href="#"
+                                class="block px-4 py-3 transition hover:bg-[#027c7d] hover:text-white">
+                                Conference
+                            </a>
+                        </div>
+                    </div>
+                @endif
                 {{-- <div class="relative group inline-block cursor-pointer">
                     <button
                         class="flex items-center gap-1 transition
@@ -147,6 +169,13 @@
                     {{ $currentSection === 'contact' ? 'text-[#027c7d] font-bold' : 'hover:text-[#027c7d] hover:underline' }}">
                     Contact
                 </a>
+
+                @if ($journal_or_conferenece != '' && !auth()->check())
+                    <a href="{{ route('guest.home', ['journal_or_conferenece' => '']) }}"
+                        class="relative transition cursor-pointer hover:text-[#027c7d] hover:underline">
+                        Go To Start
+                    </a>
+                @endif
 
                 @auth
                     @php $unreadCount = auth()->user()->unreadNotifications->count(); @endphp

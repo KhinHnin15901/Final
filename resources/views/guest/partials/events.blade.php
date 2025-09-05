@@ -158,7 +158,7 @@
     </div>
 
     <!-- Journals Section -->
-    <div x-data="{ showModal: false, selectedEventId: null }" x-show="tab === 'journals'" x-cloak class="min-h-[40vh]">
+    <div x-data="{ showModal: false, selectedEventId: null, selectedTopics: [] }" x-show="tab === 'journals'" x-cloak class="min-h-[40vh]">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @forelse ($journals as $journal)
                 <div @click="showModalAD = true" class="cursor-pointer bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition">
@@ -259,8 +259,12 @@
                                     <a href="{{ asset('files/paper_format_conference.docx') }}" download class="px-4 py-2 bg-[#027c7d] text-white rounded hover:bg-green-700 transition">
                                         Download Paper Format
                                     </a>
-                                    <a @click="selectedEventId = {{ $journal->id }}; showModal = true"
-                                        class="bg-yellow-200 hover:bg-yellow-300 text-gray-800 text-sm font-semibold px-4 py-2 rounded transition cursor-pointer">
+                                    <a @click="
+                                        selectedEventId = {{ $journal->id }};
+                                        selectedTopics = {{ $journal->topics->toJson() }};
+                                        showModal = true
+                                    "
+                                    class="bg-yellow-200 hover:bg-yellow-300 text-gray-800 text-sm font-semibold px-4 py-2 rounded transition cursor-pointer">
                                         See Paper Request Form
                                     </a>
                                 </div>
@@ -340,17 +344,13 @@
                         <div>
                             <label for="topics" class="block text-sm font-semibold text-[#027c7d]">Topic</label>
                             <div class="relative mt-1">
-                                <select name="topic_id" id="field" class="appearance-none w-full rounded-md border border-gray-300 px-4 py-2 text-[#000120] placeholder-gray-400 bg-white focus:outline-none focus:ring-2 focus:ring-[#027c7d] focus:border-[#027c7d] text-sm shadow-sm" required>
-                                    <option value="" disabled selected>Select a topic</option>
-                                    @foreach ($topics as $topic)
-                                        <option value="{{ $topic->id }}">{{ $topic->name }}</option>
-                                    @endforeach
+                                <select name="topic_id" id="field" required
+                                    class="appearance-none w-full rounded-md border border-gray-300 px-4 py-2 text-[#000120] bg-white focus:outline-none focus:ring-2 focus:ring-[#027c7d] text-sm shadow-sm">
+                                    <option value="" disabled selected>Select a Topic</option>
+                                    <template x-for="topic in selectedTopics" :key="topic.id">
+                                        <option :value="topic.id" x-text="topic.name"></option>
+                                    </template>
                                 </select>
-                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500">
-                                    <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-                                    </svg>
-                                </div>
                             </div>
                         </div>
 
