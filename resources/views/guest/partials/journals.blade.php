@@ -72,7 +72,7 @@
                     @if ($submission->journalSubmission->paper_path)
                         <p class="text-sm">
                             <strong>Paper:</strong>
-                            <a href="{{ route('conference.download', $submission->id) }}"
+                            <a href="{{ asset('storage/' . $submission->journalSubmission->paper_path) }}" target="_blank"
                                class="text-blue-600 font-medium hover:underline hover:text-green-700" download>
                                 Download
                             </a>

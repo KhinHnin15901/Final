@@ -201,17 +201,18 @@
                         </div>
                     </div>
                 @endauth
-
-                @guest
-                    <a href="{{ route('guest.home', ['section' => 'register', 'role' => 'author', 'journal_or_conference' => $journal_or_conference]) }}"
-                        class="text-white font-semibold uppercase text-xs bg-[#027c7d] rounded-md hover:bg-[#027c7d]/90 border-2 border-[#d6dd42] transition px-3 py-2">
-                        Register
-                    </a>
-                    <a href="{{ route('guest.home', ['section' => 'login', 'journal_or_conference' => $journal_or_conference]) }}"
-                        class="text-white font-semibold uppercase text-xs bg-[#027c7d] rounded-md hover:bg-[#027c7d]/90 border-2 border-[#d6dd42] transition px-3 py-2">
-                        Login
-                    </a>
-                @endguest
+                @if ($journal_or_conference == 'journal')
+                    @guest
+                        <a href="{{ route('guest.home', ['section' => 'register', 'role' => 'author', 'journal_or_conference' => $journal_or_conference]) }}"
+                            class="text-white font-semibold uppercase text-xs bg-[#027c7d] rounded-md hover:bg-[#027c7d]/90 border-2 border-[#d6dd42] transition px-3 py-2">
+                            Register
+                        </a>
+                        <a href="{{ route('guest.home', ['section' => 'login', 'journal_or_conference' => $journal_or_conference]) }}"
+                            class="text-white font-semibold uppercase text-xs bg-[#027c7d] rounded-md hover:bg-[#027c7d]/90 border-2 border-[#d6dd42] transition px-3 py-2">
+                            Login
+                        </a>
+                    @endguest
+                @endif
 
                 <!-- Mobile Menu Toggle -->
                 <button @click="mobileOpen = !mobileOpen" class="md:hidden hover:text-[#027c7d]">
