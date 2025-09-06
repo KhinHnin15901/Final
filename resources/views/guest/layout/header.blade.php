@@ -4,7 +4,7 @@
     {{-- #000120 black --}}
     @php
         $currentSection = request('section') ?? 'home';
-        $journal_or_conferenece = request('journal_or_conference') ?? '';
+        // $journal_or_conference = request('journal_or_conference') ?? '';
         $journalSections = ['journal', 'conference'];
     @endphp
 
@@ -19,19 +19,19 @@
 
             <!-- Desktop Navigation -->
             <nav class="hidden md:flex items-center space-x-6 text-sm font-semibold select-none">
-                @if ($journal_or_conferenece == 'journal' || auth()->check())
+                @if ($journal_or_conference == 'journal' || auth()->check())
                     <div class="hidden md:flex items-center space-x-6 select-none">
-                        <a href="{{ route('guest.home', ['section' => 'home']) }}"
+                        <a href="{{ route('guest.home', ['section' => 'home', 'journal_or_conference' => $journal_or_conference]) }}"
                             class="relative transition cursor-pointer
                             {{ $currentSection === 'home' ? 'text-[#027c7d] font-bold' : 'hover:text-[#027c7d] hover:underline' }}">
                             Home
                         </a>
-                        <a href="{{ route('guest.home', ['section' => 'past_issue']) }}"
+                        <a href="{{ route('guest.home', ['section' => 'past_issue', 'journal_or_conference' => $journal_or_conference]) }}"
                             class="relative transition cursor-pointer
                             {{ $currentSection === 'past_issue' ? 'text-[#027c7d] font-bold' : 'hover:text-[#027c7d] hover:underline' }}">
                             Past Issues
                         </a>
-                        <a href="{{ route('guest.home', ['section' => 'current_issue']) }}"
+                        <a href="{{ route('guest.home', ['section' => 'current_issue', 'journal_or_conference' => $journal_or_conference]) }}"
                             class="relative transition cursor-pointer
                             {{ $currentSection === 'current_issue' ? 'text-[#027c7d] font-bold' : 'hover:text-[#027c7d] hover:underline' }}">
                             Current Issue
@@ -47,12 +47,12 @@
                             </button>
                             <div
                                 class="absolute left-0 hidden group-hover:block bg-white text-[#000120] rounded-md shadow-lg min-w-[180px] z-20">
-                                <a href="{{ route('guest.home', ['section' => 'committee']) }}"
+                                <a href="{{ route('guest.home', ['section' => 'committee', 'journal_or_conference' => $journal_or_conference]) }}"
                                     class="block px-4 py-3 transition
                                     {{ $currentSection === 'committee' ? 'bg-[#027c7d] text-white' : 'hover:bg-[#027c7d] hover:text-white' }}">
                                     Committee Members
                                 </a>
-                                <a href="{{ route('guest.home', ['section' => 'reviewer']) }}"
+                                <a href="{{ route('guest.home', ['section' => 'reviewer', 'journal_or_conference' => $journal_or_conference]) }}"
                                     class="block px-4 py-3 transition
                                     {{ $currentSection === 'reviewer' ? 'bg-[#027c7d] text-white' : 'hover:bg-[#027c7d] hover:text-white' }}">
                                     For Reviewer
@@ -61,7 +61,7 @@
                         </div>
                     </div>
                 @endif
-                @if ($journal_or_conferenece == '' && !auth()->check())
+                @if ($journal_or_conference == '' && !auth()->check())
                     <div class="relative group inline-block cursor-pointer">
                         <button
                             class="flex items-center gap-1 transition hover:text-[#027c7d] hover:underline">
@@ -83,29 +83,7 @@
                         </div>
                     </div>
                 @endif
-                {{-- <div class="relative group inline-block cursor-pointer">
-                    <button
-                        class="flex items-center gap-1 transition
-                        {{ in_array($currentSection, $journalSections) ? 'text-[#027c7d] font-bold' : 'hover:text-[#027c7d] hover:underline' }}">
-                        Journals & Conferences
-                        <svg class="w-3 h-3 stroke-current" fill="none" stroke-width="2" viewBox="0 0 24 24">
-                            <path d="M6 9l6 6 6-6" />
-                        </svg>
-                    </button>
-                    <div
-                        class="absolute left-0 hidden group-hover:block bg-white text-[#000120] rounded-md shadow-lg min-w-[160px] z-20">
-                        <a href="{{ route('guest.home', ['section' => 'journal']) }}"
-                            class="block px-4 py-3 transition
-                            {{ $currentSection === 'journal' ? 'bg-[#027c7d] text-white' : 'hover:bg-[#027c7d] hover:text-white' }}">
-                            Journal
-                        </a>
-                        <a href="{{ route('guest.home', ['section' => 'conference']) }}"
-                            class="block px-4 py-3 transition
-                            {{ $currentSection === 'conference' ? 'bg-[#027c7d] text-white' : 'hover:bg-[#027c7d] hover:text-white' }}">
-                            Conference
-                        </a>
-                    </div>
-                </div> --}}
+
                 @if (Auth::check() && Auth::user()->roles->contains('name', 'author'))
                     <a href="{{ route('guest.home', ['section' => 'events']) }}"
                         class="relative transition cursor-pointer
@@ -158,20 +136,20 @@
                     </div>
                 @endif
 
-                <a href="{{ route('guest.home', ['section' => 'about']) }}"
+                <a href="{{ route('guest.home', ['section' => 'about', 'journal_or_conference' => $journal_or_conference]) }}"
                     class="relative transition cursor-pointer
                     {{ $currentSection === 'about' ? 'text-[#027c7d] font-bold' : 'hover:text-[#027c7d] hover:underline' }}">
                     About
                 </a>
 
-                <a href="{{ route('guest.home', ['section' => 'contact']) }}"
+                <a href="{{ route('guest.home', ['section' => 'contact', 'journal_or_conference' => $journal_or_conference]) }}"
                     class="relative transition cursor-pointer
                     {{ $currentSection === 'contact' ? 'text-[#027c7d] font-bold' : 'hover:text-[#027c7d] hover:underline' }}">
                     Contact
                 </a>
 
-                @if ($journal_or_conferenece != '' && !auth()->check())
-                    <a href="{{ route('guest.home', ['journal_or_conferenece' => '']) }}"
+                @if ($journal_or_conference != '' && !auth()->check())
+                    <a href="{{ route('guest.home', ['journal_or_conference' => '']) }}"
                         class="relative transition cursor-pointer hover:text-[#027c7d] hover:underline">
                         Go To Start
                     </a>
@@ -225,11 +203,11 @@
                 @endauth
 
                 @guest
-                    <a href="{{ route('guest.home', ['section' => 'register', 'role' => 'author']) }}"
+                    <a href="{{ route('guest.home', ['section' => 'register', 'role' => 'author', 'journal_or_conference' => $journal_or_conference]) }}"
                         class="text-white font-semibold uppercase text-xs bg-[#027c7d] rounded-md hover:bg-[#027c7d]/90 border-2 border-[#d6dd42] transition px-3 py-2">
                         Register
                     </a>
-                    <a href="{{ route('guest.home', ['section' => 'login']) }}"
+                    <a href="{{ route('guest.home', ['section' => 'login', 'journal_or_conference' => $journal_or_conference]) }}"
                         class="text-white font-semibold uppercase text-xs bg-[#027c7d] rounded-md hover:bg-[#027c7d]/90 border-2 border-[#d6dd42] transition px-3 py-2">
                         Login
                     </a>
