@@ -132,15 +132,6 @@
             @endif
 
             @if ($user->roles()->first()->name == 'author')
-                <!-- Address -->
-                <div class="col-md-6">
-                    <label for="address" class="form-label fw-semibold" style="color:#027c7d; font-size: 0.875rem;">Address</label>
-                    <input type="text" name="address"
-                        class="form-control shadow-sm @error('address') is-invalid @enderror"
-                        value="{{ old('address', $user->address) }}"
-                        style="font-size: 0.875rem; padding: 0.625rem;">
-                    @error('address') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                </div>
                 <!-- Position -->
                 <div class="col-md-6">
                     <label for="position" class="form-label fw-semibold" style="color:#027c7d; font-size: 0.875rem;">Position</label>
@@ -161,21 +152,12 @@
                 </div>
                 <!-- Organization -->
                 <div class="col-md-6">
-                    <label for="orginization" class="form-label fw-semibold" style="color:#027c7d; font-size: 0.875rem;">Organization</label>
-                    <input type="text" name="orginization"
-                        class="form-control shadow-sm @error('orginization') is-invalid @enderror"
-                        value="{{ old('orginization', $user->orginization) }}"
+                    <label for="organization" class="form-label fw-semibold" style="color:#027c7d; font-size: 0.875rem;">Organization</label>
+                    <input type="text" name="organization"
+                        class="form-control shadow-sm @error('organization') is-invalid @enderror"
+                        value="{{ old('organization', $user->organization) }}"
                         style="font-size: 0.875rem; padding: 0.625rem;">
-                    @error('orginization') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                </div>
-                <!-- Field -->
-                <div class="col-md-6">
-                    <label for="field" class="form-label fw-semibold" style="color:#027c7d; font-size: 0.875rem;">Field</label>
-                    <input type="text" name="field"
-                        class="form-control shadow-sm @error('field') is-invalid @enderror"
-                        value="{{ old('field', $user->field) }}"
-                        style="font-size: 0.875rem; padding: 0.625rem;">
-                    @error('field') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                    @error('organization') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>
             @endif
 

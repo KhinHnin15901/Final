@@ -8,7 +8,7 @@
         <!-- Title -->
         <div class="flex flex-col items-center gap-2 justify-center">
             <h2 class="text-center text-xl font-bold text-[#000120]">
-                Create an {{ $reg_role == 'author' ? 'Author' : 'Reviewer' }} Account {{ $reg_role }}
+                Create an {{ $reg_role == 'author' ? 'Author' : 'Reviewer' }} Account
             </h2>
             <p class="text-center text-sm text-gray-600">Fill out the form to get started</p>
         </div>

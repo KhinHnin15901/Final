@@ -47,9 +47,9 @@ class UserController extends Controller
 
         if ($user->roles()->first()->name === 'author') {
             $validate_fields += [
-                'address' => 'nullable|string|max:255',
                 'position' => 'nullable|string|max:255',
                 'department' => 'nullable|string|max:255',
+                'organization' => 'nullable|string|max:255',
             ];
         } elseif ($user->roles()->first()->name === 'reviewer') {
             $validate_fields += [
