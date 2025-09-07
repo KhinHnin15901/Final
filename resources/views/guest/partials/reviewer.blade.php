@@ -44,7 +44,7 @@
 
     <!-- CTA Button -->
     <div class="flex items-center justify-center">
-        <a href="{{ route('guest.home', ['section' => 'register', 'role' => 'reviewer']) }}"
+        <a href="{{ route('guest.home', ['section' => 'register', 'role' => 'reviewer', 'journal_or_conference' => $journal_or_conference]) }}"
            class="text-white font-semibold text-sm bg-[#027c7d] hover:bg-[#026364] rounded-lg px-6 py-3 border-2 border-[#d6dd42] shadow-md transition">
             Register Now
         </a>
