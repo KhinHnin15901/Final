@@ -5,7 +5,7 @@
     <!-- Intro -->
     <p class="text-gray-700 text-base leading-relaxed mb-6 text-center text-md">
         All submitted papers will go through a peer-review process. We are inviting qualified reviewers to join us.
-        If you would like to be a reviewer for the conference, please apply through the
+        If you would like to be a reviewer, please apply through the
         <span class="font-semibold">CMSE Peer Review System</span> or send your English CV to
         <a href="mailto:cmse@cmseconf.org" class="text-[#027c7d] underline hover:text-[#014f50]">cmse@cmseconf.org</a>.
     </p>
@@ -27,8 +27,6 @@
             <li>Refresh your knowledge</li>
             <li>Gain experience in your research field</li>
             <li>Build your reputation</li>
-            <li>Enjoy a discount for your conference registration fee after valuable reviews</li>
-            <li>Be a potential candidate for TPC membership in the next CMSE conference</li>
         </ul>
     </div>
 

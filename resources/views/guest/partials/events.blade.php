@@ -381,7 +381,7 @@
 
                         <div class="text-right">
                             <button type="submit" class="py-2.5 px-4 rounded-md shadow-md text-white bg-[#027c7d] hover:bg-[#026a6b] transition duration-300 text-sm font-semibold">
-                                Create Journal
+                                Submit Paper
                             </button>
                         </div>
                     </form>
