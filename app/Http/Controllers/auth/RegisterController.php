@@ -85,7 +85,7 @@ class RegisterController extends Controller
 
         // If reviewer, do NOT auto-login and show info to wait for approval
         if ($role && strtolower($role->name) === 'reviewer') {
-            return redirect()->route('guest.home', ['section' => 'login'])
+            return redirect()->route('guest.home', ['section' => 'login', 'journal_or_conference' => 'journal'])
                 ->with('success', 'Registration successful! Please wait for admin approval.');
         }
 
