@@ -1,7 +1,8 @@
 <div class="font-[Arial,sans-serif] w-2/3">
     <h2 class="mb-6 text-lg font-bold text-[#027c7d]">Past Issues</h2>
-    <form method="GET" action="{{ route('guest.home', ['journal_or_conference' => $journal_or_conference]) }}" class="flex flex-row items-center gap-2 w-full max-w-md mb-4">
+    <form method="GET" action="{{ route('guest.home') }}" class="flex flex-row items-center gap-2 w-full max-w-md mb-4">
         <input type="hidden" name="section" value="past_issue">
+        <input type="hidden" name="journal_or_conference" value="{{$journal_or_conference}}">
         <input id="keyword_search" name="keyword_search" type="text" value="{{ request('keyword_search') }}"
             placeholder="Search issues with keyword..."
             class="flex-1 rounded-md border border-gray-300 px-4 py-2 text-[#000120] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#027c7d] focus:border-[#027c7d] text-sm shadow-sm" />
