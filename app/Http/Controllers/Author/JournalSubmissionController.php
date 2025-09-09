@@ -23,7 +23,7 @@ class JournalSubmissionController extends Controller
             'menu_script_title' => 'required|string',
             'phone' => 'required',
             'email' => 'required|string',
-            'author_count' => 'required|integer',
+            // 'author_count' => 'required|integer',
             'topic_id' => 'required|integer|exists:topics,id',
             'abstract' => 'required|string',
             'keywords' => 'required|string',

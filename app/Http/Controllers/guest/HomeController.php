@@ -150,6 +150,7 @@ class HomeController extends Controller
             ->get();
 
         $event = Event::latest('id')->first();
+        $published_event = Event::where('id', $request->event_id)->first();
 
         $infos = RegistrationInfo::all()->groupBy('type');
         $journal_review = JournalReview::find($request->journal_review_id);
@@ -159,6 +160,7 @@ class HomeController extends Controller
             'members' => CommitteeMember::where('position', 'Member')->orderBy('name')->get(),
             'user_prefixes' => UserPrefix::get(),
             'journal_or_conference' => $journal_or_conference,
+            'published_event' => $published_event,
         ]);
     }
 }

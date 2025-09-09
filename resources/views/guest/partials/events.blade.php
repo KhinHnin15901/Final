@@ -327,19 +327,19 @@
                         </div>
 
                         <div>
-                            <label for="phone" class="block text-sm font-semibold text-[#027c7d]">Phone</label>
-                            <input type="text" name="phone" id="phone" class="w-full rounded-md border border-gray-300 px-4 py-2 text-[#000120] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#027c7d] focus:border-[#027c7d] text-sm shadow-sm mt-1"  placeholder="Enter Phone No." required maxlength="255">
+                            <label for="phone" class="block text-sm font-semibold text-[#027c7d]">Authors' Phone Numbers</label>
+                            <input type="text" name="phone" id="phone" class="w-full rounded-md border border-gray-300 px-4 py-2 text-[#000120] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#027c7d] focus:border-[#027c7d] text-sm shadow-sm mt-1"  placeholder="+959...., +959...." required>
                         </div>
 
                         <div>
-                            <label for="email" class="block text-sm font-semibold text-[#027c7d]">Email</label>
-                            <input type="email" name="email" id="email" class="w-full rounded-md border border-gray-300 px-4 py-2 text-[#000120] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#027c7d] focus:border-[#027c7d] text-sm shadow-sm mt-1"  placeholder="Enter Email" required maxlength="255">
+                            <label for="email" class="block text-sm font-semibold text-[#027c7d]">Authors' Emails</label>
+                            <input type="text" name="email" id="email" class="w-full rounded-md border border-gray-300 px-4 py-2 text-[#000120] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#027c7d] focus:border-[#027c7d] text-sm shadow-sm mt-1"  placeholder="example@gmail.com, example2@gmail.com..." required>
                         </div>
 
-                        <div>
+                        {{-- <div>
                             <label for="author_count" class="block text-sm font-semibold text-[#027c7d]">Total Number of Authors</label>
                             <input type="number" name="author_count" id="author_count" class="w-full rounded-md border border-gray-300 px-4 py-2 text-[#000120] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#027c7d] focus:border-[#027c7d] text-sm shadow-sm mt-1"  placeholder="Enter Total Number" required maxlength="255">
-                        </div>
+                        </div> --}}
 
                         <div>
                             <label for="topics" class="block text-sm font-semibold text-[#027c7d]">Topic</label>

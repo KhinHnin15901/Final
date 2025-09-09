@@ -28,14 +28,14 @@
                         </a>
                         <a href="{{ route('guest.home', ['section' => 'past_issue', 'journal_or_conference' => $journal_or_conference]) }}"
                             class="relative transition cursor-pointer
-                            {{ $currentSection === 'past_issue' ? 'text-[#027c7d] font-bold' : 'hover:text-[#027c7d] hover:underline' }}">
-                            Past Issues
+                            {{ ($currentSection === 'past_issue' || $currentSection === 'published_papers') ? 'text-[#027c7d] font-bold' : 'hover:text-[#027c7d] hover:underline' }}">
+                            Publication
                         </a>
-                        <a href="{{ route('guest.home', ['section' => 'current_issue', 'journal_or_conference' => $journal_or_conference]) }}"
+                        {{-- <a href="{{ route('guest.home', ['section' => 'current_issue', 'journal_or_conference' => $journal_or_conference]) }}"
                             class="relative transition cursor-pointer
                             {{ $currentSection === 'current_issue' ? 'text-[#027c7d] font-bold' : 'hover:text-[#027c7d] hover:underline' }}">
                             Current Issue
-                        </a>
+                        </a> --}}
                         <div class="relative group inline-block cursor-pointer">
                             <button
                                 class="flex items-center gap-1 transition
@@ -136,6 +136,23 @@
                     </div>
                 @endif
 
+                @auth
+                    @php $unreadCount = auth()->user()->unreadNotifications->count(); @endphp
+                    @if (Auth::user()->roles->contains('name', 'author'))
+                        <a href="{{ route('guest.home', ['section' => 'notification']) }}"
+                            class="relative py-2 transition cursor-pointer
+                            {{ $currentSection === 'notification' ? 'text-[#027c7d] font-bold' : 'hover:text-[#027c7d] hover:underline' }}">
+                            Notifications
+                            @if ($unreadCount > 0)
+                                <span
+                                    class="absolute -top-2 -right-3 bg-[#d6dd42] text-[#000120] text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                                    {{ $unreadCount }}
+                                </span>
+                            @endif
+                        </a>
+                    @endif
+                @endauth
+
                 <a href="{{ route('guest.home', ['section' => 'about', 'journal_or_conference' => $journal_or_conference]) }}"
                     class="relative transition cursor-pointer
                     {{ $currentSection === 'about' ? 'text-[#027c7d] font-bold' : 'hover:text-[#027c7d] hover:underline' }}">
@@ -155,22 +172,6 @@
                     </a>
                 @endif
 
-                @auth
-                    @php $unreadCount = auth()->user()->unreadNotifications->count(); @endphp
-                    @if (Auth::user()->roles->contains('name', 'author'))
-                        <a href="{{ route('guest.home', ['section' => 'notification']) }}"
-                            class="relative py-2 transition cursor-pointer
-                            {{ $currentSection === 'notification' ? 'text-[#027c7d] font-bold' : 'hover:text-[#027c7d] hover:underline' }}">
-                            Notifications
-                            @if ($unreadCount > 0)
-                                <span
-                                    class="absolute -top-2 -right-3 bg-[#d6dd42] text-[#000120] text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                                    {{ $unreadCount }}
-                                </span>
-                            @endif
-                        </a>
-                    @endif
-                @endauth
             </nav>
 
             <!-- Auth Buttons / Profile -->

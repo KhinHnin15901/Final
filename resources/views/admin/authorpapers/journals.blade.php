@@ -14,9 +14,9 @@
                 <th class="py-2 px-3">#</th>
                 <th class="py-2 px-3">ID</th>
                 <th class="py-2 px-3 text-nowrap">Menu Script Title</th>
-                <th class="py-2 px-3">Author(s)</th>
-                <th class="py-2 px-3">Phone</th>
-                <th class="py-2 px-3">Email</th>
+                <th class="py-2 px-3">Author/Authors</th>
+                <th class="py-2 px-3">Authors' Phones/Phone</th>
+                <th class="py-2 px-3">Authors' Emails/Email</th>
                 <th class="py-2 px-3 text-nowrap">Total No of Authors</th>
                 <th class="py-2 px-3">Topic</th>
                 <th class="py-2 px-3">Category</th>
@@ -40,7 +40,7 @@
                         PJ{{ str_pad($submission->id, 3, '0', STR_PAD_LEFT) }}
                     </td>
                     <td class="py-2 px-3 text-center">{{ $submission->menu_script_title ?? '-' }}</td>
-                    <td class="py-2 px-3 text-center">{{ $submission->name ?? '-' }}</td>
+                    <td class="py-2 px-3 text-center text-nowrap">{{ $submission->name ?? '-' }}</td>
                     <td class="py-2 px-3 text-nowrap">{{ $submission->phone ?? '-' }}</td>
                     <td class="py-2 px-3 text-nowrap">{{ $submission->email ?? '-' }}</td>
                     <td class="py-2 px-3 text-center">{{ $submission->author_count ?? '-' }}</td>

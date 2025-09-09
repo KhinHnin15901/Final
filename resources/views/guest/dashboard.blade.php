@@ -45,6 +45,8 @@
         @include('guest.partials.current_issue')
     @elseif ($section === 'past_issue')
         @include('guest.partials.past_issue')
+    @elseif ($section === 'published_papers')
+        @include('guest.partials.published_papers')
     @else
         @include('guest.partials.events')
     @endif
