@@ -37,6 +37,7 @@
                 <th class="py-2 px-3 text-nowrap">Reviewer 1</th>
                 <th class="py-2 px-3 text-nowrap">Reviewer 2</th>
                 <th class="py-2 px-3 text-nowrap">Reviewer 3</th>
+                <th class="py-2 px-3 text-nowrap">Marks</th>
                 <th class="py-2 px-3 text-nowrap">Evaluation</th>
                 <th class="py-2 px-3 text-nowrap">Payment Receipt</th>
                 <th class="py-2 px-3 text-nowrap">Comments</th>
@@ -55,6 +56,7 @@
                     <td class="py-2 px-3">{{ $review->reviewer1->name ?? 'Not Reviewed Yet' }}</td>
                     <td class="py-2 px-3">{{ $review->reviewer2->name ?? 'Not Reviewed Yet' }}</td>
                     <td class="py-2 px-3">{{ $review->reviewer3->name ?? 'Not Reviewed Yet' }}</td>
+                    <td class="py-2 px-3">{{ $review->mark ?? '-' }}</td>
                     <td class="py-2 px-3 text-capitalize">{{ str_replace('_', ' ', $review->evaluation) }}</td>
                     <td class="py-2 px-3 text-capitalize">
                         @if ($review->kpay_receipt)

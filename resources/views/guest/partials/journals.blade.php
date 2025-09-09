@@ -138,7 +138,7 @@
                     </div>
 
                     <!-- Overall Evaluation -->
-                    <div>
+                    {{-- <div>
                         <label class="block text-sm font-semibold text-gray-700 mb-2">Overall Evaluation</label>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                             @foreach ([
@@ -155,7 +155,7 @@
                                 </label>
                             @endforeach
                         </div>
-                    </div>
+                    </div> --}}
 
                     <!-- Comments -->
                     <div>

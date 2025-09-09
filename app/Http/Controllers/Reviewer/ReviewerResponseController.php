@@ -119,8 +119,19 @@ class ReviewerResponseController extends Controller
 
     public function updateJournal(Request $request, $id)
     {
+        $totalRating = array_sum($request->ratings);
+        $initial_evaluation = null;
+        if ($totalRating < 50) {
+                $initial_evaluation = 'reject';
+            } elseif ($totalRating <= 150 && $totalRating >= 120) {
+                $initial_evaluation = 'acceptable';
+            } elseif ($totalRating < 120 && $totalRating >= 90) {
+                $initial_evaluation = 'minor_revisions';
+            } elseif ($totalRating < 90 && $totalRating >= 50) {
+                $initial_evaluation = 'major_revisions';
+            }
         $request->validate([
-            'evaluation' => 'required|in:acceptable,minor_revisions,major_revisions,reject',
+            // 'evaluation' => 'required|in:acceptable,minor_revisions,major_revisions,reject',
             'reviewer_comments' => 'required|string|min:10',
         ]);
 
@@ -131,74 +142,49 @@ class ReviewerResponseController extends Controller
             $review = JournalReview::create([
                 'journal_submission_id' => $id,
                 'reviewer1_id' => Auth::id(),
-                'evaluation' => $request->evaluation, // initial, may be overwritten
+                'evaluation' => $initial_evaluation, // initial, may be overwritten
                 'reviewer_comments' => $request->reviewer_comments,
+                'mark' => $totalRating,
                 'status' => 'draft',
             ]);
         } else {
             $userId = Auth::id();
-            $evaluationChanged = false;
+            $markChanged = false;
             if ($review->reviewer1_id === null) {
                 $review->reviewer1_id = $userId;
-                $evaluationChanged = true;
+                $markChanged = true;
             } elseif ($review->reviewer2_id === null) {
                 $review->reviewer2_id = $userId;
-                $evaluationChanged = true;
+                $markChanged = true;
             } elseif ($review->reviewer3_id === null) {
                 $review->reviewer3_id = $userId;
-                $evaluationChanged = true;
+                $markChanged = true;
             } else {
                 return back()->with('error', 'All reviewers already assigned.');
             }
 
-            if ($evaluationChanged) {
+            if ($markChanged) {
                 // Append new reviewer comment
                 $review->reviewer_comments .= "\n[{$userId}] " . $request->reviewer_comments;
+                $newMarks = array_sum($request->ratings);
+                $marks = 0;
 
-                // Store the current user's evaluation separately
-                // We simulate storing multiple reviewer decisions in this array
-                $evaluations = [];
-
-                // Existing evaluation already stored
-                if (!empty($review->evaluation)) {
-                    $evaluations[] = $review->evaluation;
+                if (!empty($review->mark)) {
+                    $marks += $review->mark;
                 }
 
-                // Add the new evaluation just submitted
-                $evaluations[] = $request->evaluation;
+                $marks += $newMarks;
 
-                // Normalize to collection
-                $evalCollection = collect($evaluations)->filter();
-                $counts = $evalCollection->countBy();
-                $total  = $evalCollection->count();
-
-                // --- Decision rules (simple & explicit) ---
-                if ($counts->has('reject')) {
+                if ($marks < 50) {
                     $review->evaluation = 'reject';
+                } elseif ($marks <= 150 && $marks >= 120) {
+                    $review->evaluation = 'acceptable';
+                } elseif ($marks < 120 && $marks >= 90) {
+                    $review->evaluation = 'minor_revisions';
+                } elseif ($marks < 90 && $marks >= 50) {
+                    $review->evaluation = 'major_revisions';
                 }
-                // All accept (handles 1, 2, or 3 accepts only)
-                elseif ($counts->get('accept', 0) === $total) {
-                    $review->evaluation = 'accept';
-                }
-                // Special rule: if accept is majority (>=2) but there is a revision, choose that revision
-                elseif ($counts->get('accept', 0) >= 2 && ($counts->has('major_revisions') || $counts->has('minor_revisions'))) {
-                    $review->evaluation = $counts->has('major_revisions') ? 'major_revisions' : 'minor_revisions';
-                }
-                // Normal majority (>=2 of same non-accept) wins
-                elseif ($counts->max() >= 2) {
-                    $review->evaluation = $counts->sortDesc()->keys()->first(); // e.g., 2 major vs 1 minor → major
-                }
-                // No majority → priority: major > minor > accept
-                else {
-                    if ($counts->has('major_revisions')) {
-                        $review->evaluation = 'major_revisions';
-                    } elseif ($counts->has('minor_revisions')) {
-                        $review->evaluation = 'minor_revisions';
-                    } else {
-                        $review->evaluation = 'accept';
-                    }
-                }
-
+                $review->mark = $marks;
                 $review->save();
             }
         }
