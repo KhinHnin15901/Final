@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\AuthorNoti;
 use App\Models\Journal;
 use Illuminate\Http\Request;
 use App\Models\JournalSubmission;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use App\Models\JournalReview;
 use App\Notifications\ReviewDecisionNotification;
+use Illuminate\Support\Facades\Mail;
 
 class ReviewJournalScheduleController extends Controller
 {
@@ -199,13 +201,23 @@ class ReviewJournalScheduleController extends Controller
         if ($review->status === 'sent') {
 
             $submission = $review->journalSubmission; // or conferenceSubmission if appropriate
+            $author_emails = array_map(fn($mail) => trim($mail), explode(',', $submission->email));
+
+            $message = match ($review->evaluation) {
+                'acceptable' => 'accepted ✅',
+                'minor_revisions', 'major_revisions' => 'conditionally accepted (needs revision). This submission has been auto-rejected
+                                            after 3 revisions.✏️',
+                'reject' => 'rejected ❌',
+                'published' => 'published ✅',
+            };
+
+            foreach ($author_emails as $key => $mail) {
+                Mail::to($mail)->send(new AuthorNoti($message));
+            }
 
             if ($submission && ($author = $submission->author)) {
                 $author->notify(new ReviewDecisionNotification($submission, $review));
             }
-            // adjust if needed
-
-
         }
         return redirect()->back()->with('success', 'Review status updated.');
     }
