@@ -51,11 +51,11 @@
             </div>
 
             {{-- Author Count --}}
-            <div class="col-12">
+            {{-- <div class="col-12">
                 <label class="form-label fw-semibold" style="color:#027c7d;">Total No of Authors</label>
                 <input type="number" name="author_count" class="form-control shadow-sm @error('author_count') is-invalid @enderror" value="{{ old('author_count', $submission->author_count) }}" required>
                 @error('author_count') <div class="invalid-feedback">{{ $message }}</div> @enderror
-            </div>
+            </div> --}}
 
             {{-- Topic --}}
             <div class="col-12">

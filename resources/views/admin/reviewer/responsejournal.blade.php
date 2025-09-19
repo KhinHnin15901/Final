@@ -53,9 +53,9 @@
                     <td class="py-2 px-3" style="font-family: monospace; color: #027c7d; font-size: large;">
                         PJ{{ $review->journalSubmission ? str_pad($review->journalSubmission->id, 3, '0', STR_PAD_LEFT) : 'N/A' }}
                     </td>
-                    <td class="py-2 px-3">{{ $review->reviewer1->name ?? 'Not Reviewed Yet' }}</td>
-                    <td class="py-2 px-3">{{ $review->reviewer2->name ?? 'Not Reviewed Yet' }}</td>
-                    <td class="py-2 px-3">{{ $review->reviewer3->name ?? 'Not Reviewed Yet' }}</td>
+                    <td class="py-2 px-3">{{ $review->reviewer1->user_prefix->name.' '.$review->reviewer1->name ?? 'Not Reviewed Yet' }}</td>
+                    <td class="py-2 px-3">{{ $review->reviewer2->user_prefix->name.' '.$review->reviewer2->name ?? 'Not Reviewed Yet' }}</td>
+                    <td class="py-2 px-3">{{ $review->reviewer3->user_prefix->name.' '.$review->reviewer3->name ?? 'Not Reviewed Yet' }}</td>
                     <td class="py-2 px-3">{{ $review->mark ?? '-' }}</td>
                     <td class="py-2 px-3 text-capitalize">{{ str_replace('_', ' ', $review->evaluation) }}</td>
                     <td class="py-2 px-3 text-capitalize">

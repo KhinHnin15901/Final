@@ -30,9 +30,9 @@
                     <td class="py-2 px-3" style="font-family: monospace; color: #027c7d; font-size: large;">
                         PJ{{ str_pad($schedule->journalSubmission->id, 3, '0', STR_PAD_LEFT) }}
                     </td>
-                    <td class="py-2 px-3">{{ $schedule->reviewer1->name ?? 'N/A' }}</td>
-                    <td class="py-2 px-3">{{ $schedule->reviewer2->name ?? 'N/A' }}</td>
-                    <td class="py-2 px-3">{{ $schedule->reviewer3->name ?? 'N/A' }}</td>
+                    <td class="py-2 px-3">{{ $schedule->reviewer1->user_prefix->name.' '.$schedule->reviewer1->name ?? 'N/A' }}</td>
+                    <td class="py-2 px-3">{{ $schedule->reviewer2->user_prefix->name.' '.$schedule->reviewer2->name ?? 'N/A' }}</td>
+                    <td class="py-2 px-3">{{ $schedule->reviewer3->user_prefix->name.' '.$schedule->reviewer3->name ?? 'N/A' }}</td>
                     <td class="py-2 px-3">{{ $schedule->start_date ?? '-' }}</td>
                     <td class="py-2 px-3">{{ $schedule->end_date ?? '-' }}</td>
                     <td class="py-2 px-3 text-nowrap">

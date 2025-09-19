@@ -60,7 +60,7 @@
                     <select id="reviewer{{ $i }}_id" name="reviewer{{ $i }}_id" class="form-select">
                         <option value="">-- Select Reviewer --</option>
                         @foreach ($reviewers as $rev)
-                            <option value="{{ $rev->id }}">{{ $rev->name }}</option>
+                            <option value="{{ $rev->id }}">{{ $rev->user_prefix->name.' '.$rev->name }}</option>
                         @endforeach
                     </select>
                 </div>

@@ -17,7 +17,7 @@
                 <th class="py-2 px-3">Author/Authors</th>
                 <th class="py-2 px-3">Authors' Phones/Phone</th>
                 <th class="py-2 px-3">Authors' Emails/Email</th>
-                <th class="py-2 px-3 text-nowrap">Total No of Authors</th>
+                {{-- <th class="py-2 px-3 text-nowrap">Total No of Authors</th> --}}
                 <th class="py-2 px-3">Topic</th>
                 <th class="py-2 px-3">Category</th>
                 <th class="py-2 px-3">Abstract</th>
@@ -43,7 +43,7 @@
                     <td class="py-2 px-3 text-center text-nowrap">{{ $submission->name ?? '-' }}</td>
                     <td class="py-2 px-3 text-nowrap">{{ $submission->phone ?? '-' }}</td>
                     <td class="py-2 px-3 text-nowrap">{{ $submission->email ?? '-' }}</td>
-                    <td class="py-2 px-3 text-center">{{ $submission->author_count ?? '-' }}</td>
+                    {{-- <td class="py-2 px-3 text-center">{{ $submission->author_count ?? '-' }}</td> --}}
                     <td class="py-2 px-3 text-center">{{ $submission->topics->name ?? '-' }}</td>
                     <td class="py-2 px-3 text-center text-capitalize">{{ $submission->category->name ?? '-' }}</td>
                     <td class="py-2 px-3">{{ $submission->abstract ?? '-' }}</td>
