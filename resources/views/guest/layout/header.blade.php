@@ -76,7 +76,7 @@
                                 class="block px-4 py-3 transition hover:bg-[#027c7d] hover:text-white">
                                 Journal
                             </a>
-                            <a href="#"
+                            <a href="https://conference.primelogicitsolutionprovider.com" target="_blank"
                                 class="block px-4 py-3 transition hover:bg-[#027c7d] hover:text-white">
                                 Conference
                             </a>
